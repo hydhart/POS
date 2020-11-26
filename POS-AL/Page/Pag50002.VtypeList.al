@@ -1,11 +1,11 @@
-page 50002 "Vtype List"
+page 50002 "vtype List"
 {
-
     ApplicationArea = All;
-    Caption = 'Vtype List';
+    Caption = 'vtype List';
     PageType = List;
-    SourceTable = "Item Vtype";
-    UsageCategory = Lists;
+    SourceTable = vtype;
+    UsageCategory = Administration;
+    DelayedInsert = true;
 
     layout
     {
@@ -13,19 +13,15 @@ page 50002 "Vtype List"
         {
             repeater(General)
             {
-                field("Item No."; Rec."Item No.")
+                field(Type; Rec.Type)
+                {
+                    ApplicationArea = All;
+                }
+                field(Code; Rec.Code)
                 {
                     ApplicationArea = All;
                 }
                 field(Description; Rec.Description)
-                {
-                    ApplicationArea = All;
-                }
-                field(vtype; Rec.vtype)
-                {
-                    ApplicationArea = All;
-                }
-                field("vtype Description"; Rec."vtype Description")
                 {
                     ApplicationArea = All;
                 }
