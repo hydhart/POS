@@ -56,6 +56,7 @@ codeunit 50000 "Modern Channel Mgt"
         JObject: JsonObject;
         JToken: JsonToken;
         rescode: Text;
+        tagihan: Text;
     begin
         initializeData;
         getSetup(channelID, storeID);
@@ -68,8 +69,14 @@ codeunit 50000 "Modern Channel Mgt"
         JToken.WriteTo(rescode);
         JObject.Get('server_trxid', JToken);
         JToken.WriteTo(serverTrxID);
+        serverTrxID := DelChr(serverTrxID, '=', '"');
+        JObject.Get('amount', JToken);
+        JToken.WriteTo(tagihan);
+        tagihan := DelChr(tagihan, '=', '"');
 
         if rescode = '4' then begin
+            if not Confirm('Total Tagihan yang harus dibayar adalah sebesar %1.\Lanjut Bayar?', true, tagihan) then
+                exit;
             requestURL := confirmURL();
             response := httpCall(requestURL);
             writeLog(response, requestURL);
@@ -239,9 +246,12 @@ codeunit 50000 "Modern Channel Mgt"
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
-        requestURL := modernChannelSetup.URL + 'channelid=' + channelID + '&password=' + signature + '&cmd=' +
+        requestURL := modernChannelSetup.URL + 'channelid=' + channelID + '&storeid=' + storeID + '&posid=' + posID + '&cashierid=' +
+                   cashierID + '&password=' + signature + '&cmd=' + format(command) + '&hp=' + handphone + '&vtype=' + vtype + '&trxtime=' +
+                   Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID + '&idpel=' + handphone + '&f=json';
+        /* requestURL := modernChannelSetup.URL + 'channelid=' + channelID + '&password=' + signature + '&cmd=' +
         Format(command) + '&hp=' + handphone + '&vtype=' + vtype + '&trxtime=' +
-        Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID + '&storeid=' + storeID + '&idpel=' + handphone + '&f=json';
+        Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID + '&storeid=' + storeID + '&idpel=' + handphone + '&f=json'; */
 
         exit(requestURL);
     end;
@@ -254,13 +264,13 @@ codeunit 50000 "Modern Channel Mgt"
     begin
         command := command::confirm;
         //GET REQUEST URL
-        firstHash := modernChannelSetup.PIN + modernChannelSetup."Secret Key" + serverTrxID + partnerTrxID;
+        firstHash := modernChannelSetup.PIN + modernChannelSetup."Secret Key" + partnerTrxID;
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
         requestURL := modernChannelSetup.URL + 'channelid=' + channelID + '&password=' + signature + '&cmd=' +
         Format(command::confirm) + '&trxtime=' + Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID +
-        '&order_trxid=' + serverTrxID + '&storeid' + storeID + '&f=json';
+        '&order_trxid=' + serverTrxID + '&storeid=' + storeID + '&posid=' + posID + '&cashierid=' + cashierID + '&f=json';
 
         exit(requestURL);
     end;
@@ -292,7 +302,9 @@ codeunit 50000 "Modern Channel Mgt"
         cashierID := 'csh01';
         //vtype := 'PLGS5'; pulsa prepaid
         vtype := 'HALO';
-        handphone := '081210753300';
+        //Pascabayar = ( positif =081312341234) ( negatif = 081356785678)  ( pending = 08131234123)
+        //handphone := '081210753300';
+        handphone := '081312341234';
         partnerTrxID := 'p000001';
         serverTrxID := '';
         subscriberID := '';
