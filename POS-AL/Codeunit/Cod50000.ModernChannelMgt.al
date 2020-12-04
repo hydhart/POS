@@ -55,6 +55,7 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
         JToken: JsonToken;
+        JToken1: JsonToken;
         rescode: Text;
         tagihan: Text;
     begin
@@ -64,7 +65,7 @@ codeunit 50000 "Modern Channel Mgt"
         response := httpCall(requestURL);
         writeLog(response, requestURL);
 
-        jObject.ReadFrom(response);
+        JObject.ReadFrom(response);
         JObject.Get('rescode', JToken);
         JToken.WriteTo(rescode);
         JObject.Get('server_trxid', JToken);
@@ -74,13 +75,27 @@ codeunit 50000 "Modern Channel Mgt"
         JToken.WriteTo(tagihan);
         tagihan := DelChr(tagihan, '=', '"');
 
-        if rescode = '4' then begin
+        JObject.Get('struk', JToken);
+        if JToken.IsObject then begin
+            JObject := JToken.AsObject();
+            JObject.Get('name', JToken1);
+            JToken1.WriteTo(tagihan);
+            Message(tagihan);
+        end;
+
+        /* if rescode = '4' then begin
             if not Confirm('Total Tagihan yang harus dibayar adalah sebesar %1.\Lanjut Bayar?', true, tagihan) then
                 exit;
             requestURL := confirmURL();
             response := httpCall(requestURL);
             writeLog(response, requestURL);
-        end;
+        end
+        else begin
+            JObject.Get('resmessage', JToken);
+            JToken.WriteTo(response);
+            JToken.
+            Message(response);
+        end; */
     end;
 
     procedure testRunInquiry()

@@ -1,4 +1,4 @@
-tableextension 50001 "Trans Sales Entry Ext" extends "Trans. Sales Entry"
+tableextension 50003 "POS Trans Line Ext" extends "POS Trans. Line"
 {
     fields
     {

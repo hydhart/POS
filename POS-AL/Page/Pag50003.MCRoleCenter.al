@@ -37,6 +37,11 @@ page 50003 "MC Role Center"
                     ApplicationArea = All;
                     RunObject = page "Modern Channel Setup";
                 }
+                action(Vtype)
+                {
+                    ApplicationArea = All;
+                    RunObject = page "vtype List";
+                }
                 action(Log)
                 {
                     ApplicationArea = All;
