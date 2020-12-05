@@ -7,7 +7,7 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
     begin
-        initializeData;
+        initializeData('planetgadget', 'a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
         getSetup(channelID, storeID);
         requestURL := pingTelURL();
         response := httpCall(requestURL);
@@ -23,7 +23,7 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
     begin
-        initializeData;
+        initializeData('planetgadget', 'a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
         getSetup(channelID, storeID);
         requestURL := topUpURL();
         response := httpCall(requestURL);
@@ -39,7 +39,7 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
     begin
-        initializeData;
+        initializeData('planetgadget', 'a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
         getSetup(channelID, storeID);
         requestURL := denomURL();
         response := httpCall(requestURL);
@@ -55,11 +55,12 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
         JToken: JsonToken;
-        JToken1: JsonToken;
+        JToken1: List of [JsonToken];
+        JToken2: JsonToken;
         rescode: Text;
         tagihan: Text;
     begin
-        initializeData;
+        initializeData('planetgadget', 'a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
         getSetup(channelID, storeID);
         requestURL := orderURL();
         response := httpCall(requestURL);
@@ -75,12 +76,17 @@ codeunit 50000 "Modern Channel Mgt"
         JToken.WriteTo(tagihan);
         tagihan := DelChr(tagihan, '=', '"');
 
-        JObject.Get('struk', JToken);
+        /* JObject.Get('struk', JToken);
         if JToken.IsObject then begin
             JObject := JToken.AsObject();
             JObject.Get('name', JToken1);
             JToken1.WriteTo(tagihan);
             Message(tagihan);
+        end; */
+        JToken1 := JObject.Values;
+
+        foreach JToken2 in JToken1 do begin
+
         end;
 
         /* if rescode = '4' then begin
@@ -105,7 +111,7 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
     begin
-        initializeData;
+        initializeData('planetgadget', 'a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
         getSetup(channelID, storeID);
         requestURL := inquiryURL();
         response := httpCall(requestURL);
@@ -135,8 +141,12 @@ codeunit 50000 "Modern Channel Mgt"
         entryNo += 1;
         mcLogEntry.Init();
         mcLogEntry."Entry No." := entryNo;
+        mcLogEntry."Receipt No." := partnerTrxID;
+        mcLogEntry."Transaction Line No." := 0;
         mcLogEntry."Log Date" := Today;
         mcLogEntry."Log Time" := Time;
+        mcLogEntry."Transaction Date" := Today;
+        mcLogEntry."Transaction Time" := Time;
         mcLogEntry."Channel ID" := channelID;
         mcLogEntry."Store ID" := storeID;
         mcLogEntry."POS ID" := posID;
@@ -309,18 +319,15 @@ codeunit 50000 "Modern Channel Mgt"
         exit(requestURL);
     end;
 
-    local procedure initializeData()
+    local procedure initializeData(pChannelID: Text; pStoreID: Text; pPosID: Text; pCashierID: Text; pVtype: Text; pHandphone: Text; pPartnerTrxID: Text)
     begin
-        channelID := 'planetgadget';
-        storeID := 'a001';
-        posID := 'pos01';
-        cashierID := 'csh01';
-        //vtype := 'PLGS5'; pulsa prepaid
-        vtype := 'HALO';
-        //Pascabayar = ( positif =081312341234) ( negatif = 081356785678)  ( pending = 08131234123)
-        //handphone := '081210753300';
-        handphone := '081312341234';
-        partnerTrxID := 'p000001';
+        channelID := pChannelID;
+        storeID := pStoreID;
+        posID := pPosID;
+        cashierID := pCashierID;
+        vtype := pVtype;
+        handphone := pHandphone;
+        partnerTrxID := pPartnerTrxID;
         serverTrxID := '';
         subscriberID := '';
     end;
