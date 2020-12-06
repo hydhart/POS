@@ -10,6 +10,10 @@ report 50000 "Item Ledger Entries"
     {
         dataitem(ItemLedgerEntry; "Item Ledger Entry")
         {
+            DataItemTableView = sorting("Entry No.");
+            RequestFilterFields = "Posting Date", "Source Type", "Source No.", "Document Type", "Document No.";
+
+            column(Entry_No_; "Entry No.") { }
             column(PostingDate; "Posting Date") { }
             column(EntryType; "Entry Type") { }
             column(DocumentNo; "Document No.") { }

@@ -7,7 +7,6 @@
         <DataProvider>SQL</DataProvider>
         <ConnectString />
       </ConnectionProperties>
-      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>321400f8-12a2-4cf1-bbd9-846ce1e7c77a</rd:DataSourceID>
     </DataSource>
   </DataSources>
@@ -19,33 +18,36 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>0.62008in</Width>
+                  <Width>1.575cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.83071in</Width>
+                  <Width>4.65cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.76772in</Width>
+                  <Width>1.95001cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.76772in</Width>
+                  <Width>1.95001cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.76772in</Width>
+                  <Width>1.95001cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.76772in</Width>
+                  <Width>1.95001cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.76772in</Width>
+                  <Width>1.72495cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.73819in</Width>
+                  <Width>1.95001cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.875cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.33307in</Height>
+                  <Height>0.846cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -227,6 +229,36 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Textbox3">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Inventory</Value>
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox3</rd:DefaultName>
+                          <Style>
+                            <VerticalAlign>Bottom</VerticalAlign>
+                            <PaddingLeft>0.075cm</PaddingLeft>
+                            <PaddingRight>0.075cm</PaddingRight>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="InvtValue5_ItemLedgEntryCaption">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -287,7 +319,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.16654in</Height>
+                  <Height>0.42301cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -434,16 +466,17 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <ColSpan>4</ColSpan>
+                        <ColSpan>5</ColSpan>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell />
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.16654in</Height>
+                  <Height>0.42301cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -472,7 +505,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -620,6 +652,34 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Inventory">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Inventory.Value</Value>
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Inventory</rd:DefaultName>
+                          <Style>
+                            <PaddingLeft>0.075cm</PaddingLeft>
+                            <PaddingRight>0.075cm</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="InvtValue5_ItemLedgEntry">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -677,7 +737,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.16654in</Height>
+                  <Height>0.42301cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -703,9 +763,10 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <ColSpan>8</ColSpan>
+                        <ColSpan>9</ColSpan>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell />
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
@@ -716,7 +777,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.16654in</Height>
+                  <Height>0.42301cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -894,6 +955,36 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Inventory1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=SUM(Fields!Inventory.Value)</Value>
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Inventory1</rd:DefaultName>
+                          <Style>
+                            <PaddingLeft>0.075cm</PaddingLeft>
+                            <PaddingRight>0.075cm</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <rd:Selected>true</rd:Selected>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="InvtValue5_ItemControl17">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -965,6 +1056,7 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -1016,19 +1108,19 @@
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.87245cm</Top>
             <Height>2.53804cm</Height>
-            <Width>17.85005cm</Width>
+            <Width>19.575cm</Width>
             <Style />
           </Tablix>
           <Tablix Name="table2">
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>7.12411in</Width>
+                  <Width>18.09524cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.16654in</Height>
+                  <Height>0.42301cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1061,7 +1153,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.16654in</Height>
+                  <Height>0.42301cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1135,7 +1227,7 @@
         <Height>3.41049cm</Height>
         <Style />
       </Body>
-      <Width>18.15cm</Width>
+      <Width>19.575cm</Width>
       <Page>
         <PageHeader>
           <Height>1.692cm</Height>
@@ -1158,7 +1250,7 @@
                 </Paragraph>
               </Paragraphs>
               <Top>0.423cm</Top>
-              <Left>16.95cm</Left>
+              <Left>18.22cm</Left>
               <Height>0.423cm</Height>
               <Width>0.75cm</Width>
               <Visibility>
@@ -1239,7 +1331,7 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Left>15cm</Left>
+              <Left>16.27cm</Left>
               <Height>0.423cm</Height>
               <Width>3.15cm</Width>
               <ZIndex>3</ZIndex>
@@ -1272,7 +1364,7 @@
                 </Paragraph>
               </Paragraphs>
               <Top>0.846cm</Top>
-              <Left>14.9cm</Left>
+              <Left>16.17cm</Left>
               <Height>0.423cm</Height>
               <Width>3.25cm</Width>
               <ZIndex>4</ZIndex>
@@ -1304,7 +1396,7 @@
                 </Paragraph>
               </Paragraphs>
               <Top>0.423cm</Top>
-              <Left>17.7cm</Left>
+              <Left>18.97cm</Left>
               <Height>0.423cm</Height>
               <Width>0.45cm</Width>
               <ZIndex>5</ZIndex>
@@ -1373,6 +1465,12 @@ End Function</Code>
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
+        <Field Name="Inventory">
+          <DataField>Inventory</DataField>
+        </Field>
+        <Field Name="InventoryFormat">
+          <DataField>InventoryFormat</DataField>
+        </Field>
         <Field Name="TodayFormatted">
           <DataField>TodayFormatted</DataField>
         </Field>

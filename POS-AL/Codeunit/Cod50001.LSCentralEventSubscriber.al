@@ -172,4 +172,47 @@ codeunit 50001 "LS Central Event Subscriber"
     //#endregion POS Print Utility
 
 
+    /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"EPOS Controler", 'OnKeyboardResult', '', false, false)]
+    local procedure OnKeyboardResult(var processed: Boolean; resultOK: Boolean; payload: Text; inputValue: Text)
+    begin
+        Message('OnKeyboardResult');
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"EPOS Controler", 'OnLookupResult', '', false, false)]
+    local procedure OnLookupResult(var processed: Boolean; LookupID: Text; resultOK: Boolean; FilterText: Text)
+    begin
+        Message('OnLookupResult');
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"EPOS Controler", 'OnModalPanelResult', '', false, false)]
+    local procedure OnModalPanelResult(var processed: Boolean; resultOK: Boolean; panelID: Text; payload: Text)
+    begin
+        Message('OnModalPanelResult');
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"EPOS Controler", 'OnNumpadResult', '', false, false)]
+    local procedure OnNumpadResult(var processed: Boolean; resultOK: Boolean; payload: Text; inputValue: Text)
+    begin
+        Message('OnNumpadResult');
+    end; */
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"EPOS Controler", 'OnPOSCommand', '', false, false)]
+    local procedure OnPOSCommand(var ActivePanel: Record "POS Panel"; var PosMenuLine: Record "POS Menu Line")
+    var
+        tes: Text;
+    begin
+        tes := '';
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction", 'OnBeforeInsertPaymentLine', '', false, false)]
+    local procedure OnBeforeInsertPaymentLine(var Rec: Record "POS Transaction"; var PaymentAmount: Decimal; CouponBarcode: Code[22])
+    begin
+        Message('OnBeforeInsertPaymentLine');
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction", 'OnItemNoPressed', '', false, false)]
+    local procedure OnItemNoPressed(var Handled: Boolean; REC: Record "POS Transaction"; CurrInput: Text)
+    begin
+        Message('OnItemNoPressed');
+    end;
 }
