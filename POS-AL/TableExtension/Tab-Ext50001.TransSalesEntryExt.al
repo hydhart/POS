@@ -41,5 +41,10 @@ tableextension 50001 "Trans Sales Entry Ext" extends "Trans. Sales Entry"
         {
             DataClassification = ToBeClassified;
         }
+        field(50008; "Card No."; Code[20])
+        {
+            Caption = 'Card No.';
+            DataClassification = ToBeClassified;
+        }
     }
 }
