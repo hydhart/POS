@@ -1,7 +1,5 @@
-codeunit 50001 "LS Central Event Subscriber"
+codeunit 50003 "MC Event Subscriber"
 {
-    SingleInstance = true;
-
     //#region POS Post Utility
 
     //>> TO01.01
@@ -197,4 +195,40 @@ codeunit 50001 "LS Central Event Subscriber"
     begin
         Message('OnNumpadResult');
     end; */
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"EPOS Controler", 'OnPOSCommand', '', false, false)]
+    local procedure OnPOSCommand(var ActivePanel: Record "POS Panel"; var PosMenuLine: Record "POS Menu Line")
+    var
+        tes: Text;
+    begin
+        tes := '';
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction", 'OnBeforeInsertPaymentLine', '', false, false)]
+    local procedure OnBeforeInsertPaymentLine(var Rec: Record "POS Transaction"; var PaymentAmount: Decimal; CouponBarcode: Code[22])
+    begin
+        Message('OnBeforeInsertPaymentLine');
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction", 'OnItemNoPressed', '', false, false)]
+    local procedure OnItemNoPressed(var Handled: Boolean; REC: Record "POS Transaction"; CurrInput: Text)
+    var
+        posTransLine: Record "POS Trans. Line";
+        Item: Record Item;
+        posGUI: Codeunit "EPOS Control Interface";
+    begin
+        posTransLine.Reset();
+        posTransLine.SetRange("Receipt No.", REC."Receipt No.");
+        if posTransLine.FindFirst() then begin
+            if Item.Get(posTransLine.Number) then begin
+                if Item.mc_vtype <> '' then
+                    Error('Pembelian Pulsa hanya bisa dalam 1 transaksi pada 1 waktu.');
+            end;
+        end;
+        if Item.Get(CurrInput) then begin
+            if Item.mc_ItemType <> Item.mc_ItemType::" " then
+                posGUI.ShowPanelModal('#MCINPUT');
+        end;
+    end;
+
 }
