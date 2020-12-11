@@ -216,19 +216,40 @@ codeunit 50003 "MC Event Subscriber"
         posTransLine: Record "POS Trans. Line";
         Item: Record Item;
         posGUI: Codeunit "EPOS Control Interface";
+        EPOSCITest: Codeunit "EPOS Control Interface HTML";
+        eposCtrl: Codeunit "POS GUI";
+        tes: Report test;
+        masukan: Text;
+        act: Action;
     begin
-        posTransLine.Reset();
+        /* posTransLine.Reset();
         posTransLine.SetRange("Receipt No.", REC."Receipt No.");
         if posTransLine.FindFirst() then begin
             if Item.Get(posTransLine.Number) then begin
                 if Item.mc_vtype <> '' then
                     Error('Pembelian Pulsa hanya bisa dalam 1 transaksi pada 1 waktu.');
             end;
-        end;
+        end; */
         if Item.Get(CurrInput) then begin
-            if Item.mc_ItemType <> Item.mc_ItemType::" " then
-                posGUI.ShowPanelModal('#MCINPUT');
-        end;
-    end;
+            //if Item.mc_ItemType <> Item.mc_ItemType::" " then
+            //if not posGUI.ShowPanelModalWithPayload('#MCINPUT', input) then begin
+            //input := eposCtrl.OpenNumericKeyboard('Input', 1, '', 1, act);
+            /* input := EPOSCITest.OpenNumericKeyboard('Input HP', '', act);
+            posGUI.ShowPanelModal('#MCINPUT'); */
+            /* EPOSCITest.TouchNumPadPressed('Input HP', masukan);
+            Message(masukan); */
+            //            posGUI.ShowPanelModal('#MCINPUT');
+            posGUI.TouchNumPadPressed('Input', masukan);
+            /*           masukan := posGUI.GetInputText('#INPUT');
+                      Message(masukan); */
+            //input := posGUI.OpenNumericKeyboard('Input', '', act);            
+            /* tes.RunModal();
+            tes.getNoHp(masukan);
+            
+            Message(masukan); */
+            //end;
 
+        end;
+        //Message('test ');
+    end;
 }
