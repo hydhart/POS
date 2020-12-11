@@ -1,5 +1,7 @@
 codeunit 50001 "LS Central Event Subscriber"
 {
+    SingleInstance = true;
+
     //#region POS Post Utility
 
     //>> TO01.01
