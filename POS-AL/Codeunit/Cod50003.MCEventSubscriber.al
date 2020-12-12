@@ -239,7 +239,7 @@ codeunit 50003 "MC Event Subscriber"
             /* EPOSCITest.TouchNumPadPressed('Input HP', masukan);
             Message(masukan); */
             //            posGUI.ShowPanelModal('#MCINPUT');
-            posGUI.TouchNumPadPressed('Input', masukan);
+            //posGUI.TouchNumPadPressed('Input', masukan);
             /*           masukan := posGUI.GetInputText('#INPUT');
                       Message(masukan); */
             //input := posGUI.OpenNumericKeyboard('Input', '', act);            
