@@ -107,6 +107,11 @@ codeunit 50004 "POS Custom Event Subscriber"
         MembershipCard: Record "Membership Card";
     begin
         Transaction."Sales Staff" := POSTrans."Sales Staff";
+        RetailSetup.Reset();
+        if RetailSetup.FindFirst() then
+            RetailSetup.Init();
+        Message(RetailSetup."NM Phone Info");
+        /*
         RetailSetup.Get();
         if Transaction."Member Card No." <> '' then begin
             POSInfoEntry.SETRANGE(Infocode, RetailSetup."NM Phone Info");
@@ -144,6 +149,7 @@ codeunit 50004 "POS Custom Event Subscriber"
                 Transaction."Member Card No." := MembershipCard."Card No.";
             end;
         end;
+        */
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Post Utility", 'SalesEntryOnBeforeInsert', '', false, false)]

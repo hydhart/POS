@@ -248,10 +248,12 @@ codeunit 50003 "MC Event Subscriber"
             
             Message(masukan); */
             //end;            
+            /*
             eposCtrl.SetInputEnabled('#MCINPUT', true);
             eposCtrl.ActivateInput('#MCINPUT');
             masukan := eposCtrl.GetInputText('#MCINPUT');
-            //Message(masukan);
+            Message(masukan);
+            */
         end;
         //Message('test ');
     end;
