@@ -218,6 +218,8 @@ codeunit 50003 "MC Event Subscriber"
         posGUI: Codeunit "POS GUI";
         EPOSCITest: Codeunit "EPOS Control Interface HTML";
         eposCtrl: Codeunit "EPOS Control Interface";
+        posTrx: Codeunit "POS Transaction";
+        posPanelUtil: Codeunit "POS Panel Utility";
         tes: Report test;
         masukan: Text;
         act: Action;
@@ -247,7 +249,7 @@ codeunit 50003 "MC Event Subscriber"
             tes.getNoHp(masukan);
             
             Message(masukan); */
-            //end;            
+            //end;
             eposCtrl.SetInputEnabled('#MCINPUT', true);
             eposCtrl.ActivateInput('#MCINPUT');
             masukan := eposCtrl.GetInputText('#MCINPUT');
