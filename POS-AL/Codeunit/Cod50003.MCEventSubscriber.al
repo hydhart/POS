@@ -198,10 +198,10 @@ codeunit 50003 "MC Event Subscriber"
                 if Item.mc_vtype <> '' then
                     Error('Pembelian Pulsa hanya bisa dalam 1 transaksi pada 1 waktu.');
             end;
-        end; */
+        end; 
         if Item.Get(CurrInput) then begin
 
-        end;
+        end;*/
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnAfterCheckInfoCode', '', false, false)]
@@ -244,8 +244,10 @@ codeunit 50003 "MC Event Subscriber"
     var
         Item: Record Item;
     begin
-        Rec.mc_Itemtype := Item.mc_ItemType;
-        Rec.mc_vtype := Item.mc_vtype;
+        if Item.Get(Rec.Number) then begin
+            Rec.mc_Itemtype := Item.mc_ItemType;
+            Rec.mc_vtype := Item.mc_vtype;
+        end;
     end;
 
     local procedure getNomorHP(POSTransaction: Record "POS Transaction"; Infocode: Record Infocode): Text
