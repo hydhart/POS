@@ -42,4 +42,16 @@ tableextension 50003 "POS Trans Line Ext" extends "POS Trans. Line"
             DataClassification = ToBeClassified;
         }
     }
+    trigger OnAfterModify()
+    var
+        POSTrans: Record "POS Transaction";
+    begin
+        if xRec."Sales Staff" <> Rec."Sales Staff" then begin
+            if POSTrans.Get("Receipt No.") then begin
+                POSTrans."Sales Staff" := "Sales Staff";
+                POSTrans.Modify();
+            end;
+
+        end;
+    end;
 }
