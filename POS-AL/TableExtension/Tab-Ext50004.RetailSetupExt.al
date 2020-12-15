@@ -26,6 +26,12 @@ tableextension 50004 "Retail Setup Ext" extends "Retail Setup"
             DataClassification = ToBeClassified;
             TableRelation = "Member Scheme".Code where("Club Code" = field("NM Club Code"));
         }
+        field(50004; "PPOB Infocode"; Code[10])
+        {
+            Caption = 'PPOB Infocode';
+            DataClassification = ToBeClassified;
+            TableRelation = Infocode.Code;
+        }
     }
 
     var

@@ -171,45 +171,6 @@ codeunit 50003 "MC Event Subscriber"
     end; */
     //#endregion POS Print Utility
 
-
-    /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"EPOS Controler", 'OnKeyboardResult', '', false, false)]
-    local procedure OnKeyboardResult(var processed: Boolean; resultOK: Boolean; payload: Text; inputValue: Text)
-    begin
-        Message('OnKeyboardResult');
-    end;
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"EPOS Controler", 'OnLookupResult', '', false, false)]
-    local procedure OnLookupResult(var processed: Boolean; LookupID: Text; resultOK: Boolean; FilterText: Text)
-    begin
-        Message('OnLookupResult');
-    end;
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"EPOS Controler", 'OnModalPanelResult', '', false, false)]
-    local procedure OnModalPanelResult(var processed: Boolean; resultOK: Boolean; panelID: Text; payload: Text)
-    begin
-        Message('OnModalPanelResult');
-    end;
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"EPOS Controler", 'OnNumpadResult', '', false, false)]
-    local procedure OnNumpadResult(var processed: Boolean; resultOK: Boolean; payload: Text; inputValue: Text)
-    begin
-        Message('OnNumpadResult');
-    end; */
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"EPOS Controler", 'OnPOSCommand', '', false, false)]
-    local procedure OnPOSCommand(var ActivePanel: Record "POS Panel"; var PosMenuLine: Record "POS Menu Line")
-    var
-        tes: Text;
-    begin
-        tes := '';
-    end;
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction", 'OnBeforeInsertPaymentLine', '', false, false)]
-    local procedure OnBeforeInsertPaymentLine(var Rec: Record "POS Transaction"; var PaymentAmount: Decimal; CouponBarcode: Code[22])
-    begin
-        Message('OnBeforeInsertPaymentLine');
-    end;
-
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction", 'OnItemNoPressed', '', false, false)]
     local procedure OnItemNoPressed(var Handled: Boolean; REC: Record "POS Transaction"; CurrInput: Text)
     var
@@ -220,9 +181,15 @@ codeunit 50003 "MC Event Subscriber"
         eposCtrl: Codeunit "EPOS Control Interface";
         posTrx: Codeunit "POS Transaction";
         posPanelUtil: Codeunit "POS Panel Utility";
-        tes: Report test;
+        posInfocode: Codeunit "POS Infocode Utility";
+        posInfocodeMgt: Codeunit "POS InfoData Mgt.";
+        posCmd: Codeunit "POS Common Functions";
         masukan: Text;
         act: Action;
+
+        RetailSetup: Record "Retail Setup";
+        InfoEntry: Record "POS Trans. Infocode Entry";
+        Input: text;
     begin
         /* posTransLine.Reset();
         posTransLine.SetRange("Receipt No.", REC."Receipt No.");
@@ -233,30 +200,68 @@ codeunit 50003 "MC Event Subscriber"
             end;
         end; */
         if Item.Get(CurrInput) then begin
-            //if Item.mc_ItemType <> Item.mc_ItemType::" " then
-            //if not posGUI.ShowPanelModalWithPayload('#MCINPUT', input) then begin
-            //input := eposCtrl.OpenNumericKeyboard('Input', 1, '', 1, act);
-            /* input := EPOSCITest.OpenNumericKeyboard('Input HP', '', act);
-            posGUI.ShowPanelModal('#MCINPUT'); */
-            /* EPOSCITest.TouchNumPadPressed('Input HP', masukan);
-            Message(masukan); */
-            //            posGUI.ShowPanelModal('#MCINPUT');
-            //posGUI.TouchNumPadPressed('Input', masukan);
-            /*           masukan := posGUI.GetInputText('#INPUT');
-                      Message(masukan); */
-            //input := posGUI.OpenNumericKeyboard('Input', '', act);            
-            /* tes.RunModal();
-            tes.getNoHp(masukan);
-            
-            Message(masukan); */
-            //end;            
-            /*
-            eposCtrl.SetInputEnabled('#MCINPUT', true);
-            eposCtrl.ActivateInput('#MCINPUT');
-            masukan := eposCtrl.GetInputText('#MCINPUT');
-            Message(masukan);
-            */
+
         end;
-        //Message('test ');
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnAfterCheckInfoCode', '', false, false)]
+    local procedure AfterCheckInfocode(var POSTransaction: Record "POS Transaction"; var Infocode: Record Infocode)
+    begin
+        getNomorHP(POSTransaction, Infocode);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnBeforeTotalExecuted', '', false, false)]
+    local procedure OnBeforeTotalExecuted(var IsHandled: Boolean; var POSTransaction: Record "POS Transaction")
+    var
+        POSTransLine: Record "POS Trans. Line";
+        InfocodeEntry: Record "POS Trans. Infocode Entry";
+        Item: Record Item;
+        RetailSetup: Record "Retail Setup";
+        InfoCode: Record Infocode;
+        POSTrx: Codeunit "POS Transaction";
+        ModernChannelMgt: Codeunit "Modern Channel Mgt";
+    begin
+        RetailSetup.Get();
+
+        POSTransLine.Reset();
+        POSTransLine.SetRange("Receipt No.", POSTransaction."Receipt No.");
+        if POSTransLine.FindFirst() then begin
+            if POSTransLine.mc_Itemtype = POSTransLine.mc_Itemtype::"Pulsa Prepaid" then begin
+                if InfoCode.Get(RetailSetup."PPOB Infocode") then begin
+                    POSTransLine.mc_hp := getNomorHP(POSTransaction, InfoCode);
+                    POSTransLine.Modify();
+                end;
+                ModernChannelMgt.initializeData(POSTransaction."Store No.", POSTransaction."Store No.",
+                POSTransaction."Created by Staff ID", POSTransLine.mc_vtype, POSTransLine.mc_hp, POSTransaction."Receipt No.");
+                ModernChannelMgt.RunTopUp(POSTransLine);
+            end;
+
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"POS Trans. Line", 'OnAfterValidateEvent', 'Number', false, false)]
+    local procedure OnAfterValidateNumber(CurrFieldNo: Integer; var Rec: Record "POS Trans. Line"; var xRec: Record "POS Trans. Line")
+    var
+        Item: Record Item;
+    begin
+        Rec.mc_Itemtype := Item.mc_ItemType;
+        Rec.mc_vtype := Item.mc_vtype;
+    end;
+
+    local procedure getNomorHP(POSTransaction: Record "POS Transaction"; Infocode: Record Infocode): Text
+    var
+        RetailSetup: Record "Retail Setup";
+        InfoEntry: Record "POS Trans. Infocode Entry";
+        InputText: text;
+    begin
+        RetailSetup.Get();
+        if RetailSetup."PPOB Infocode" = Infocode.Code then begin
+            InfoEntry.Reset();
+            InfoEntry.SetRange("Receipt No.", POSTransaction."Receipt No.");
+            InfoEntry.SetRange(Infocode, Infocode.Code);
+            if InfoEntry.FindFirst() then
+                InputText := InfoEntry.Information;
+        end;
+        exit(InputText);
     end;
 }

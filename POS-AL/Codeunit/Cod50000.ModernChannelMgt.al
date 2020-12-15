@@ -1,5 +1,6 @@
 codeunit 50000 "Modern Channel Mgt"
 {
+    #region Test Run
     procedure testRunPing()
     var
         requestURL: Text;
@@ -7,8 +8,8 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
     begin
-        initializeData('planetgadget', 'a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
-        getSetup(channelID, storeID);
+        initializeData('a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
+        getSetup();
         requestURL := pingTelURL();
         response := httpCall(requestURL);
 
@@ -23,8 +24,8 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
     begin
-        initializeData('planetgadget', 'a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
-        getSetup(channelID, storeID);
+        initializeData('a001', 'pos01', 'csh01', 'PLGS5', '081312341234', 'p000001');
+        getSetup();
         requestURL := topUpURL();
         response := httpCall(requestURL);
 
@@ -39,8 +40,8 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
     begin
-        initializeData('planetgadget', 'a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
-        getSetup(channelID, storeID);
+        initializeData('a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
+        getSetup();
         requestURL := denomURL();
         response := httpCall(requestURL);
 
@@ -60,13 +61,13 @@ codeunit 50000 "Modern Channel Mgt"
         rescode: Text;
         tagihan: Text;
     begin
-        initializeData('planetgadget', 'a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
-        getSetup(channelID, storeID);
+        getSetup();
+        initializeData('a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
         requestURL := orderURL();
         response := httpCall(requestURL);
         writeLog(response, requestURL);
 
-        JObject.ReadFrom(response);
+        /* JObject.ReadFrom(response);
         JObject.Get('rescode', JToken);
         JToken.WriteTo(rescode);
         JObject.Get('server_trxid', JToken);
@@ -74,7 +75,7 @@ codeunit 50000 "Modern Channel Mgt"
         serverTrxID := DelChr(serverTrxID, '=', '"');
         JObject.Get('amount', JToken);
         JToken.WriteTo(tagihan);
-        tagihan := DelChr(tagihan, '=', '"');
+        tagihan := DelChr(tagihan, '=', '"'); */
 
         /* JObject.Get('struk', JToken);
         if JToken.IsObject then begin
@@ -83,11 +84,11 @@ codeunit 50000 "Modern Channel Mgt"
             JToken1.WriteTo(tagihan);
             Message(tagihan);
         end; */
-        JToken1 := JObject.Values;
+        /* JToken1 := JObject.Values;
 
         foreach JToken2 in JToken1 do begin
 
-        end;
+        end; */
 
         /* if rescode = '4' then begin
             if not Confirm('Total Tagihan yang harus dibayar adalah sebesar %1.\Lanjut Bayar?', true, tagihan) then
@@ -111,18 +112,52 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
     begin
-        initializeData('planetgadget', 'a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
-        getSetup(channelID, storeID);
+        initializeData('a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
+        getSetup();
         requestURL := inquiryURL();
         response := httpCall(requestURL);
 
         jObject.ReadFrom(response);
         writeLog(response, requestURL);
     end;
+    #endregion Test Run
 
-    local procedure getSetup(channelID: Text; storeID: Text)
+    procedure RunTopUp(var POSTransLine: Record "POS Trans. Line")
+    var
+        requestURL: Text;
+        response: Text;
+        httpResponse: HttpResponseMessage;
+        JObject: JsonObject;
+        JToken: JsonToken;
+        rescode: Text;
+        sn: Text;
+        operator: Text;
+        amount: Text;
+
     begin
-        modernChannelSetup.Get(channelID, storeID);
+        requestURL := topUpURL();
+        response := httpCall(requestURL);
+
+        jObject.ReadFrom(response);
+        writeLog(response, requestURL);
+
+        JObject.Get('rescode', JToken);
+        JToken.WriteTo(rescode);
+        if rescode = '4' then begin
+            POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
+
+            JObject.Get('sn', JToken);
+            JToken.WriteTo(sn);
+            POSTransLine.mc_sn := sn;
+            POSTransLine.mc_amount := amount;
+            POSTransLine.mc_operator := operator;
+            POSTransLine.Modify();
+        end;
+    end;
+
+    local procedure getSetup()
+    begin
+        modernChannelSetup.Get();
     end;
 
     local procedure writeLog(responsMsg: Text; requestURL: Text)
@@ -213,7 +248,7 @@ codeunit 50000 "Modern Channel Mgt"
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
-        requestURL := modernChannelSetup.URL + 'channelid=' + channelID + '&posid=' + posID + '&password=' + signature +
+        requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&posid=' + posID + '&password=' + signature +
         '&cmd=' + Format(command) + '&trxtime=' + Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID +
         '&storeid=' + storeID + '&cashierid=' + cashierID + '&f=json';
 
@@ -232,7 +267,7 @@ codeunit 50000 "Modern Channel Mgt"
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
-        requestURL := modernChannelSetup.URL + 'channelid=' + channelID + '&posid=' + posID + '&password=' + signature +
+        requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&posid=' + posID + '&password=' + signature +
         '&cmd=' + Format(command) + '&trxtime=' + Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID +
         '&storeid=' + storeID + '&cashierid=' + cashierID + '&f=json';
 
@@ -251,7 +286,7 @@ codeunit 50000 "Modern Channel Mgt"
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
-        requestURL := modernChannelSetup.URL + 'channelid=' + channelID + '&storeid=' + storeID + '&posid=' + posID + '&cashierid=' +
+        requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&storeid=' + storeID + '&posid=' + posID + '&cashierid=' +
            cashierID + '&password=' + signature + '&cmd=' + format(command) + '&hp=' + handphone + '&vtype=' + vtype + '&trxtime=' +
            Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID + '&f=json';
 
@@ -271,10 +306,10 @@ codeunit 50000 "Modern Channel Mgt"
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
-        requestURL := modernChannelSetup.URL + 'channelid=' + channelID + '&storeid=' + storeID + '&posid=' + posID + '&cashierid=' +
+        requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&storeid=' + storeID + '&posid=' + posID + '&cashierid=' +
                    cashierID + '&password=' + signature + '&cmd=' + format(command) + '&hp=' + handphone + '&vtype=' + vtype + '&trxtime=' +
                    Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID + '&idpel=' + handphone + '&f=json';
-        /* requestURL := modernChannelSetup.URL + 'channelid=' + channelID + '&password=' + signature + '&cmd=' +
+        /* requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&password=' + signature + '&cmd=' +
         Format(command) + '&hp=' + handphone + '&vtype=' + vtype + '&trxtime=' +
         Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID + '&storeid=' + storeID + '&idpel=' + handphone + '&f=json'; */
 
@@ -293,7 +328,7 @@ codeunit 50000 "Modern Channel Mgt"
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
-        requestURL := modernChannelSetup.URL + 'channelid=' + channelID + '&password=' + signature + '&cmd=' +
+        requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&password=' + signature + '&cmd=' +
         Format(command::confirm) + '&trxtime=' + Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID +
         '&order_trxid=' + serverTrxID + '&storeid=' + storeID + '&posid=' + posID + '&cashierid=' + cashierID + '&f=json';
 
@@ -312,16 +347,17 @@ codeunit 50000 "Modern Channel Mgt"
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
-        requestURL := modernChannelSetup.URL + 'channelid=' + channelID + '&posid=' + posID + '&password=' + signature +
+        requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&posid=' + posID + '&password=' + signature +
         '&cmd=' + Format(command) + '&trxtime=' + Format(CurrentDateTime, 0, formatDate) + '&server_trxid=' + partnerTrxID +
         '&storeid=' + storeID + '&cashierid=' + cashierID + '&f=json';
 
         exit(requestURL);
     end;
 
-    local procedure initializeData(pChannelID: Text; pStoreID: Text; pPosID: Text; pCashierID: Text; pVtype: Text; pHandphone: Text; pPartnerTrxID: Text)
+    procedure initializeData(pStoreID: Text; pPosID: Text; pCashierID: Text; pVtype: Text; pHandphone: Text; pPartnerTrxID: Text)
     begin
-        channelID := pChannelID;
+        getSetup();
+        channelID := modernChannelSetup."Channel ID";
         storeID := pStoreID;
         posID := pPosID;
         cashierID := pCashierID;

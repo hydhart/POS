@@ -1,10 +1,12 @@
 page 50000 "Modern Channel Setup"
 {
     ApplicationArea = All;
-    Caption = 'Modern Channel Setup';
+    Caption = 'PPOB Setup';
     PageType = List;
     SourceTable = "Modern Channel Setup";
     UsageCategory = Administration;
+    InsertAllowed = false;
+    DeleteAllowed = false;
 
     layout
     {
@@ -13,10 +15,6 @@ page 50000 "Modern Channel Setup"
             repeater(General)
             {
                 field("Channel ID"; Rec."Channel ID")
-                {
-                    ApplicationArea = All;
-                }
-                field("Store ID"; Rec."Store ID")
                 {
                     ApplicationArea = All;
                 }
@@ -29,10 +27,6 @@ page 50000 "Modern Channel Setup"
                     ApplicationArea = All;
                 }
                 field(URL; Rec.URL)
-                {
-                    ApplicationArea = All;
-                }
-                field(Path; Rec.Path)
                 {
                     ApplicationArea = All;
                 }
@@ -95,4 +89,13 @@ page 50000 "Modern Channel Setup"
             }
         }
     }
+
+    trigger OnOpenPage()
+    begin
+        Rec.RESET;
+        IF NOT Rec.GET THEN BEGIN
+            Rec.INIT;
+            Rec.INSERT;
+        END;
+    end;
 }

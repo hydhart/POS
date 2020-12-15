@@ -23,6 +23,13 @@ pageextension 50001 "Retail Setup Ext" extends "Retail Setup"
                     ApplicationArea = All;
                 }
             }
+            group(PPOB)
+            {
+                field("PPOB Infocode"; Rec."PPOB Infocode")
+                {
+                    ApplicationArea = All;
+                }
+            }
         }
     }
 }

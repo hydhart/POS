@@ -2,6 +2,7 @@ table 50002 vtype
 {
     Caption = 'vtype';
     DataClassification = ToBeClassified;
+    LookupPageId = "vtype List";
 
     fields
     {

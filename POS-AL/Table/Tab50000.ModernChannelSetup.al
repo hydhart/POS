@@ -1,18 +1,17 @@
 table 50000 "Modern Channel Setup"
 {
-    Caption = 'Modern Channel Setup';
+    Caption = 'PPOB Setup';
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(1; "Channel ID"; Code[20])
+        field(1; "Primary Key"; Code[20])
         {
-            Caption = 'Channel ID';
             DataClassification = ToBeClassified;
         }
-        field(2; "Store ID"; Code[20])
+        field(2; "Channel ID"; Code[20])
         {
-            Caption = 'Store ID';
+            Caption = 'Channel ID';
             DataClassification = ToBeClassified;
         }
         field(3; PIN; Text[10])
@@ -41,7 +40,7 @@ table 50000 "Modern Channel Setup"
     }
     keys
     {
-        key(PK; "Channel ID", "Store ID")
+        key(PK; "Primary Key")
         {
             Clustered = true;
         }

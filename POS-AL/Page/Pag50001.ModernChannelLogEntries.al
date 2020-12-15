@@ -2,7 +2,7 @@ page 50001 "Modern Channel Log Entries"
 {
 
     ApplicationArea = All;
-    Caption = 'Modern Channel Log Entries';
+    Caption = 'PPOB Log Entries';
     PageType = List;
     SourceTable = "Modern Channel Log Entry";
     UsageCategory = History;
