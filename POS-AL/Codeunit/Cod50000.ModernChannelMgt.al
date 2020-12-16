@@ -91,7 +91,7 @@ codeunit 50000 "Modern Channel Mgt"
 
         end; */
 
-        /* if rescode = '4' then begin
+        if rescode = '4' then begin
             if not Confirm('Total Tagihan yang harus dibayar adalah sebesar %1.\Lanjut Bayar?', true, tagihan) then
                 exit;
             requestURL := confirmURL();
@@ -101,9 +101,8 @@ codeunit 50000 "Modern Channel Mgt"
         else begin
             JObject.Get('resmessage', JToken);
             JToken.WriteTo(response);
-            JToken.
             Message(response);
-        end; */
+        end;
     end;
 
     procedure testRunInquiry()
@@ -123,6 +122,13 @@ codeunit 50000 "Modern Channel Mgt"
     end;
     #endregion Test Run
 
+    procedure RunPing(POSTransLine: Record "POS Trans. Line")
+    var
+        myInt: Integer;
+    begin
+
+    end;
+
     procedure RunTopUp(var POSTransLine: Record "POS Trans. Line")
     var
         requestURL: Text;
@@ -132,7 +138,7 @@ codeunit 50000 "Modern Channel Mgt"
         JToken: JsonToken;
         rescode: Text;
         sn: Text;
-        operator: Text;
+        scrmsg: Text;
         amount: Text;
 
     begin
@@ -144,16 +150,79 @@ codeunit 50000 "Modern Channel Mgt"
 
         JObject.Get('rescode', JToken);
         JToken.WriteTo(rescode);
-        if rescode = '4' then begin
-            POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
+        case rescode of
+            '4':
+                begin
+                    POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
 
-            JObject.Get('sn', JToken);
-            JToken.WriteTo(sn);
-            POSTransLine.mc_sn := sn;
-            JObject.Get('harga', JToken);
-            JToken.WriteTo(amount);
-            POSTransLine.mc_amount := amount;
-            POSTransLine.Modify();
+                    JObject.Get('sn', JToken);
+                    JToken.WriteTo(sn);
+                    POSTransLine.mc_sn := sn;
+                    JObject.Get('harga', JToken);
+                    JToken.WriteTo(amount);
+                    POSTransLine.mc_amount := amount;
+                    POSTransLine.Modify();
+                end;
+            '10':
+                begin
+                    JObject.Get('scrmessage', JToken);
+                    JToken.WriteTo(scrmsg);
+                    Error(scrmsg);
+                end;
+        end;
+    end;
+
+    procedure RunOrder(var POSTransLine: Record "POS Trans. Line")
+    var
+        requestURL: Text;
+        response: Text;
+        httpResponse: HttpResponseMessage;
+        JObject: JsonObject;
+        JToken: JsonToken;
+        rescode: Text;
+        sn: Text;
+        scrmsg: Text;
+        amount: Text;
+        operator: Text;
+    begin
+        requestURL := orderURL();
+        response := httpCall(requestURL);
+
+        jObject.ReadFrom(response);
+        writeLog(response, requestURL);
+
+        JObject.Get('rescode', JToken);
+        JToken.WriteTo(rescode);
+        case rescode of
+            '4':
+                begin
+                    POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
+
+                    JObject.Get('sn', JToken);
+                    JToken.WriteTo(sn);
+                    POSTransLine.mc_sn := sn;
+                    JObject.Get('harga', JToken);
+                    JToken.WriteTo(amount);
+                    POSTransLine.mc_amount := amount;
+                    POSTransLine.Modify();
+                end;
+            '0':
+                begin
+                    POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
+
+                    JObject.Get('sn', JToken);
+                    JToken.WriteTo(sn);
+                    POSTransLine.mc_sn := sn;
+                    JObject.Get('harga', JToken);
+                    JToken.WriteTo(amount);
+                    POSTransLine.mc_amount := amount;
+                    POSTransLine.Modify();
+                end;
+            else begin
+                    JObject.Get('scrmessage', JToken);
+                    JToken.WriteTo(scrmsg);
+                    Error(scrmsg);
+                end;
         end;
     end;
 

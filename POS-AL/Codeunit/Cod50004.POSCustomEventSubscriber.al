@@ -18,16 +18,44 @@ codeunit 50004 "POS Custom Event Subscriber"
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnBeforeTotalExecuted', '', false, false)]
     local procedure OnBeforeTotalExecuted(var POSTransaction: Record "POS Transaction")
+    var
+        POSTransLine: Record "POS Trans. Line";
+        InfocodeEntry: Record "POS Trans. Infocode Entry";
+        Item: Record Item;
+        RetailSetup: Record "Retail Setup";
+        InfoCode: Record Infocode;
+        POSTrx: Codeunit "POS Transaction";
+        ModernChannelMgt: Codeunit "Modern Channel Mgt";
+        MCEvent: Codeunit "MC Event Subscriber";
     begin
-        ErrorSalesStaff := false;
-        if POSTransaction."Sales Staff" = '' then begin
-            ErrorSalesStaff := true;
-            Message('Please assign SPG for this transaction to continue...');
-        end;
+        /*         ErrorSalesStaff := false;
+                if POSTransaction."Sales Staff" = '' then begin
+                    ErrorSalesStaff := true;
+                    Message('Please assign SPG for this transaction to continue...');
+                end; */
         //CodPOSTrans.OpenNumericKeyboard('New Input', 0, '', 2);
         //CodPOSTrans.OpenNumericKeyboard('Input', 0, '', 1);
         //InputAltered := true;
         //CodPOSTrans.MessageBeep('test');
+        RetailSetup.Get();
+
+        POSTransLine.Reset();
+        POSTransLine.SetRange("Receipt No.", POSTransaction."Receipt No.");
+        POSTransLine.SetRange("Entry Status", POSTransLine."Entry Status"::" ");
+        if POSTransLine.FindFirst() then begin
+            if POSTransLine.mc_Itemtype = POSTransLine.mc_Itemtype::"Pulsa Prepaid" then begin
+                if InfoCode.Get(RetailSetup."PPOB Infocode") then begin
+                    POSTransLine.mc_hp := MCEvent.getNomorHP(POSTransaction, InfoCode);
+                    if POSTransLine.mc_hp = '' then
+                        Error('Please Void this transaction then and create a new one.');
+                    POSTransLine.Modify();
+                end;
+                ModernChannelMgt.initializeData(POSTransaction."Store No.", POSTransaction."Staff ID",
+                POSTransLine.mc_vtype, POSTransLine.mc_hp, POSTransaction."Receipt No.");
+                ModernChannelMgt.RunTopUp(POSTransLine);
+            end;
+
+        end;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnAfterTotalExecuted', '', false, false)]

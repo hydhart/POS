@@ -214,7 +214,7 @@ codeunit 50003 "MC Event Subscriber"
         end;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnBeforeTotalExecuted', '', false, false)]
+    /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnBeforeTotalExecuted', '', false, false)]
     local procedure OnBeforeTotalExecuted(var IsHandled: Boolean; var POSTransaction: Record "POS Transaction")
     var
         POSTransLine: Record "POS Trans. Line";
@@ -244,7 +244,7 @@ codeunit 50003 "MC Event Subscriber"
             end;
 
         end;
-    end;
+    end; */
 
     [EventSubscriber(ObjectType::Table, Database::"POS Trans. Line", 'OnAfterValidateEvent', 'Number', false, false)]
     local procedure OnAfterValidateNumber(CurrFieldNo: Integer; var Rec: Record "POS Trans. Line"; var xRec: Record "POS Trans. Line")
@@ -257,7 +257,7 @@ codeunit 50003 "MC Event Subscriber"
         end;
     end;
 
-    local procedure getNomorHP(POSTransaction: Record "POS Transaction"; Infocode: Record Infocode): Text
+    procedure getNomorHP(POSTransaction: Record "POS Transaction"; Infocode: Record Infocode): Text
     var
         RetailSetup: Record "Retail Setup";
         InfoEntry: Record "POS Trans. Infocode Entry";
