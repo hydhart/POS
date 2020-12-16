@@ -8,7 +8,8 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
     begin
-        initializeData('a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
+        //initializeData('a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');00000P0001000000011
+        initializeData('S0001', 'haryadi', 'HALO', '081312341234', '00000P0001000000011');
         getSetup();
         requestURL := pingTelURL();
         response := httpCall(requestURL);
@@ -24,7 +25,7 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
     begin
-        initializeData('a001', 'pos01', 'csh01', 'PLGS5', '081312341234', 'p000001');
+        initializeData('pos01', 'csh01', 'PLGS5', '081312341234', 'p000001');
         getSetup();
         requestURL := topUpURL();
         response := httpCall(requestURL);
@@ -40,7 +41,7 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
     begin
-        initializeData('a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
+        initializeData('pos01', 'csh01', 'HALO', '081312341234', 'p000001');
         getSetup();
         requestURL := denomURL();
         response := httpCall(requestURL);
@@ -62,7 +63,7 @@ codeunit 50000 "Modern Channel Mgt"
         tagihan: Text;
     begin
         getSetup();
-        initializeData('a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
+        initializeData('pos01', 'csh01', 'HALO', '081312341234', 'p000001');
         requestURL := orderURL();
         response := httpCall(requestURL);
         writeLog(response, requestURL);
@@ -112,7 +113,7 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
     begin
-        initializeData('a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');
+        initializeData('pos01', 'csh01', 'HALO', '081312341234', 'p000001');
         getSetup();
         requestURL := inquiryURL();
         response := httpCall(requestURL);
@@ -149,8 +150,9 @@ codeunit 50000 "Modern Channel Mgt"
             JObject.Get('sn', JToken);
             JToken.WriteTo(sn);
             POSTransLine.mc_sn := sn;
+            JObject.Get('harga', JToken);
+            JToken.WriteTo(amount);
             POSTransLine.mc_amount := amount;
-            POSTransLine.mc_operator := operator;
             POSTransLine.Modify();
         end;
     end;
@@ -354,13 +356,13 @@ codeunit 50000 "Modern Channel Mgt"
         exit(requestURL);
     end;
 
-    procedure initializeData(pStoreID: Text; pPosID: Text; pCashierID: Text; pVtype: Text; pHandphone: Text; pPartnerTrxID: Text)
+    procedure initializeData(pPosID: Text; pCashierID: Text; pVtype: Text; pHandphone: Text; pPartnerTrxID: Text)
     begin
         getSetup();
-        channelID := modernChannelSetup."Channel ID";
-        storeID := pStoreID;
-        posID := pPosID;
-        cashierID := pCashierID;
+        channelID := LowerCase(modernChannelSetup."Channel ID");
+        storeID := LowerCase(modernChannelSetup."Store ID");
+        posID := LowerCase(pPosID);
+        cashierID := LowerCase(pCashierID);
         vtype := pVtype;
         handphone := pHandphone;
         partnerTrxID := pPartnerTrxID;

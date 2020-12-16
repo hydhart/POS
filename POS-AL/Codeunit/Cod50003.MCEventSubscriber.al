@@ -176,38 +176,42 @@ codeunit 50003 "MC Event Subscriber"
     var
         posTransLine: Record "POS Trans. Line";
         Item: Record Item;
-        posGUI: Codeunit "POS GUI";
-        EPOSCITest: Codeunit "EPOS Control Interface HTML";
-        eposCtrl: Codeunit "EPOS Control Interface";
-        posTrx: Codeunit "POS Transaction";
-        posPanelUtil: Codeunit "POS Panel Utility";
-        posInfocode: Codeunit "POS Infocode Utility";
-        posInfocodeMgt: Codeunit "POS InfoData Mgt.";
-        posCmd: Codeunit "POS Common Functions";
-        masukan: Text;
-        act: Action;
-
-        RetailSetup: Record "Retail Setup";
-        InfoEntry: Record "POS Trans. Infocode Entry";
-        Input: text;
+        MCExist: Boolean;
+        text001: Label 'Penjualan PPOB hanya bisa dilakukan dalam 1 transaksi.';
     begin
-        /* posTransLine.Reset();
-        posTransLine.SetRange("Receipt No.", REC."Receipt No.");
-        if posTransLine.FindFirst() then begin
-            if Item.Get(posTransLine.Number) then begin
-                if Item.mc_vtype <> '' then
-                    Error('Pembelian Pulsa hanya bisa dalam 1 transaksi pada 1 waktu.');
-            end;
-        end; 
         if Item.Get(CurrInput) then begin
+            if Item.mc_ItemType <> Item.mc_ItemType::" " then
+                MCExist := true;
+        end;
 
-        end;*/
+        posTransLine.Reset();
+        posTransLine.SetRange("Receipt No.", REC."Receipt No.");
+        POSTransLine.SetRange("Entry Status", POSTransLine."Entry Status"::" ");
+        if posTransLine.FindFirst() then begin
+            if MCExist then begin
+                Handled := true;
+                Message(text001);
+            end;
+
+        end;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnAfterCheckInfoCode', '', false, false)]
     local procedure AfterCheckInfocode(var POSTransaction: Record "POS Transaction"; var Infocode: Record Infocode)
+    var
+        posTransLine: Record "POS Trans. Line";
+        item: Record Item;
     begin
-        getNomorHP(POSTransaction, Infocode);
+        if getNomorHP(POSTransaction, Infocode) = '' then begin
+            posTransLine.Reset();
+            posTransLine.SetRange("Receipt No.", POSTransaction."Receipt No.");
+            if posTransLine.FindFirst() then begin
+                if item.Get(posTransLine.Number) then begin
+                    if item.mc_vtype <> '' then
+                        posTransLine.VoidLine();
+                end;
+            end;
+        end;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnBeforeTotalExecuted', '', false, false)]
@@ -225,14 +229,17 @@ codeunit 50003 "MC Event Subscriber"
 
         POSTransLine.Reset();
         POSTransLine.SetRange("Receipt No.", POSTransaction."Receipt No.");
+        POSTransLine.SetRange("Entry Status", POSTransLine."Entry Status"::" ");
         if POSTransLine.FindFirst() then begin
             if POSTransLine.mc_Itemtype = POSTransLine.mc_Itemtype::"Pulsa Prepaid" then begin
                 if InfoCode.Get(RetailSetup."PPOB Infocode") then begin
                     POSTransLine.mc_hp := getNomorHP(POSTransaction, InfoCode);
+                    if POSTransLine.mc_hp = '' then
+                        Error('Please Void this transaction then and create a new one.');
                     POSTransLine.Modify();
                 end;
-                ModernChannelMgt.initializeData(POSTransaction."Store No.", POSTransaction."Store No.",
-                POSTransaction."Created by Staff ID", POSTransLine.mc_vtype, POSTransLine.mc_hp, POSTransaction."Receipt No.");
+                ModernChannelMgt.initializeData(POSTransaction."Store No.", POSTransaction."Staff ID",
+                POSTransLine.mc_vtype, POSTransLine.mc_hp, POSTransaction."Receipt No.");
                 ModernChannelMgt.RunTopUp(POSTransLine);
             end;
 
