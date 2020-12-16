@@ -91,8 +91,10 @@ codeunit 50004 "POS Custom Event Subscriber"
                 InfoEntry.SetRange(Infocode, Infocode.Code);
                 if InfoEntry.FindFirst() then begin
                     Input := InfoEntry.Information;
+                    POSTransaction.Validate("Member Card No.", Input);
+                    POSTransaction.Modify();
+                    Message(STRSUBSTNO('Membership card %1 found and applied', Input));
                 end;
-                Message(STRSUBSTNO('Membership card %1 found and applied', Input));
             end;
         end;
     end;
