@@ -231,8 +231,8 @@ codeunit 50003 "MC Event Subscriber"
                     POSTransLine.mc_hp := getNomorHP(POSTransaction, InfoCode);
                     POSTransLine.Modify();
                 end;
-                ModernChannelMgt.initializeData(POSTransaction."Store No.", POSTransaction."Store No.",
-                POSTransaction."Created by Staff ID", POSTransLine.mc_vtype, POSTransLine.mc_hp, POSTransaction."Receipt No.");
+                ModernChannelMgt.initializeData(POSTransaction."Store No.", POSTransaction."Staff ID",
+                POSTransLine.mc_vtype, POSTransLine.mc_hp, POSTransaction."Receipt No.");
                 ModernChannelMgt.RunTopUp(POSTransLine);
             end;
 

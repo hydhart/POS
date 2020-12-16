@@ -7,6 +7,7 @@ page 50000 "Modern Channel Setup"
     UsageCategory = Administration;
     InsertAllowed = false;
     DeleteAllowed = false;
+    PromotedActionCategories = 'New,Process,Report,Navigate';
 
     layout
     {
@@ -15,6 +16,10 @@ page 50000 "Modern Channel Setup"
             repeater(General)
             {
                 field("Channel ID"; Rec."Channel ID")
+                {
+                    ApplicationArea = All;
+                }
+                field("Store ID"; Rec."Store ID")
                 {
                     ApplicationArea = All;
                 }
@@ -86,6 +91,17 @@ page 50000 "Modern Channel Setup"
                 begin
                     MCMgt.testRunInquiry();
                 end;
+            }
+        }
+        area(Navigation)
+        {
+            action(Log)
+            {
+                ApplicationArea = All;
+                Image = Log;
+                Promoted = true;
+                PromotedCategory = Category4;
+                RunObject = page "Modern Channel Log Entries";
             }
         }
     }
