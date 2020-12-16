@@ -46,17 +46,15 @@ codeunit 50004 "POS Custom Event Subscriber"
         RetailSetup: Record "Retail Setup";
         Input: text;
     begin
-        /*
         RetailSetup.Get();
         if (RetailSetup."NM Name Info" = Infocode.Code) or (RetailSetup."NM Phone Info" = Infocode.Code) then begin
             if POSTransaction."Member Card No." <> '' then begin
-                //Clear(CurrInput);
-                //CodPOSTrans.SetCurrInput(CurrInput);
-                if RetailSetup."NM Phone Info" = Infocode.Code then
+                if RetailSetup."NM Phone Info" = Infocode.Code then begin
+                    CodPOSTrans.CancelPressed(true, 0);
                     CodPOSTrans.MessageBeep(STRSUBSTNO('Membership card %1 already applied', POSTransaction."Member Card No."));
+                end;
             end;
         end;
-        */
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnAfterCheckInfoCode', '', false, false)]
@@ -64,26 +62,11 @@ codeunit 50004 "POS Custom Event Subscriber"
     var
         RetailSetup: Record "Retail Setup";
         InfoEntry: Record "POS Trans. Infocode Entry";
+        NameInfoEntry: Record "POS Trans. Infocode Entry";
+        MembershipCard: Record "Membership Card";
+        MemberAccount: Record "Member Account";
         Input: text;
     begin
-        /*
-        RetailSetup.Get();
-        if RetailSetup."NM Phone Info" = Infocode.Code then begin
-            if POSTransaction."Member Card No." = '' then begin
-                InfoEntry.SetRange("Receipt No.", POSTransaction."Receipt No.");
-                InfoEntry.SetRange("Transaction Type", POSTransaction."Transaction Type");
-                InfoEntry.SetRange(Infocode, Infocode.Code);
-                if InfoEntry.FindFirst() then begin
-                    CurrInput := InfoEntry.Information;
-                    POSTransaction.Validate("Member Card No.", CurrInput);
-                    POSTransaction.Modify();
-                    CodPOSTrans.MessageBeep(STRSUBSTNO('Membership card %1 found and applied', CurrInput));
-                end else
-                    CodPOSTrans.CancelPressed(false, 0);
-            end else
-                CodPOSTrans.MessageBeep(STRSUBSTNO('Membership card %1 already applied', POSTransaction."Member Card No."));
-        end;
-        */
         RetailSetup.Get();
         if RetailSetup."NM Phone Info" = Infocode.Code then begin
             if POSTransaction."Member Card No." = '' then begin
@@ -91,9 +74,23 @@ codeunit 50004 "POS Custom Event Subscriber"
                 InfoEntry.SetRange(Infocode, Infocode.Code);
                 if InfoEntry.FindFirst() then begin
                     Input := InfoEntry.Information;
-                    POSTransaction.Validate("Member Card No.", Input);
-                    POSTransaction.Modify();
-                    Message(STRSUBSTNO('Membership card %1 found and applied', Input));
+                    if MembershipCard.Get(Input) then begin
+                        POSTransaction.Validate("Member Card No.", Input);
+                        POSTransaction.Modify();
+
+                        MemberAccount.Get(Input);
+                        NameInfoEntry.Init();
+                        NameInfoEntry.Copy(InfoEntry);
+                        NameInfoEntry."Line No." += 10000;
+                        NameInfoEntry.Infocode := RetailSetup."NM Name Info";
+                        NameInfoEntry.Information := MemberAccount.Description;
+                        if InfoEntry.Insert() then;
+
+                        CodPOSTrans.CancelPressed(true, 0);
+                        Message(STRSUBSTNO('Membership card %1 found and applied', Input));
+                    end else begin
+                        Message(STRSUBSTNO('Membership card %1 will be registered once transaction finished.\Press NON MEMBER again to input name', Input));
+                    end;
                 end;
             end;
         end;
@@ -108,13 +105,8 @@ codeunit 50004 "POS Custom Event Subscriber"
         MembershipCard: Record "Membership Card";
     begin
         Transaction."Sales Staff" := POSTrans."Sales Staff";
-        RetailSetup.Reset();
-        if RetailSetup.FindFirst() then
-            RetailSetup.Init();
-        Message(RetailSetup."NM Phone Info");
-        /*
         RetailSetup.Get();
-        if Transaction."Member Card No." <> '' then begin
+        if POSTrans."Member Card No." <> '' then begin
             POSInfoEntry.SETRANGE(Infocode, RetailSetup."NM Phone Info");
             if POSInfoEntry.FINDFIRST then
                 POSInfoEntry.DELETE;
@@ -125,32 +117,32 @@ codeunit 50004 "POS Custom Event Subscriber"
         end else begin
             POSInfoEntry.SETRANGE(Infocode, RetailSetup."NM Phone Info");
             if POSInfoEntry.FINDFIRST then begin
-                MemberAccount.Init();
-                MemberAccount."No." := POSInfoEntry.Information;
-                POSInfoEntry.SETRANGE(Infocode, RetailSetup."NM Name Info");
-                if POSInfoEntry.FINDFIRST then
-                    MemberAccount.Description := POSInfoEntry.Information;
-                MemberAccount."Club Code" := RetailSetup."NM Club Code";
-                MemberAccount."Scheme Code" := RetailSetup."NM Scheme Code";
-                MemberAccount.Status := MemberAccount.Status::Active;
-                MemberAccount."Date Activated" := TODAY;
-                MemberAccount."Activated By" := USERID;
-                MemberAccount.Blocked := FALSE;
-                MemberAccount.INSERT(TRUE);
+                if not MemberAccount.Get(POSInfoEntry.Information) then begin
+                    MemberAccount.Init();
+                    MemberAccount."No." := POSInfoEntry.Information;
+                    POSInfoEntry.SETRANGE(Infocode, RetailSetup."NM Name Info");
+                    if POSInfoEntry.FINDFIRST then
+                        MemberAccount.Description := POSInfoEntry.Information;
+                    MemberAccount."Club Code" := RetailSetup."NM Club Code";
+                    MemberAccount."Scheme Code" := RetailSetup."NM Scheme Code";
+                    MemberAccount.Status := MemberAccount.Status::Active;
+                    MemberAccount."Date Activated" := TODAY;
+                    MemberAccount."Activated By" := USERID;
+                    MemberAccount.Blocked := FALSE;
+                    MemberAccount.INSERT(TRUE);
 
-                MembershipCard.INIT;
-                MembershipCard."Card No." := MemberAccount."No.";
-                MembershipCard.Status := MembershipCard.Status::Active;
-                MembershipCard."Account No." := MemberAccount."No.";
-                MembershipCard."Contact No." := MemberAccount."No.";
-                MembershipCard."Club Code" := MemberAccount."Club Code";
-                MembershipCard."Scheme Code" := MemberAccount."Scheme Code";
-                MembershipCard.INSERT(TRUE);
-
+                    MembershipCard.INIT;
+                    MembershipCard."Card No." := MemberAccount."No.";
+                    MembershipCard.Status := MembershipCard.Status::Active;
+                    MembershipCard."Account No." := MemberAccount."No.";
+                    MembershipCard."Contact No." := MemberAccount."No.";
+                    MembershipCard."Club Code" := MemberAccount."Club Code";
+                    MembershipCard."Scheme Code" := MemberAccount."Scheme Code";
+                    MembershipCard.INSERT(TRUE);
+                end;
                 Transaction."Member Card No." := MembershipCard."Card No.";
             end;
         end;
-        */
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Post Utility", 'SalesEntryOnBeforeInsert', '', false, false)]
