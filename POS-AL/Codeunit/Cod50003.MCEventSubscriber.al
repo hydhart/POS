@@ -214,7 +214,7 @@ codeunit 50003 "MC Event Subscriber"
         end;
     end;
 
-    /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnBeforeTotalExecuted', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnBeforeTotalExecuted', '', false, false)]
     local procedure OnBeforeTotalExecuted(var IsHandled: Boolean; var POSTransaction: Record "POS Transaction")
     var
         POSTransLine: Record "POS Trans. Line";
@@ -227,7 +227,7 @@ codeunit 50003 "MC Event Subscriber"
     begin
         RetailSetup.Get();
 
-        POSTransLine.Reset();
+        /* POSTransLine.Reset();
         POSTransLine.SetRange("Receipt No.", POSTransaction."Receipt No.");
         POSTransLine.SetRange("Entry Status", POSTransLine."Entry Status"::" ");
         if POSTransLine.FindFirst() then begin
@@ -242,9 +242,24 @@ codeunit 50003 "MC Event Subscriber"
                 POSTransLine.mc_vtype, POSTransLine.mc_hp, POSTransaction."Receipt No.");
                 ModernChannelMgt.RunTopUp(POSTransLine);
             end;
+        end; */
+        Message('OnBeforeTotalExecuted');
+    end;
 
-        end;
-    end; */
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnAfterTotalExecuted', '', false, false)]
+    local procedure OnAfterCalcTotals(var POSTransaction: Record "POS Transaction")
+    var
+        POSTransLine: Record "POS Trans. Line";
+        InfocodeEntry: Record "POS Trans. Infocode Entry";
+        Item: Record Item;
+        RetailSetup: Record "Retail Setup";
+        InfoCode: Record Infocode;
+        POSTrx: Codeunit "POS Transaction";
+        ModernChannelMgt: Codeunit "Modern Channel Mgt";
+    begin
+
+        Message('OnAfterTotalExecuted');
+    end;
 
     [EventSubscriber(ObjectType::Table, Database::"POS Trans. Line", 'OnAfterValidateEvent', 'Number', false, false)]
     local procedure OnAfterValidateNumber(CurrFieldNo: Integer; var Rec: Record "POS Trans. Line"; var xRec: Record "POS Trans. Line")
@@ -272,5 +287,11 @@ codeunit 50003 "MC Event Subscriber"
                 InputText := InfoEntry.Information;
         end;
         exit(InputText);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Post Utility", 'SalesEntryOnBeforeInsert', '', false, false)]
+    local procedure SalesEntryOnBeforeInsert(var pPOSTransLine: Record "POS Trans. Line"; var pTransSalesEntry: Record "Trans. Sales Entry")
+    begin
+        pTransSalesEntry.mc_vtype := pPOSTransLine.mc_vtype;
     end;
 }

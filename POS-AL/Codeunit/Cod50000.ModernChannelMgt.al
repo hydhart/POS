@@ -7,9 +7,11 @@ codeunit 50000 "Modern Channel Mgt"
         response: Text;
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
+        firstHash: Text;
+        secondHash: Text;
     begin
         //initializeData('a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');00000P0001000000011
-        initializeData('S0001', 'haryadi', 'HALO', '081312341234', '00000P0001000000011');
+        initializeData('s0001', '10', 'HALO', '081312341234', '00000p0001000000011');
         getSetup();
         requestURL := pingTelURL();
         response := httpCall(requestURL);
@@ -167,7 +169,7 @@ codeunit 50000 "Modern Channel Mgt"
                 begin
                     JObject.Get('scrmessage', JToken);
                     JToken.WriteTo(scrmsg);
-                    Error(scrmsg);
+                    //Error(scrmsg);
                 end;
         end;
     end;
@@ -434,7 +436,7 @@ codeunit 50000 "Modern Channel Mgt"
         cashierID := LowerCase(pCashierID);
         vtype := pVtype;
         handphone := pHandphone;
-        partnerTrxID := pPartnerTrxID;
+        partnerTrxID := LowerCase(pPartnerTrxID);
         serverTrxID := '';
         subscriberID := '';
     end;
