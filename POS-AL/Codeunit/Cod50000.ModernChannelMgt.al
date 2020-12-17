@@ -99,11 +99,6 @@ codeunit 50000 "Modern Channel Mgt"
             requestURL := confirmURL();
             response := httpCall(requestURL);
             writeLog(response, requestURL);
-        end
-        else begin
-            JObject.Get('resmessage', JToken);
-            JToken.WriteTo(response);
-            Message(response);
         end;
     end;
 
@@ -124,14 +119,33 @@ codeunit 50000 "Modern Channel Mgt"
     end;
     #endregion Test Run
 
-    procedure RunPing(POSTransLine: Record "POS Trans. Line")
+    procedure RunPing(POSTransaction: Record "POS Transaction")
     var
-        myInt: Integer;
+        requestURL: Text;
+        response: Text;
+        httpResponse: HttpResponseMessage;
+        JObject: JsonObject;
+        firstHash: Text;
+        secondHash: Text;
+        JToken: JsonToken;
+        status: Text;
     begin
+        //initializeData('a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');00000P0001000000011
+        initializeData(POSTransaction."Store No.", POSTransaction."Sales Staff", 'ping', '00000', POSTransaction."Receipt No.");
+        getSetup();
+        requestURL := pingTelURL();
+        response := httpCall(requestURL);
 
+        jObject.ReadFrom(response);
+        writeLog(response, requestURL);
+
+        JObject.Get('status', JToken);
+        JToken.WriteTo(status);
+
+        Message(status);
     end;
 
-    procedure RunTopUp(var POSTransLine: Record "POS Trans. Line")
+    procedure RunTopUp(var POSTransLine: Record "POS Trans. Line"): Text
     var
         requestURL: Text;
         response: Text;
@@ -165,13 +179,17 @@ codeunit 50000 "Modern Channel Mgt"
                     POSTransLine.mc_amount := amount;
                     POSTransLine.Modify();
                 end;
-            '10':
+            '0':
                 begin
-                    JObject.Get('scrmessage', JToken);
-                    JToken.WriteTo(scrmsg);
-                    //Error(scrmsg);
+                    POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
+
+                    JObject.Get('harga', JToken);
+                    JToken.WriteTo(amount);
+                    POSTransLine.mc_amount := amount;
+                    POSTransLine.Modify();
                 end;
         end;
+        exit(rescode);
     end;
 
     procedure RunOrder(var POSTransLine: Record "POS Trans. Line")
@@ -186,6 +204,8 @@ codeunit 50000 "Modern Channel Mgt"
         scrmsg: Text;
         amount: Text;
         operator: Text;
+        serverTrxID: Text;
+        name: Text;
     begin
         requestURL := orderURL();
         response := httpCall(requestURL);
@@ -203,9 +223,19 @@ codeunit 50000 "Modern Channel Mgt"
                     JObject.Get('sn', JToken);
                     JToken.WriteTo(sn);
                     POSTransLine.mc_sn := sn;
+
                     JObject.Get('harga', JToken);
                     JToken.WriteTo(amount);
+                    Evaluate(POSTransLine.Price, amount);
                     POSTransLine.mc_amount := amount;
+
+                    JObject.Get('server_trxid', JToken);
+                    JToken.WriteTo(serverTrxID);
+                    POSTransLine.mc_server_trxid := serverTrxID;
+
+                    JObject.Get('name', JToken);
+                    JToken.WriteTo(name);
+                    POSTransLine.mc_name := name;
                     POSTransLine.Modify();
                 end;
             '0':
@@ -219,6 +249,46 @@ codeunit 50000 "Modern Channel Mgt"
                     JToken.WriteTo(amount);
                     POSTransLine.mc_amount := amount;
                     POSTransLine.Modify();
+                end;
+            else begin
+                    JObject.Get('scrmessage', JToken);
+                    JToken.WriteTo(scrmsg);
+                    Error(scrmsg);
+                end;
+        end;
+    end;
+
+    procedure RunConfirm(var POSTransLine: Record "POS Trans. Line")
+    var
+        requestURL: Text;
+        response: Text;
+        httpResponse: HttpResponseMessage;
+        JObject: JsonObject;
+        JToken: JsonToken;
+        rescode: Text;
+        sn: Text;
+        scrmsg: Text;
+        amount: Text;
+        operator: Text;
+        serverTrxID: Text;
+        name: Text;
+    begin
+        requestURL := confirmURL();
+        response := httpCall(requestURL);
+
+        jObject.ReadFrom(response);
+        writeLog(response, requestURL);
+
+        JObject.Get('rescode', JToken);
+        JToken.WriteTo(rescode);
+        case rescode of
+            '4':
+                begin
+
+                end;
+            '0':
+                begin
+
                 end;
             else begin
                     JObject.Get('scrmessage', JToken);

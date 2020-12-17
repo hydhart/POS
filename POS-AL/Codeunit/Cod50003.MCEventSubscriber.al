@@ -1,65 +1,5 @@
 codeunit 50003 "MC Event Subscriber"
 {
-    //#region POS Post Utility
-
-    //>> TO01.01
-    //HY01
-    /* IF (Store."Server Address" <> '') AND (Store."Server Port" <> 0) THEN BEGIN
-        IF (Item."Modern Channel Item No." <> '') AND (POSTransLineTmp.Quantity >0) THEN BEGIN
-          IF Item."MC Item Type" = Item."MC Item Type"::Telp THEN BEGIN
-            IF MCFunction.ConfirmTopup(POSTransLineTmp, XMLDoc) THEN BEGIN
-              XMLValue := MCFunction.GetNodeInnerText(XMLDoc, 'server_trxid');
-    SalesEntry.mc_confirm_trxid := XMLValue;
-    SalesEntry.mc_vtype := POSTransLineTmp.mc_vtype;
-    SalesEntry.mc_hp := POSTransLineTmp.mc_hp;
-
-    IF (MCFunction.GetNodeInnerText(XMLDoc, 'rescode')='4') THEN
-                SN := MCFunction.GetNodeInnerText(XMLDoc, 'sn');
-    //HY01
-    SalesEntry.mc_sn := SN;
-    //HY01
-    ServerTrxID := MCFunction.GetNodeInnerText(XMLDoc, 'server_trxid');
-    IF (SN <> '0') AND (SN <> ServerTrxID) THEN
-                  SalesEntry.mc_success := TRUE;
-            END ELSE BEGIN
-              XMLValue := MCFunction.GetNodeInnerText(XMLDoc, 'scrmessage');
-              ERROR(STRSUBSTNO('Topup failed/Error message: %1',XMLValue));
-            END;
-          END ELSE BEGIN
-            IF MCFunction.ConfirmOrder(POSTransLineTmp, XMLDoc) THEN BEGIN
-              SalesEntry.mc_vtype := POSTransLineTmp.mc_vtype;
-              SalesEntry.mc_subscriber_id := POSTransLineTmp.mc_subscriber_id;
-              SalesEntry.mc_hp := POSTransLineTmp.mc_hp;
-              SalesEntry.mc_subscriber_name := POSTransLineTmp.mc_subscriber_name;
-              SalesEntry.mc_alt_id := POSTransLineTmp.mc_alt_id;
-              SalesEntry.mc_order_trxid := POSTransLineTmp.mc_order_trxid;
-              SalesEntry.mc_confirm_trxid := POSTransLineTmp.mc_confirm_trxid;
-              SalesEntry.mc_idpel := POSTransLineTmp.mc_idpel;
-              SalesEntry.mc_name := POSTransLineTmp.mc_name;
-              SalesEntry.mc_seg := POSTransLineTmp.mc_seg;
-              SalesEntry.mc_pcc := POSTransLineTmp.mc_pcc;
-              SalesEntry.mc_amount := POSTransLineTmp.mc_amount;
-              SalesEntry.mc_adm := POSTransLineTmp.mc_adm;
-              XMLValue := MCFunction.GetNodeInnerText(XMLDoc, 'server_trxid');
-              SalesEntry.mc_confirm_trxid := XMLValue;
-              XMLValue := MCFunction.GetNodeInnerText(XMLDoc, 'ext_data');
-              SalesEntry.mc_ext_data := COPYSTR(XMLValue,1, 250);
-              SalesEntry.mc_ext_data2 := COPYSTR(XMLValue,251, 250);
-              XMLValue := MCFunction.GetNodeInnerText(XMLDoc, 'token');
-              SalesEntry.mc_token := XMLValue;
-              SalesEntry.mc_success := (MCFunction.GetNodeInnerText(XMLDoc, 'rescode')='4');
-            END ELSE BEGIN
-              XMLValue := MCFunction.GetNodeInnerText(XMLDoc, 'scrmessage');
-              ERROR(STRSUBSTNO('Confim Order failed/Error message: %1',XMLValue));
-            END;
-          END;
-        END;
-      END; */
-    //HY01
-    //<< TO01.01
-    //#endregion POS Post Utility
-
-
     //#region POS Print Utility
     /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Print Utility", 'OnAfterPrintSalesSlip', '', false, false)]
     local procedure OnAfterPrintSalesSlip(var TransactionHeader: Record "Transaction Header"; var PrintBufferIndex: Integer; var POSPrintBuffer: Record "POS Print Buffer"; var LinesPrinted: Integer; sender: Codeunit "POS Print Utility")
@@ -201,64 +141,54 @@ codeunit 50003 "MC Event Subscriber"
     var
         posTransLine: Record "POS Trans. Line";
         item: Record Item;
+        PPOBMgt: Codeunit "Modern Channel Mgt";
     begin
-        if getNomorHP(POSTransaction, Infocode) = '' then begin
+        if getNomorHP(POSTransaction, Infocode) <> '' then begin
             posTransLine.Reset();
             posTransLine.SetRange("Receipt No.", POSTransaction."Receipt No.");
             if posTransLine.FindFirst() then begin
                 if item.Get(posTransLine.Number) then begin
-                    if item.mc_vtype <> '' then
-                        posTransLine.VoidLine();
+                    if item.mc_ItemType = item.mc_ItemType::"Pulsa PostPaid" then
+                        PPOBMgt.RunOrder(posTransLine);
+                    Message('Total Tagihan sebesar %1, untuk nomor %2 atas nama %3', posTransLine.mc_amount, posTransLine.mc_hp, posTransLine.mc_name);
                 end;
             end;
         end;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnBeforeTotalExecuted', '', false, false)]
-    local procedure OnBeforeTotalExecuted(var IsHandled: Boolean; var POSTransaction: Record "POS Transaction")
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnBeforeRunCommand', '', false, false)]
+    local procedure OnBeforeRunCommand(var Proceed: Boolean; var CurrInput: Text; var POSMenuLine: Record "POS Menu Line"; var POSTransaction: Record "POS Transaction"; var POSTransLine: Record "POS Trans. Line")
     var
-        POSTransLine: Record "POS Trans. Line";
         InfocodeEntry: Record "POS Trans. Infocode Entry";
         Item: Record Item;
         RetailSetup: Record "Retail Setup";
         InfoCode: Record Infocode;
         POSTrx: Codeunit "POS Transaction";
         ModernChannelMgt: Codeunit "Modern Channel Mgt";
+        rescode: Text;
     begin
-        RetailSetup.Get();
+        if POSMenuLine.Command = 'TENDER_K' then begin
+            RetailSetup.Get();
 
-        /* POSTransLine.Reset();
-        POSTransLine.SetRange("Receipt No.", POSTransaction."Receipt No.");
-        POSTransLine.SetRange("Entry Status", POSTransLine."Entry Status"::" ");
-        if POSTransLine.FindFirst() then begin
             if POSTransLine.mc_Itemtype = POSTransLine.mc_Itemtype::"Pulsa Prepaid" then begin
                 if InfoCode.Get(RetailSetup."PPOB Infocode") then begin
                     POSTransLine.mc_hp := getNomorHP(POSTransaction, InfoCode);
                     if POSTransLine.mc_hp = '' then
-                        Error('Please Void this transaction then and create a new one.');
+                        Error('Silahkan ulangi Transaksi dengan receipt baru.');
                     POSTransLine.Modify();
                 end;
                 ModernChannelMgt.initializeData(POSTransaction."Store No.", POSTransaction."Staff ID",
                 POSTransLine.mc_vtype, POSTransLine.mc_hp, POSTransaction."Receipt No.");
-                ModernChannelMgt.RunTopUp(POSTransLine);
+                rescode := ModernChannelMgt.RunTopUp(POSTransLine);
+                if (rescode <> '4') or (rescode <> '0') then
+                    Proceed := false;
             end;
-        end; */
-        Message('OnBeforeTotalExecuted');
-    end;
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnAfterTotalExecuted', '', false, false)]
-    local procedure OnAfterCalcTotals(var POSTransaction: Record "POS Transaction")
-    var
-        POSTransLine: Record "POS Trans. Line";
-        InfocodeEntry: Record "POS Trans. Infocode Entry";
-        Item: Record Item;
-        RetailSetup: Record "Retail Setup";
-        InfoCode: Record Infocode;
-        POSTrx: Codeunit "POS Transaction";
-        ModernChannelMgt: Codeunit "Modern Channel Mgt";
-    begin
-
-        Message('OnAfterTotalExecuted');
+            if POSTransLine.mc_Itemtype = POSTransLine.mc_Itemtype::"Pulsa PostPaid" then begin
+                ModernChannelMgt.initializeData(POSTransaction."Store No.", POSTransaction."Staff ID",
+                POSTransLine.mc_vtype, POSTransLine.mc_hp, POSTransaction."Receipt No.");
+                ModernChannelMgt.RunConfirm(POSTransLine);
+            end;
+        end;
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"POS Trans. Line", 'OnAfterValidateEvent', 'Number', false, false)]
@@ -293,5 +223,13 @@ codeunit 50003 "MC Event Subscriber"
     local procedure SalesEntryOnBeforeInsert(var pPOSTransLine: Record "POS Trans. Line"; var pTransSalesEntry: Record "Trans. Sales Entry")
     begin
         pTransSalesEntry.mc_vtype := pPOSTransLine.mc_vtype;
+        pTransSalesEntry.mc_Itemtype := pPOSTransLine.mc_Itemtype;
+        pTransSalesEntry.mc_amount := pPOSTransLine.mc_amount;
+        pTransSalesEntry.mc_hp := pPOSTransLine.mc_hp;
+        pTransSalesEntry.mc_name := pPOSTransLine.mc_name;
+        pTransSalesEntry.mc_operator := pPOSTransLine.mc_operator;
+        pTransSalesEntry.mc_partner_trxid := pPOSTransLine.mc_partner_trxid;
+        pTransSalesEntry.mc_server_trxid := pPOSTransLine.mc_server_trxid;
+        pTransSalesEntry.mc_sn := pPOSTransLine.mc_sn;
     end;
 }

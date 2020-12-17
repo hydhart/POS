@@ -42,20 +42,14 @@ codeunit 50001 "POS Command MC"
         exit(PingTelCommand);
     end;
 
-    procedure HelloWorld()
-    var
-        HelloWorldMsg: Label 'Hello World!';
-    begin
-        Message(HelloWorldMsg);
-    end;
-
     procedure PingTel()
     var
         POSTrx: Codeunit "POS Transaction";
         POSTransaction: Record "POS Transaction";
+        PPOBMgt: Codeunit "Modern Channel Mgt";
     begin
         POSTrx.GetPOSTransaction(POSTransaction);
-        Message(POSTransaction."Receipt No.");
+        PPOBMgt.RunPing(POSTransaction);
     end;
 
     procedure Inquiry()
