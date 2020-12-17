@@ -142,14 +142,19 @@ codeunit 50003 "MC Event Subscriber"
         posTransLine: Record "POS Trans. Line";
         item: Record Item;
         PPOBMgt: Codeunit "Modern Channel Mgt";
+        hp: Text;
     begin
-        if getNomorHP(POSTransaction, Infocode) <> '' then begin
+        hp := getNomorHP(POSTransaction, Infocode);
+        if hp <> '' then begin
             posTransLine.Reset();
             posTransLine.SetRange("Receipt No.", POSTransaction."Receipt No.");
             if posTransLine.FindFirst() then begin
+                posTransLine.mc_hp := hp;
                 if item.Get(posTransLine.Number) then begin
-                    if item.mc_ItemType = item.mc_ItemType::"Pulsa PostPaid" then
+                    if item.mc_ItemType = item.mc_ItemType::"Pulsa PostPaid" then begin
+                        PPOBMgt.initializeData(posTransLine."Store No.", POSTransaction."Staff ID", posTransLine.mc_vtype, posTransLine.mc_hp, POSTransaction."Receipt No.");
                         PPOBMgt.RunOrder(posTransLine);
+                    end;
                     Message('Total Tagihan sebesar %1, untuk nomor %2 atas nama %3', posTransLine.mc_amount, posTransLine.mc_hp, posTransLine.mc_name);
                 end;
             end;
