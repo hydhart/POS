@@ -4,6 +4,15 @@ codeunit 50004 "POS Custom Event Subscriber"
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnBeforeTotalExecuted', '', false, false)]
     local procedure OnBeforeTotalExecuted(var POSTransaction: Record "POS Transaction")
+    var
+        POSTransLine: Record "POS Trans. Line";
+        InfocodeEntry: Record "POS Trans. Infocode Entry";
+        Item: Record Item;
+        RetailSetup: Record "Retail Setup";
+        InfoCode: Record Infocode;
+        POSTrx: Codeunit "POS Transaction";
+        ModernChannelMgt: Codeunit "Modern Channel Mgt";
+        MCEvent: Codeunit "MC Event Subscriber";
     begin
         ErrorSalesStaff := false;
         if POSTransaction."Sales Staff" = '' then begin

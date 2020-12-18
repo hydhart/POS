@@ -7,9 +7,11 @@ codeunit 50000 "Modern Channel Mgt"
         response: Text;
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
+        firstHash: Text;
+        secondHash: Text;
     begin
         //initializeData('a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');00000P0001000000011
-        initializeData('S0001', 'haryadi', 'HALO', '081312341234', '00000P0001000000011');
+        initializeData('s0001', '10', 'HALO', '081312341234', '00000p0001000000011');
         getSetup();
         requestURL := pingTelURL();
         response := httpCall(requestURL);
@@ -91,19 +93,13 @@ codeunit 50000 "Modern Channel Mgt"
 
         end; */
 
-        /* if rescode = '4' then begin
+        if rescode = '4' then begin
             if not Confirm('Total Tagihan yang harus dibayar adalah sebesar %1.\Lanjut Bayar?', true, tagihan) then
                 exit;
             requestURL := confirmURL();
             response := httpCall(requestURL);
             writeLog(response, requestURL);
-        end
-        else begin
-            JObject.Get('resmessage', JToken);
-            JToken.WriteTo(response);
-            JToken.
-            Message(response);
-        end; */
+        end;
     end;
 
     procedure testRunInquiry()
@@ -123,7 +119,33 @@ codeunit 50000 "Modern Channel Mgt"
     end;
     #endregion Test Run
 
-    procedure RunTopUp(var POSTransLine: Record "POS Trans. Line")
+    procedure RunPing(POSTransaction: Record "POS Transaction")
+    var
+        requestURL: Text;
+        response: Text;
+        httpResponse: HttpResponseMessage;
+        JObject: JsonObject;
+        firstHash: Text;
+        secondHash: Text;
+        JToken: JsonToken;
+        status: Text;
+    begin
+        //initializeData('a001', 'pos01', 'csh01', 'HALO', '081312341234', 'p000001');00000P0001000000011
+        initializeData(POSTransaction."Store No.", POSTransaction."Sales Staff", 'ping', '00000', POSTransaction."Receipt No.");
+        getSetup();
+        requestURL := pingTelURL();
+        response := httpCall(requestURL);
+
+        jObject.ReadFrom(response);
+        writeLog(response, requestURL);
+
+        JObject.Get('status', JToken);
+        JToken.WriteTo(status);
+
+        Message(status);
+    end;
+
+    procedure RunTopUp(var POSTransLine: Record "POS Trans. Line"): Text
     var
         requestURL: Text;
         response: Text;
@@ -132,7 +154,7 @@ codeunit 50000 "Modern Channel Mgt"
         JToken: JsonToken;
         rescode: Text;
         sn: Text;
-        operator: Text;
+        scrmsg: Text;
         amount: Text;
 
     begin
@@ -144,16 +166,135 @@ codeunit 50000 "Modern Channel Mgt"
 
         JObject.Get('rescode', JToken);
         JToken.WriteTo(rescode);
-        if rescode = '4' then begin
-            POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
+        case rescode of
+            '4':
+                begin
+                    POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
 
-            JObject.Get('sn', JToken);
-            JToken.WriteTo(sn);
-            POSTransLine.mc_sn := sn;
-            JObject.Get('harga', JToken);
-            JToken.WriteTo(amount);
-            POSTransLine.mc_amount := amount;
-            POSTransLine.Modify();
+                    JObject.Get('sn', JToken);
+                    JToken.WriteTo(sn);
+                    POSTransLine.mc_sn := sn;
+                    JObject.Get('harga', JToken);
+                    JToken.WriteTo(amount);
+                    POSTransLine.mc_amount := amount;
+                    POSTransLine.Modify();
+                end;
+            '0':
+                begin
+                    POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
+
+                    JObject.Get('harga', JToken);
+                    JToken.WriteTo(amount);
+                    POSTransLine.mc_amount := amount;
+                    POSTransLine.Modify();
+                end;
+        end;
+        exit(rescode);
+    end;
+
+    procedure RunOrder(var POSTransLine: Record "POS Trans. Line")
+    var
+        requestURL: Text;
+        response: Text;
+        httpResponse: HttpResponseMessage;
+        JObject: JsonObject;
+        JToken: JsonToken;
+        rescode: Text;
+        sn: Text;
+        scrmsg: Text;
+        amount: Text;
+        operator: Text;
+        serverTrxID: Text;
+        name: Text;
+    begin
+        requestURL := orderURL();
+        response := httpCall(requestURL);
+
+        jObject.ReadFrom(response);
+        writeLog(response, requestURL);
+
+        JObject.Get('rescode', JToken);
+        JToken.WriteTo(rescode);
+        case rescode of
+            '4':
+                begin
+                    POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
+
+                    JObject.Get('sn', JToken);
+                    JToken.WriteTo(sn);
+                    POSTransLine.mc_sn := sn;
+
+                    JObject.Get('harga', JToken);
+                    JToken.WriteTo(amount);
+                    Evaluate(POSTransLine.Price, amount);
+                    POSTransLine.mc_amount := amount;
+
+                    JObject.Get('server_trxid', JToken);
+                    JToken.WriteTo(serverTrxID);
+                    POSTransLine.mc_server_trxid := serverTrxID;
+
+                    JObject.Get('name', JToken);
+                    JToken.WriteTo(name);
+                    POSTransLine.mc_name := name;
+                    POSTransLine.Modify();
+                end;
+            '0':
+                begin
+                    POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
+
+                    JObject.Get('sn', JToken);
+                    JToken.WriteTo(sn);
+                    POSTransLine.mc_sn := sn;
+                    JObject.Get('harga', JToken);
+                    JToken.WriteTo(amount);
+                    POSTransLine.mc_amount := amount;
+                    POSTransLine.Modify();
+                end;
+            else begin
+                    JObject.Get('scrmessage', JToken);
+                    JToken.WriteTo(scrmsg);
+                    Error(scrmsg);
+                end;
+        end;
+    end;
+
+    procedure RunConfirm(var POSTransLine: Record "POS Trans. Line")
+    var
+        requestURL: Text;
+        response: Text;
+        httpResponse: HttpResponseMessage;
+        JObject: JsonObject;
+        JToken: JsonToken;
+        rescode: Text;
+        sn: Text;
+        scrmsg: Text;
+        amount: Text;
+        operator: Text;
+        serverTrxID: Text;
+        name: Text;
+    begin
+        requestURL := confirmURL();
+        response := httpCall(requestURL);
+
+        jObject.ReadFrom(response);
+        writeLog(response, requestURL);
+
+        JObject.Get('rescode', JToken);
+        JToken.WriteTo(rescode);
+        case rescode of
+            '4':
+                begin
+
+                end;
+            '0':
+                begin
+
+                end;
+            else begin
+                    JObject.Get('scrmessage', JToken);
+                    JToken.WriteTo(scrmsg);
+                    Error(scrmsg);
+                end;
         end;
     end;
 
@@ -365,7 +506,7 @@ codeunit 50000 "Modern Channel Mgt"
         cashierID := LowerCase(pCashierID);
         vtype := pVtype;
         handphone := pHandphone;
-        partnerTrxID := pPartnerTrxID;
+        partnerTrxID := LowerCase(pPartnerTrxID);
         serverTrxID := '';
         subscriberID := '';
     end;
