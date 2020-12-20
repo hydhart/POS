@@ -143,11 +143,13 @@ codeunit 50003 "MC Event Subscriber"
         item: Record Item;
         PPOBMgt: Codeunit "Modern Channel Mgt";
         hp: Text;
+        harga: Decimal;
     begin
         hp := getNomorHP(POSTransaction, Infocode);
         if hp <> '' then begin
             posTransLine.Reset();
             posTransLine.SetRange("Receipt No.", POSTransaction."Receipt No.");
+            posTransLine.SetRange("Entry Status", posTransLine."Entry Status"::" ");
             if posTransLine.FindFirst() then begin
                 posTransLine.mc_hp := hp;
                 if item.Get(posTransLine.Number) then begin
@@ -155,6 +157,7 @@ codeunit 50003 "MC Event Subscriber"
                         PPOBMgt.initializeData(posTransLine."Store No.", POSTransaction."Staff ID", posTransLine.mc_vtype, posTransLine.mc_hp, POSTransaction."Receipt No.");
                         PPOBMgt.RunOrder(posTransLine);
                     end;
+                    posTransLine.Modify();
                     Message('Total Tagihan sebesar %1, untuk nomor %2 atas nama %3', posTransLine.mc_amount, posTransLine.mc_hp, posTransLine.mc_name);
                 end;
             end;
