@@ -1,4 +1,4 @@
-codeunit 50001 "POS Command MC"
+codeunit 50002 "POS Command MC"
 {
     TableNo = "POS Menu Line";
 
