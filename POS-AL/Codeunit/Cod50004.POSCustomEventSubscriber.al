@@ -195,6 +195,53 @@ codeunit 50004 "POS Custom Event Subscriber"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Statement-Post", 'OnBeforeProcessTransactionStatus', '', false, false)]
+    local procedure BeforeProcessTransactionStatus(var TransactionStatus: Record "Transaction Status"; Statement: Record Statement)
+    var
+        TransSalesEntry: Record "Trans. Sales Entry";
+        Item: Record Item;
+        ItemTrackingCode: Record "Item Tracking Code";
+    begin
+        TransSalesEntry.SetRange("Store No.", TransactionStatus."Store No.");
+        TransSalesEntry.SetRange("POS Terminal No.", TransactionStatus."POS Terminal No.");
+        TransSalesEntry.SetRange("Transaction No.", TransactionStatus."Transaction No.");
+        if TransSalesEntry.FindSet() then
+            repeat
+                IF item.GET(TransSalesEntry."Item No.") THEN BEGIN
+                    IF itemTrackingCode.GET(item."Item Tracking Code") THEN BEGIN
+                        IF (TransSalesEntry.Quantity > 0) AND itemTrackingCode."SN Sales Inbound Tracking" THEN BEGIN
+                            ValidateSerialNo(TransSalesEntry."Item No.", TransSalesEntry."Variant Code", TransSalesEntry."Store No.", TransSalesEntry."Serial No.", false);
+                        END;
+                        IF (TransSalesEntry.Quantity < 0) AND ItemTrackingCode."SN Sales Outbound Tracking" THEN BEGIN
+                            ValidateSerialNo(TransSalesEntry."Item No.", TransSalesEntry."Variant Code", TransSalesEntry."Store No.", TransSalesEntry."Serial No.", true);
+                        END;
+                    END;
+                END;
+            until TransSalesEntry.Next() = 0;
+    end;
+
+    local procedure ValidateSerialNo(ItemNo: Code[20]; VariantCode: Code[10]; StoreNo: Code[10]; SerialNo: Code[20]; Out: Boolean)
+    var
+        Store: Record Store;
+        ILE: Record "Item Ledger Entry";
+    begin
+        Store.Get(StoreNo);
+        ILE.SETCURRENTKEY("Item No.", Open, "Variant Code", Positive, "Lot No.", "Serial No.");
+        ILE.SETRANGE("Item No.", ItemNo);
+        ILE.SETRANGE(Open, TRUE);
+        ILE.SETRANGE("Variant Code", VariantCode);
+        ILE.SETRANGE("Location Code", Store."Location Code");
+        ILE.SETRANGE("Serial No.", SerialNo);
+
+        IF Out THEN BEGIN
+            IF ile.ISEMPTY THEN
+                ERROR('S/N (%1) not available for item no. %2 and location %3', SerialNo, ItemNo, Store."Location Code");
+        END ELSE BEGIN
+            IF NOT ile.ISEMPTY THEN
+                ERROR('S/N (%1) already exist for item no. %2 and Location %3', SerialNo, ItemNo, Store."Location Code");
+        END;
+    end;
+
     var
         Globals: Codeunit "POS Session";
         CodPOSTrans: Codeunit "POS Transaction";
