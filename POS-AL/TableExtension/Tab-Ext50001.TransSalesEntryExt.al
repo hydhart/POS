@@ -36,7 +36,7 @@ tableextension 50001 "Trans Sales Entry Ext" extends "Trans. Sales Entry"
             Caption = 'mc_amount';
             DataClassification = ToBeClassified;
         }
-        field(50007; mc_sn; Text[20])
+        field(50007; mc_sn; Text[50])
         {
             Caption = 'mc_sn';
             DataClassification = ToBeClassified;
