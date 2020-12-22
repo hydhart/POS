@@ -101,22 +101,6 @@ page 50003 "Non Member Transaction"
         }
     }
 
-    actions
-    {
-        area(Processing)
-        {
-            action(ActionName)
-            {
-                ApplicationArea = All;
-
-                trigger OnAction()
-                begin
-
-                end;
-            }
-        }
-    }
-
     trigger OnAfterGetRecord()
     begin
         IF Item.GET("Item No.") THEN
