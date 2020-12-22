@@ -174,6 +174,11 @@ codeunit 50000 "Modern Channel Mgt"
                     POSTransLine.mc_amount := amount;
                     POSTransLine.Modify();
                 end;
+            else begin
+                    JObject.Get('resmessage', JToken);
+                    JToken.WriteTo(scrmsg);
+                    Error(scrmsg);
+                end;
         end;
         exit(rescode);
     end;
@@ -250,9 +255,10 @@ codeunit 50000 "Modern Channel Mgt"
                     Message('Pesanan Dalam Proses. Silahkan lakukan Order ulang.');
                 end;
             else begin
-                    JObject.Get('scrmessage', JToken);
+                    JObject.Get('resmessage', JToken);
                     JToken.WriteTo(scrmsg);
-                    Error(scrmsg);
+                    POSTransLine.VoidLine();
+                    Message(scrmsg);
                 end;
         end;
     end;
