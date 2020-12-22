@@ -70,6 +70,15 @@ codeunit 50000 "Modern Channel Mgt"
         response := httpCall(requestURL);
         writeLog(response, requestURL);
 
+        JObject.ReadFrom(response);
+        JObject.Get('server_trxid', JToken);
+        JToken.WriteTo(serverTrxID);
+
+        serverTrxID := DelChr(serverTrxID, '=', '"');
+
+        JObject.Get('rescode', JToken);
+        JToken.WriteTo(rescode);
+
         if (rescode = '4') or (rescode = '0') then begin
             if not Confirm('Total Tagihan yang harus dibayar adalah sebesar %1.\Lanjut Bayar?', true, tagihan) then
                 exit;
@@ -176,6 +185,7 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
         JToken: JsonToken;
+        struk: JsonObject;
         rescode: Text;
         sn: Text;
         scrmsg: Text;
@@ -207,9 +217,14 @@ codeunit 50000 "Modern Channel Mgt"
                     serverTrxID := DelChr(serverTrxID, '=', '"');
                     POSTransLine.mc_server_trxid := serverTrxID;
 
-                    JObject.Get('name', JToken);
+                    JObject.Get('struk', JToken);
+                    struk := JToken.AsObject();
+
+                    struk.Get('name', JToken);
                     JToken.WriteTo(name);
                     POSTransLine.mc_name := name;
+
+                    Message('Total Tagihan sebesar %1, untuk nomor %2 atas nama %3', posTransLine.mc_amount, posTransLine.mc_hp, posTransLine.mc_name);
                 end;
             '0':
                 begin
@@ -224,6 +239,15 @@ codeunit 50000 "Modern Channel Mgt"
                     JToken.WriteTo(serverTrxID);
                     serverTrxID := DelChr(serverTrxID, '=', '"');
                     POSTransLine.mc_server_trxid := serverTrxID;
+
+                    JObject.Get('struk', JToken);
+                    struk := JToken.AsObject();
+
+                    struk.Get('name', JToken);
+                    JToken.WriteTo(name);
+                    POSTransLine.mc_name := name;
+
+                    Message('Pesanan Dalam Proses. Silahkan lakukan Order ulang.');
                 end;
             else begin
                     JObject.Get('scrmessage', JToken);
@@ -259,7 +283,9 @@ codeunit 50000 "Modern Channel Mgt"
         case rescode of
             '4':
                 begin
-
+                    JObject.Get('sn', JToken);
+                    JToken.WriteTo(sn);
+                    POSTransLine.mc_sn := sn;
                 end;
             '0':
                 begin

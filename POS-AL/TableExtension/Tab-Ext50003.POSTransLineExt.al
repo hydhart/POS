@@ -36,7 +36,7 @@ tableextension 50003 "POS Trans Line Ext" extends "POS Trans. Line"
             Caption = 'mc_amount';
             DataClassification = ToBeClassified;
         }
-        field(50007; mc_sn; Text[20])
+        field(50007; mc_sn; Text[50])
         {
             Caption = 'mc_sn';
             DataClassification = ToBeClassified;
