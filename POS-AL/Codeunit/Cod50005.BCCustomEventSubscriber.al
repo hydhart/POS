@@ -19,6 +19,31 @@ codeunit 50005 "BC Custom Event Subscriber"
         */
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnAfterSalesInvHeaderInsert', '', false, false)]
+    local procedure AfterSalesInvHeaderInsert(var SalesInvHeader: Record "Sales Invoice Header"; SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean)
+    var
+        NPM: Record "Nominal Payment Method";
+        NPMIns: Record "Nominal Payment Method";
+    begin
+        NPM.RESET;
+        NPM.SETRANGE("Document Type", NPM."Document Type"::Invoice);
+        NPM.SETRANGE("Document No.", SalesInvHeader."No.");
+        IF NOT NPM.FINDFIRST THEN BEGIN
+            NPM.RESET;
+            NPM.SETRANGE("Document Type", NPM."Document Type"::Order);
+            NPM.SETRANGE("Document No.", SalesHeader."No.");
+            IF NPM.FINDSET THEN BEGIN
+                REPEAT
+                    NPMIns.INIT;
+                    NPMIns.TRANSFERFIELDS(NPM);
+                    NPMIns."Document Type" := NPMIns."Document Type"::Invoice;
+                    NPMIns."Document No." := SalesInvHeader."No.";
+                    NPMIns.INSERT;
+                UNTIL NPM.NEXT = 0;
+            END;
+        END;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnAfterCheckTrackingAndWarehouseForReceive', '', false, false)]
     local procedure AfterCheckTrackingAndWarehouseForReceive(var SalesHeader: Record "Sales Header"; var Receive: Boolean; CommitIsSuppressed: Boolean; var TempWhseShptHeader: Record "Warehouse Shipment Header"; var TempWhseRcptHeader: Record "Warehouse Receipt Header")
     var
