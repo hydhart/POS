@@ -195,6 +195,140 @@ codeunit 50004 "POS Custom Event Subscriber"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Print Utility", 'OnBeforePrintSubHeader', '', false, false)]
+    local procedure BeforePrintSubHeader(Sender: Codeunit "POS Print Utility"; var TransactionHeader: Record "Transaction Header"; Tray: Integer; var POSPrintBuffer: Record "POS Print Buffer"; var PrintBufferIndex: Integer; var LinesPrinted: Integer; var IsHandled: Boolean)
+    var
+        Staff: Record Staff;
+        Store: Record Store;
+        MemberCard: Record "Membership Card";
+        MemberAccount: Record "Member Account";
+        StaffName: Text[30];
+        blankStr: Text[30];
+        StoreName: Text[30];
+        CardHolderName: Text[30];
+        DSTR1: Text[100];
+        NodeName: array[32] of Text[50];
+        Value: array[10] of Text[80];
+        LineLen: Integer;
+        InvLineLen: Integer;
+    begin
+        LineLen := 40;
+        InvLineLen := 44;
+        IF Tray = 2 THEN
+            blankStr := Sender.StringPad(' ', LineLen - 38)
+        ELSE
+            IF Tray = 4 THEN
+                blankStr := Sender.StringPad(' ', InvLineLen - 38);
+
+        CLEAR(Value);
+        DSTR1 := '#L################## #L#################';
+        Value[1] := TextNoInvoice;
+        NodeName[1] := 'x';
+        Value[2] := TransactionHeader."Receipt No.";
+        NodeName[2] := 'Receipt No.';
+        Sender.PrintLine(Tray, Sender.FormatLine(Sender.FormatStr(Value, DSTR1), FALSE, TRUE, FALSE, FALSE));
+        Sender.AddPrintLine(200, 2, NodeName, Value, DSTR1, FALSE, TRUE, FALSE, FALSE, Tray);
+
+        CLEAR(Value);
+        DSTR1 := '#L################## #L#################';
+        Value[1] := TextTanggal;
+        NodeName[1] := 'x';
+        Value[2] := FORMAT(TransactionHeader.Date, 0, '<Day,2>-<Month,2>-<Year>');
+        NodeName[2] := 'Trans. Date';
+        Sender.PrintLine(Tray, Sender.FormatLine(Sender.FormatStr(Value, DSTR1), FALSE, TRUE, FALSE, FALSE));
+        Sender.AddPrintLine(200, 3, NodeName, Value, DSTR1, FALSE, TRUE, FALSE, FALSE, Tray);
+
+        CLEAR(Value);
+        DSTR1 := '#L################## #L#################';
+        StoreName := TransactionHeader."Store No.";
+        IF Store.GET(StoreName) THEN
+            StoreName := COPYSTR(Store.Name, 1, 30);
+        Value[1] := TextOutlet;
+        NodeName[1] := 'x';
+        Value[2] := StoreName;
+        NodeName[2] := 'Trans. Date';
+        Sender.PrintLine(Tray, Sender.FormatLine(Sender.FormatStr(Value, DSTR1), FALSE, TRUE, FALSE, FALSE));
+        Sender.AddPrintLine(200, 3, NodeName, Value, DSTR1, FALSE, TRUE, FALSE, FALSE, Tray);
+
+        CLEAR(Value);
+        DSTR1 := '#L################## #L#################';
+        Value[1] := TextNoCashier;
+        NodeName[1] := 'x';
+        Value[2] := TransactionHeader."Staff ID";
+        NodeName[2] := 'No. Cashier';
+        Sender.PrintLine(Tray, Sender.FormatLine(Sender.FormatStr(Value, DSTR1), FALSE, TRUE, FALSE, FALSE));
+        Sender.AddPrintLine(200, 5, NodeName, Value, DSTR1, FALSE, TRUE, FALSE, FALSE, Tray);
+
+        CLEAR(Value);
+        DSTR1 := '#L################## #L#################';
+        StaffName := TransactionHeader."Staff ID";
+        IF Staff.GET(TransactionHeader."Staff ID") THEN
+            StaffName := Staff."Name on Receipt";
+        Value[1] := TextCashier;
+        NodeName[1] := 'x';
+        Value[2] := StaffName;
+        NodeName[2] := 'Cashier';
+        Sender.PrintLine(Tray, Sender.FormatLine(Sender.FormatStr(Value, DSTR1), FALSE, TRUE, FALSE, FALSE));
+        Sender.AddPrintLine(200, 5, NodeName, Value, DSTR1, FALSE, TRUE, FALSE, FALSE, Tray);
+
+        CLEAR(Value);
+        DSTR1 := '#L################## #L#################';
+        StaffName := TransactionHeader."Sales Staff";
+        IF Staff.GET(TransactionHeader."Sales Staff") THEN
+            StaffName := Staff."Name on Receipt";
+        Value[1] := TextSales;
+        NodeName[1] := 'x';
+        Value[2] := StaffName;
+        NodeName[2] := 'Sales Person';
+        Sender.PrintLine(Tray, Sender.FormatLine(Sender.FormatStr(Value, DSTR1), FALSE, TRUE, FALSE, FALSE));
+        Sender.AddPrintLine(200, 5, NodeName, Value, DSTR1, FALSE, TRUE, FALSE, FALSE, Tray);
+
+        CLEAR(Value);
+        DSTR1 := '#L################## #L#################';
+        CardHolderName := TransactionHeader."Member Card No.";
+        IF MemberCard.GET(CardHolderName) THEN BEGIN
+            MemberAccount.Get(MemberCard."Account No.");
+            CardHolderName := MemberAccount.Description;
+        END;
+        Value[1] := TextCustomer;
+        NodeName[1] := 'x';
+        Value[2] := CardHolderName;
+        NodeName[2] := 'Customer';
+        Sender.PrintLine(Tray, Sender.FormatLine(Sender.FormatStr(Value, DSTR1), FALSE, TRUE, FALSE, FALSE));
+        Sender.AddPrintLine(200, 5, NodeName, Value, DSTR1, FALSE, TRUE, FALSE, FALSE, Tray);
+
+        PrintSeperator2(Sender, Tray, '=');
+
+        CLEAR(Value);
+        DSTR1 := '#L######################################';
+        Value[1] := TextFieldName1;
+        NodeName[1] := 'x';
+        Sender.PrintLine(Tray, Sender.FormatLine(Sender.FormatStr(Value, DSTR1), FALSE, TRUE, FALSE, FALSE));
+        Sender.AddPrintLine(200, 5, NodeName, Value, DSTR1, FALSE, TRUE, FALSE, FALSE, Tray);
+
+        CLEAR(Value);
+        Value[1] := TextFieldName2;
+        NodeName[1] := 'x';
+        Sender.PrintLine(Tray, Sender.FormatLine(Sender.FormatStr(Value, DSTR1), FALSE, TRUE, FALSE, FALSE));
+        Sender.AddPrintLine(200, 5, NodeName, Value, DSTR1, FALSE, TRUE, FALSE, FALSE, Tray);
+
+        PrintSeperator2(Sender, Tray, '=');
+
+        IsHandled := true;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Print Utility", 'OnBeforePrintSalesInfo', '', false, false)]
+    local procedure BeforePrintSalesInfo(Sender: Codeunit "POS Print Utility"; var Transaction: Record "Transaction Header"; var PrintBuffer: Record "POS Print Buffer"; var PrintBufferIndex: Integer; var LinesPrinted: Integer; Tray: Integer; var IsHandled: Boolean)
+    begin
+
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Print Utility", 'OnBeforePrintLoyalty', '', false, false)]
+    local procedure BeforePrintLoyalty(Sender: Codeunit "POS Print Utility"; var Transaction: Record "Transaction Header"; var PrintBuffer: Record "POS Print Buffer"; var PrintBufferIndex: Integer; var LinesPrinted: Integer; var DSTR1: Text[100]; var IsHandled: Boolean)
+    begin
+
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Statement-Post", 'OnBeforeProcessTransactionStatus', '', false, false)]
     local procedure BeforeProcessTransactionStatus(var TransactionStatus: Record "Transaction Status"; Statement: Record Statement)
     var
@@ -218,6 +352,25 @@ codeunit 50004 "POS Custom Event Subscriber"
                     END;
                 END;
             until TransSalesEntry.Next() = 0;
+    end;
+
+    local procedure PrintSeperator2(Var Sender: Codeunit "POS Print Utility"; Tray: Integer; Char: Text)
+    var
+        LineLength: Integer;
+        DSTR1: Text;
+        Value: array[10] of Text[80];
+        LineLen: Integer;
+        InvLineLen: Integer;
+    begin
+        IF Tray = 2 THEN
+            LineLength := LineLen
+        ELSE
+            IF Tray = 4 THEN
+                LineLength := InvLineLen;
+
+        DSTR1 := '#C' + Sender.StringPad('#', LineLength - 2);
+        Value[1] := Sender.StringPad(Char, LineLength);
+        Sender.PrintLine(Tray, Sender.FormatLine(Sender.FormatStr(Value, DSTR1), FALSE, FALSE, FALSE, FALSE));
     end;
 
     local procedure ValidateSerialNo(ItemNo: Code[20]; VariantCode: Code[10]; StoreNo: Code[10]; SerialNo: Code[20]; Out: Boolean)
@@ -246,4 +399,15 @@ codeunit 50004 "POS Custom Event Subscriber"
         Globals: Codeunit "POS Session";
         CodPOSTrans: Codeunit "POS Transaction";
         ErrorSalesStaff: Boolean;
+
+        TextNoInvoice: TextConst ENU = 'No.Invoice         :';
+        TextTanggal: TextConst ENU = 'Tanggal            :';
+        TextOutlet: TextConst ENU = 'Outlet             :';
+        TextShift: TextConst ENU = 'Shift              :';
+        TextNoCashier: TextConst ENU = 'No. Cashier        :';
+        TextCashier: TextConst ENU = 'Cashier            :';
+        TextSales: TextConst ENU = 'Sales              :';
+        TextCustomer: TextConst ENU = 'Customer           :';
+        TextFieldName1: TextConst ENU = 'NAMA BARANG';
+        TextFieldName2: TextConst ENU = 'QTY   H. SATUAN     DISC          TOTAL';
 }
