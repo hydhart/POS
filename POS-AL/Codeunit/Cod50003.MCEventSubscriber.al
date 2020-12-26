@@ -197,6 +197,14 @@ codeunit 50003 "MC Event Subscriber"
                 POSTransLine.Modify();
             end;
         end;
+
+        if POSMenuLine.Command = 'VOID' then begin
+            RetailSetup.Get();
+            InfocodeEntry.Reset();
+            InfocodeEntry.SetRange("Receipt No.", POSTransaction."Receipt No.");
+            if InfocodeEntry.FindFirst() then
+                InfocodeEntry.DeleteAll();
+        end;
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"POS Trans. Line", 'OnAfterValidateEvent', 'Number', false, false)]
