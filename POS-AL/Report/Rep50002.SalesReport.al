@@ -48,7 +48,9 @@ report 50002 "Sales Report"
 
                 trigger OnAfterGetRecord()
                 begin
-                    if TenderType.Get("Tender Type") then begin
+                    TenderType.Reset();
+                    TenderType.SetRange(Code, "Tender Type");
+                    if TenderType.FindFirst() then begin
                         TenderDesc := TenderType.Description;
                         TenderCaption := TenderDesc;
                     end;
