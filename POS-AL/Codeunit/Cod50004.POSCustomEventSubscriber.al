@@ -2,6 +2,12 @@ codeunit 50004 "POS Custom Event Subscriber"
 {
     SingleInstance = true;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Functions", 'OnBeforeSerialNoIsValid', '', false, false)]
+    //OnBeforeSerialNoIsValid(pPOSTransLine, pSerialNo, ExitValue, Proceed);
+    local procedure BeforeSerialNoIsValid(var pPOSTransLine: Record "POS Trans. Line"; var pSerialNo: Code[50]; var ExitValue: Boolean; var Proceed: Boolean)
+    begin
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction Events", 'OnBeforeTotalExecuted', '', false, false)]
     local procedure OnBeforeTotalExecuted(var POSTransaction: Record "POS Transaction")
     var
