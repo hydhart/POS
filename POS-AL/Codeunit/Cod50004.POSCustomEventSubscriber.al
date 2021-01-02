@@ -3,7 +3,6 @@ codeunit 50004 "POS Custom Event Subscriber"
     SingleInstance = true;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Functions", 'OnBeforeSerialNoIsValid', '', false, false)]
-    //OnBeforeSerialNoIsValid(pPOSTransLine, pSerialNo, ExitValue, Proceed);
     local procedure BeforeSerialNoIsValid(var pPOSTransLine: Record "POS Trans. Line"; var pSerialNo: Code[50]; var ExitValue: Boolean; var Proceed: Boolean)
     begin
     end;
@@ -147,9 +146,11 @@ codeunit 50004 "POS Custom Event Subscriber"
     var
         POSTrans: Record "POS Transaction";
     begin
+        Commit();
         pTransSalesEntry."Sales Staff" := pPOSTransLine."Sales Staff";
         if POSTrans.Get(pPOSTransLine."Receipt No.") then
             pTransSalesEntry."Card No." := POSTrans."Member Card No.";
+        Commit();
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Print Utility", 'OnBeforePrintSlips', '', false, false)]
@@ -160,9 +161,11 @@ codeunit 50004 "POS Custom Event Subscriber"
         Terminal: Record "POS Terminal";
         Staff: Record Staff;
     begin
+        Commit();
         POSFuncProfile.Get(Globals.FunctionalityProfileID());
         Transaction."Print Counter" += 1;
         Transaction.Modify();
+        Commit();
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Print Utility", 'OnBeforePrintVoidSlip', '', false, false)]
@@ -170,11 +173,13 @@ codeunit 50004 "POS Custom Event Subscriber"
     var
         POSFuncProfile: Record "POS Functionality Profile";
     begin
+        Commit();
         POSFuncProfile.Get(Globals.FunctionalityProfileID());
         if not POSFuncProfile."Print Void Slip" then begin
             IsHandled := true;
             ReturnValue := false;
         end;
+        Commit();
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Print Utility", 'OnBeforePrintCardSlipFromEFT', '', false, false)]
@@ -182,11 +187,13 @@ codeunit 50004 "POS Custom Event Subscriber"
     var
         POSFuncProfile: Record "POS Functionality Profile";
     begin
+        Commit();
         POSFuncProfile.Get(Globals.FunctionalityProfileID());
         if not POSFuncProfile."Print Card Slip" then begin
             IsHandled := true;
             ReturnValue := false;
         end;
+        Commit();
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Print Utility", 'OnBeforePrintSuspendSlip', '', false, false)]
@@ -194,11 +201,13 @@ codeunit 50004 "POS Custom Event Subscriber"
     var
         POSFuncProfile: Record "POS Functionality Profile";
     begin
+        Commit();
         POSFuncProfile.Get(Globals.FunctionalityProfileID());
         if not POSFuncProfile."Print Suspend Slip" then begin
             IsHandled := true;
             ReturnValue := false;
         end;
+        Commit();
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Print Utility", 'OnBeforePrintSubHeader', '', false, false)]
@@ -218,6 +227,7 @@ codeunit 50004 "POS Custom Event Subscriber"
         LineLen: Integer;
         InvLineLen: Integer;
     begin
+        Commit();
         LineLen := 40;
         InvLineLen := 44;
         IF Tray = 2 THEN
@@ -321,6 +331,7 @@ codeunit 50004 "POS Custom Event Subscriber"
         PrintSeperator2(Sender, Tray, '=');
 
         IsHandled := true;
+        Commit();
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Print Utility", 'OnBeforePrintSalesInfo', '', false, false)]
@@ -389,6 +400,7 @@ codeunit 50004 "POS Custom Event Subscriber"
         LineLen: Integer;
         InvLineLen: Integer;
     begin
+        Commit();
         GenPosFunc.Get(Globals.FunctionalityProfileID());
         IF GenPosFunc."Multiple Items Symbol" = '' THEN
             GenPosFunc."Multiple Items Symbol" := ' x ';
@@ -682,6 +694,7 @@ codeunit 50004 "POS Custom Event Subscriber"
 
         glTrans.INIT;
         IsHandled := true;
+        Commit();
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Print Utility", 'OnBeforePrintLoyalty', '', false, false)]
@@ -714,6 +727,7 @@ codeunit 50004 "POS Custom Event Subscriber"
         Value: array[10] of Text[80];
         Tray: Integer;
     begin
+        Commit();
         Tray := 2;
         IF Transaction."Member Card No." = '' THEN
             exit;
@@ -813,6 +827,7 @@ codeunit 50004 "POS Custom Event Subscriber"
 
         PrintSeperator2(Sender, Tray, '=');
         IsHandled := true;
+        Commit();
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Statement-Post", 'OnBeforeProcessTransactionStatus', '', false, false)]
