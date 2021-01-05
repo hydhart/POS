@@ -1,10 +1,8 @@
 page 50000 "Modern Channel Setup"
 {
-    ApplicationArea = All;
     Caption = 'PPOB Setup';
     PageType = List;
     SourceTable = "Modern Channel Setup";
-    UsageCategory = Administration;
     InsertAllowed = false;
     DeleteAllowed = false;
     PromotedActionCategories = 'New,Process,Report,Navigate';
