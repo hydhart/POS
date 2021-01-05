@@ -4,7 +4,7 @@ pageextension 50000 "Retail Item Card Ext" extends "Retail Item Card"
     {
         addafter(POS)
         {
-            group("Modern Channel")
+            group("PPOB")
             {
                 field(mc_ItemType; Rec.mc_ItemType)
                 {
