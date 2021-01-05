@@ -837,6 +837,7 @@ codeunit 50004 "POS Custom Event Subscriber"
         Item: Record Item;
         ItemTrackingCode: Record "Item Tracking Code";
     begin
+        /*
         TransSalesEntry.SetRange("Store No.", TransactionStatus."Store No.");
         TransSalesEntry.SetRange("POS Terminal No.", TransactionStatus."POS Terminal No.");
         TransSalesEntry.SetRange("Transaction No.", TransactionStatus."Transaction No.");
@@ -853,6 +854,7 @@ codeunit 50004 "POS Custom Event Subscriber"
                     END;
                 END;
             until TransSalesEntry.Next() = 0;
+        */
     end;
 
     local procedure PrintTotal(Var Sender: Codeunit "POS Print Utility"; Transaction: Record "Transaction Header"; Tray: Integer; RightIndent: Integer; BanyakItem: Integer; ItemKembali: Integer)
