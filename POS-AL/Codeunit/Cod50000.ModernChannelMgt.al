@@ -183,6 +183,60 @@ codeunit 50000 "Modern Channel Mgt"
         exit(rescode);
     end;
 
+    procedure RunInquiry(var POSTransLine: Record "POS Trans. Line"): Text
+    var
+        requestURL: Text;
+        response: Text;
+        httpResponse: HttpResponseMessage;
+        JObject: JsonObject;
+        JToken: JsonToken;
+        rescode: Text;
+        sn: Text;
+        scrmsg: Text;
+        amount: Text;
+    begin
+        requestURL := inquiryURL();
+        response := httpCall(requestURL);
+
+        jObject.ReadFrom(response);
+        writeLog(response, requestURL);
+
+        JObject.Get('rescode', JToken);
+        JToken.WriteTo(rescode);
+        /* case rescode of
+            '4':
+                begin
+                    POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
+
+                    JObject.Get('sn', JToken);
+                    JToken.WriteTo(sn);
+                    POSTransLine.mc_sn := sn;
+                    JObject.Get('harga', JToken);
+                    JToken.WriteTo(amount);
+                    POSTransLine.mc_amount := amount;
+                    POSTransLine.Modify();
+                end;
+            '0':
+                begin
+                    POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
+
+                    JObject.Get('harga', JToken);
+                    JToken.WriteTo(amount);
+                    POSTransLine.mc_amount := amount;
+                    POSTransLine.Modify();
+                end;
+            else begin
+                    JObject.Get('resmessage', JToken);
+                    JToken.WriteTo(scrmsg);
+                    Error(scrmsg);
+                end;
+        end; */
+        JObject.Get('resmessage', JToken);
+        JToken.WriteTo(scrmsg);
+        Message(scrmsg);
+        exit(rescode);
+    end;
+
     procedure RunOrder(var POSTransLine: Record "POS Trans. Line")
     var
         requestURL: Text;
@@ -293,14 +347,10 @@ codeunit 50000 "Modern Channel Mgt"
                     JToken.WriteTo(sn);
                     POSTransLine.mc_sn := sn;
                 end;
-            '0':
-                begin
-
-                end;
             else begin
                     JObject.Get('scrmessage', JToken);
                     JToken.WriteTo(scrmsg);
-                    Message(scrmsg);
+                    Error(scrmsg);
                 end;
         end;
     end;
@@ -308,6 +358,12 @@ codeunit 50000 "Modern Channel Mgt"
     local procedure getSetup()
     begin
         modernChannelSetup.Get();
+    end;
+
+    local procedure getStore(storeNo: Code[20])
+    begin
+        if not Store.Get(storeNo) then
+            Error('Store %1 does not exist.', storeNo);
     end;
 
     local procedure writeLog(responsMsg: Text; requestURL: Text)
@@ -394,11 +450,11 @@ codeunit 50000 "Modern Channel Mgt"
     begin
         //GET REQUEST URL
         command := command::pingtel;
-        firstHash := modernChannelSetup.PIN + modernChannelSetup."Secret Key" + serverTrxID + partnerTrxID;
+        firstHash := PIN + SKey + serverTrxID + partnerTrxID;
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
-        requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&posid=' + posID + '&password=' + signature +
+        requestURL := URL + '?' + 'channelid=' + channelID + '&posid=' + posID + '&password=' + signature +
         '&cmd=' + Format(command) + '&trxtime=' + Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID +
         '&storeid=' + storeID + '&cashierid=' + cashierID + '&f=json';
 
@@ -413,11 +469,11 @@ codeunit 50000 "Modern Channel Mgt"
     begin
         //GET REQUEST URL
         command := command::denom;
-        firstHash := modernChannelSetup.PIN + modernChannelSetup."Secret Key" + serverTrxID + partnerTrxID;
+        firstHash := PIN + SKey + serverTrxID + partnerTrxID;
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
-        requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&posid=' + posID + '&password=' + signature +
+        requestURL := URL + '?' + 'channelid=' + channelID + '&posid=' + posID + '&password=' + signature +
         '&cmd=' + Format(command) + '&trxtime=' + Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID +
         '&storeid=' + storeID + '&cashierid=' + cashierID + '&f=json';
 
@@ -432,11 +488,11 @@ codeunit 50000 "Modern Channel Mgt"
     begin
         command := command::topup;
         //GET REQUEST URL        
-        firstHash := modernChannelSetup.PIN + modernChannelSetup."Secret Key" + serverTrxID + partnerTrxID;
+        firstHash := PIN + SKey + serverTrxID + partnerTrxID;
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
-        requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&storeid=' + storeID + '&posid=' + posID + '&cashierid=' +
+        requestURL := URL + '?' + 'channelid=' + channelID + '&storeid=' + storeID + '&posid=' + posID + '&cashierid=' +
            cashierID + '&password=' + signature + '&cmd=' + format(command) + '&hp=' + handphone + '&vtype=' + vtype + '&trxtime=' +
            Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID + '&f=json';
 
@@ -451,14 +507,14 @@ codeunit 50000 "Modern Channel Mgt"
     begin
         command := command::order;
         //GET REQUEST URL
-        firstHash := modernChannelSetup.PIN + modernChannelSetup."Secret Key" + serverTrxID + partnerTrxID;
+        firstHash := PIN + SKey + serverTrxID + partnerTrxID;
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
-        requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&storeid=' + storeID + '&posid=' + posID + '&cashierid=' +
+        requestURL := URL + '?' + 'channelid=' + channelID + '&storeid=' + storeID + '&posid=' + posID + '&cashierid=' +
                    cashierID + '&password=' + signature + '&cmd=' + format(command) + '&hp=' + handphone + '&vtype=' + vtype + '&trxtime=' +
                    Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID + '&idpel=' + handphone + '&f=json';
-        /* requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&password=' + signature + '&cmd=' +
+        /* requestURL := URL + '?' + 'channelid=' + channelID + '&password=' + signature + '&cmd=' +
         Format(command) + '&hp=' + handphone + '&vtype=' + vtype + '&trxtime=' +
         Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID + '&storeid=' + storeID + '&idpel=' + handphone + '&f=json'; */
 
@@ -473,11 +529,11 @@ codeunit 50000 "Modern Channel Mgt"
     begin
         command := command::confirm;
         //GET REQUEST URL
-        firstHash := modernChannelSetup.PIN + modernChannelSetup."Secret Key" + partnerTrxID;
+        firstHash := PIN + SKey + partnerTrxID;
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
-        requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&password=' + signature + '&cmd=' +
+        requestURL := URL + '?' + 'channelid=' + channelID + '&password=' + signature + '&cmd=' +
         Format(command::confirm) + '&trxtime=' + Format(CurrentDateTime, 0, formatDate) + '&partner_trxid=' + partnerTrxID +
         '&order_trxid=' + serverTrxID + '&storeid=' + storeID + '&posid=' + posID + '&cashierid=' + cashierID + '&f=json';
 
@@ -492,12 +548,12 @@ codeunit 50000 "Modern Channel Mgt"
     begin
         //GET REQUEST URL
         command := command::inquiry;
-        firstHash := modernChannelSetup.PIN + modernChannelSetup."Secret Key" + serverTrxID + partnerTrxID;
+        firstHash := PIN + SKey + serverTrxID + partnerTrxID;
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
-        requestURL := modernChannelSetup.URL + '?' + 'channelid=' + channelID + '&posid=' + posID + '&password=' + signature +
-        '&cmd=' + Format(command) + '&trxtime=' + Format(CurrentDateTime, 0, formatDate) + '&server_trxid=' + partnerTrxID +
+        requestURL := URL + '?' + 'channelid=' + channelID + '&posid=' + posID + '&password=' + signature +
+        '&cmd=' + Format(command) + '&trxtime=' + Format(CurrentDateTime, 0, formatDate) + '&server_trxid=' + serverTrxID +
         '&storeid=' + storeID + '&cashierid=' + cashierID + '&f=json';
 
         exit(requestURL);
@@ -506,8 +562,17 @@ codeunit 50000 "Modern Channel Mgt"
     procedure initializeData(pPosID: Text; pCashierID: Text; pVtype: Text; pHandphone: Text; pPartnerTrxID: Text)
     begin
         getSetup();
-        channelID := LowerCase(modernChannelSetup."Channel ID");
+        getStore(pPosID);
+        /* channelID := LowerCase(modernChannelSetup."Channel ID");
         storeID := LowerCase(modernChannelSetup."Store ID");
+        PIN := modernChannelSetup.PIN;
+        SKey := modernChannelSetup."Secret Key";
+        URL := modernChannelSetup.URL; */
+        channelID := LowerCase(Store."Channel ID");
+        storeID := LowerCase(Store."Store ID");
+        PIN := Store.PIN;
+        SKey := Store."Secret Key";
+        URL := Store.URL;
         posID := LowerCase(pPosID);
         cashierID := LowerCase(pCashierID);
         vtype := pVtype;
@@ -518,6 +583,7 @@ codeunit 50000 "Modern Channel Mgt"
 
     var
         modernChannelSetup: Record "Modern Channel Setup";
+        Store: Record Store;
         formatDate: Label '<Year4><Month,2><Day,2><Hours,2><Minutes,2><Seconds,2>';
         channelID: Text;
         storeID: Text;
@@ -530,4 +596,7 @@ codeunit 50000 "Modern Channel Mgt"
         serverTrxID: Text;
         subscriberID: Text;
         signature: Text;
+        PIN: Text;
+        SKey: Text;
+        URL: Text;
 }
