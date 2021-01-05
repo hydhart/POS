@@ -80,9 +80,8 @@ codeunit 50004 "POS Custom Event Subscriber"
                         NameInfoEntry."Line No." += 10000;
                         NameInfoEntry.Infocode := RetailSetup."NM Name Info";
                         NameInfoEntry.Information := MemberAccount.Description;
-                        if InfoEntry.Insert() then;
+                        if NameInfoEntry.Insert() then;
 
-                        CodPOSTrans.CancelPressed(true, 0);
                         Message(STRSUBSTNO('Membership card %1 found and applied', Input));
                     end else begin
                         Message(STRSUBSTNO('Membership card %1 will be registered once transaction finished.\Press NON MEMBER again to input name', Input));
@@ -100,16 +99,17 @@ codeunit 50004 "POS Custom Event Subscriber"
         MemberAccount: Record "Member Account";
         MembershipCard: Record "Membership Card";
     begin
+        Commit();
         Transaction."Sales Staff" := POSTrans."Sales Staff";
         RetailSetup.Get();
         if POSTrans."Member Card No." <> '' then begin
-            POSInfoEntry.SETRANGE(Infocode, RetailSetup."NM Phone Info");
+            /*POSInfoEntry.SETRANGE(Infocode, RetailSetup."NM Phone Info");
             if POSInfoEntry.FINDFIRST then
                 POSInfoEntry.DELETE;
 
             POSInfoEntry.SETRANGE(Infocode, RetailSetup."NM Name Info");
             if POSInfoEntry.FINDFIRST then
-                POSInfoEntry.DELETE;
+                POSInfoEntry.DELETE;*/
         end else begin
             POSInfoEntry.SETRANGE(Infocode, RetailSetup."NM Phone Info");
             if POSInfoEntry.FINDFIRST then begin
@@ -137,6 +137,8 @@ codeunit 50004 "POS Custom Event Subscriber"
                     MembershipCard.INSERT(TRUE);
                 end;
                 Transaction."Member Card No." := MembershipCard."Card No.";
+                POSTrans."Member Card No." := MembershipCard."Card No.";
+                POSTrans.Modify();
             end;
         end;
     end;
@@ -150,7 +152,6 @@ codeunit 50004 "POS Custom Event Subscriber"
         pTransSalesEntry."Sales Staff" := pPOSTransLine."Sales Staff";
         if POSTrans.Get(pPOSTransLine."Receipt No.") then
             pTransSalesEntry."Card No." := POSTrans."Member Card No.";
-        Commit();
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Print Utility", 'OnBeforePrintSlips', '', false, false)]
