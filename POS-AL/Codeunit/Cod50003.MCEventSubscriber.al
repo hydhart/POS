@@ -1,116 +1,5 @@
 codeunit 50003 "MC Event Subscriber"
 {
-    //#region POS Print Utility
-    /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Print Utility", 'OnAfterPrintSalesSlip', '', false, false)]
-    local procedure OnAfterPrintSalesSlip(var TransactionHeader: Record "Transaction Header"; var PrintBufferIndex: Integer; var POSPrintBuffer: Record "POS Print Buffer"; var LinesPrinted: Integer; sender: Codeunit "POS Print Utility")
-    begin
-
-    end;
-
-    local procedure PrintModernChannelSlip(): Boolean
-    var
-        POSTerminal: Record "POS Terminal";
-    begin
-        //PrintModernChannelSlip
-        IF NOT POSTerminal.GET(Globals.TerminalNo) THEN
-            EXIT(TRUE);
-
-        IF NOT OpenReceiptPrinter(2, 'MC', '', Transaction."Transaction No.", Transaction."Receipt No.") THEN
-            EXIT(FALSE);
-        PrintLine(2, '');
-        PrintSeperator(2);  //
-        PrintModernChannelInfo(Transaction);
-
-        IF NOT ClosePrinter(2) THEN
-            EXIT(FALSE);
-        COMMIT;
-        EXIT(TRUE);
-    end;
-    //PrintModernChannelSlip
-
-    local procedure PrintModernChannelInfo(TransHeader: Record "Transaction Header")
-    var
-        TransSalesEntry: Record "Trans. Sales Entry";
-        Item: Record Item;
-    begin
-        //PrintModernChannelInfo
-        TransSalesEntry.SETRANGE("Store No.", TransHeader."Store No.");
-        TransSalesEntry.SETRANGE("POS Terminal No.", TransHeader."POS Terminal No.");
-        TransSalesEntry.SETRANGE("Transaction No.", TransHeader."Transaction No.");
-        TransSalesEntry.SETFILTER(mc_vtype, '<>%1', '');
-        IF TransSalesEntry.FINDSET THEN
-            REPEAT
-                IF Item.GET(TransSalesEntry."Item No.") THEN BEGIN
-                    IF Item."MC Item Type" = Item."MC Item Type"::Telp THEN BEGIN
-                        PrintFromData(TransSalesEntry);
-                    END ELSE
-                        IF Item."MC Item Type" = Item."MC Item Type"::PLN THEN BEGIN
-                            PrintFromExtData(TransSalesEntry.mc_ext_data + TransSalesEntry.mc_ext_data2);
-                        END ELSE
-                            IF Item."MC Item Type" = Item."MC Item Type"::PPOB THEN BEGIN
-                                PrintFromExtData(TransSalesEntry.mc_ext_data + TransSalesEntry.mc_ext_data2);
-                            END;
-                END;
-            UNTIL TransSalesEntry.NEXT = 0;
-        PrintSeperator(2);
-    end;
-
-    local procedure PrintFromExtData(ExtData: Text)
-    var
-        DSTR1: Text;
-        LineText: Text;
-        Pos: Integer;
-    begin
-        IF STRLEN(ExtData) > 0 THEN
-            REPEAT
-                DSTR1 := '#L######################################';
-                Pos := STRPOS(ExtData, '|');
-                IF Pos > 0 THEN BEGIN
-                    LineText := DELCHR(COPYSTR(ExtData, 1, Pos - 1), '<>', ' '); // Delete leading and trailing space character
-                    ExtData := COPYSTR(ExtData, Pos + 1);
-                END ELSE BEGIN
-                    LineText := DELCHR(ExtData, '<>', ' '); // Delete leading and trailing space character
-                    ExtData := '';
-                END;
-                IF LineText = '' THEN
-                    PrintLine(2, '')
-                ELSE BEGIN
-                    Value[1] := LineText;
-                    NodeName[1] := 'MC Desc';
-                    PrintLine(2, FormatLine(FormatStr(Value, DSTR1), FALSE, TRUE, FALSE, FALSE));
-                    AddPrintLine(800, 2, NodeName, Value, DSTR1, FALSE, TRUE, FALSE, FALSE, 2);
-                END;
-            UNTIL (ExtData = '');
-    end;
-
-    local procedure PrintFromData(TransSalesEntry: Record "Trans. Sales Entry")
-    var
-        myInt: Integer;
-    begin
-        DSTR1 := '#L######################################';
-
-        IF (TransSalesEntry.mc_vtype <> '') THEN BEGIN
-            //HY
-            PrintLine(2, '');
-            //HY
-            Value[1] := STRSUBSTNO('VType : %1', TransSalesEntry.mc_vtype);
-            NodeName[1] := 'MC Desc';
-            PrintLine(2, FormatLine(FormatStr(Value, DSTR1), FALSE, TRUE, FALSE, FALSE));
-            AddPrintLine(800, 2, NodeName, Value, DSTR1, FALSE, TRUE, FALSE, FALSE, 2);
-
-            Value[1] := STRSUBSTNO('HP    : %1', TransSalesEntry.mc_hp);
-            NodeName[1] := 'MC Desc';
-            PrintLine(2, FormatLine(FormatStr(Value, DSTR1), FALSE, TRUE, FALSE, FALSE));
-            AddPrintLine(800, 2, NodeName, Value, DSTR1, FALSE, TRUE, FALSE, FALSE, 2);
-
-            Value[1] := STRSUBSTNO('SN    : %1', TransSalesEntry.mc_sn);
-            NodeName[1] := 'MC Desc';
-            PrintLine(2, FormatLine(FormatStr(Value, DSTR1), FALSE, TRUE, FALSE, FALSE));
-            AddPrintLine(800, 2, NodeName, Value, DSTR1, FALSE, TRUE, FALSE, FALSE, 2);
-        END;
-    end; */
-    //#endregion POS Print Utility
-
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"POS Transaction", 'OnItemNoPressed', '', false, false)]
     local procedure OnItemNoPressed(var Handled: Boolean; REC: Record "POS Transaction"; CurrInput: Text)
     var
@@ -131,8 +20,19 @@ codeunit 50003 "MC Event Subscriber"
             if MCExist then begin
                 Handled := true;
                 Message(text001);
+                exit;
             end;
+        end;
 
+        posTransLine.Reset();
+        posTransLine.SetRange("Receipt No.", REC."Receipt No.");
+        POSTransLine.SetRange("Entry Status", POSTransLine."Entry Status"::" ");
+        if posTransLine.FindFirst() then begin
+            if Item.Get(posTransLine.Number) then
+                if Item.mc_ItemType <> Item.mc_ItemType::" " then begin
+                    Handled := true;
+                    Message(text001);
+                end;
         end;
     end;
 
