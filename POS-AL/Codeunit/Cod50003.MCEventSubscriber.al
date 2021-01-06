@@ -107,6 +107,10 @@ codeunit 50003 "MC Event Subscriber"
         end;
 
         if POSMenuLine.Command = 'VOID' then begin
+            if POSTransLine."PPOB Status" = '4' then begin
+                Message('Proses Pembelian pulsa telah sukses. Silahkan lanjutkan pembayaran.');
+                exit;
+            end;
             RetailSetup.Get();
             InfocodeEntry.Reset();
             InfocodeEntry.SetRange("Receipt No.", POSTransaction."Receipt No.");
