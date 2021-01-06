@@ -49,6 +49,10 @@ tableextension 50003 "POS Trans Line Ext" extends "POS Trans. Line"
         {
             DataClassification = ToBeClassified;
         }
+        field(50010; "PPOB Status"; Code[10])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
     trigger OnAfterModify()
     var
