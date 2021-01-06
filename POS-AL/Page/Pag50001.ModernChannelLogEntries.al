@@ -26,6 +26,10 @@ page 50001 "Modern Channel Log Entries"
                 {
                     ApplicationArea = All;
                 }
+                field("Status Message"; Rec."Status Message")
+                {
+                    ApplicationArea = All;
+                }
                 field("Response Message"; responseMsg)
                 {
                     ApplicationArea = All;
