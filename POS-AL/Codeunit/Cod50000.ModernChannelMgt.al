@@ -127,6 +127,7 @@ codeunit 50000 "Modern Channel Mgt"
 
         JObject.Get('status', JToken);
         JToken.WriteTo(status);
+        scrmsg := status;
 
         Message(status);
     end;
@@ -140,9 +141,7 @@ codeunit 50000 "Modern Channel Mgt"
         JToken: JsonToken;
         rescode: Text;
         sn: Text;
-        scrmsg: Text;
         amount: Text;
-
     begin
         requestURL := topUpURL();
         response := httpCall(requestURL);
@@ -163,6 +162,8 @@ codeunit 50000 "Modern Channel Mgt"
                     JObject.Get('harga', JToken);
                     JToken.WriteTo(amount);
                     POSTransLine.mc_amount := amount;
+                    JObject.Get('scrmessage', JToken);
+                    JToken.WriteTo(scrmsg);
                     POSTransLine.Modify();
                 end;
             '0':
@@ -172,12 +173,16 @@ codeunit 50000 "Modern Channel Mgt"
                     JObject.Get('harga', JToken);
                     JToken.WriteTo(amount);
                     POSTransLine.mc_amount := amount;
+                    JObject.Get('scrmessage', JToken);
+                    JToken.WriteTo(scrmsg);
                     POSTransLine.Modify();
                 end;
             else begin
                     JObject.Get('resmessage', JToken);
+                    JToken.WriteTo(resmsg);
+                    JObject.Get('scrmessage', JToken);
                     JToken.WriteTo(scrmsg);
-                    Error(scrmsg);
+                    Error(resmsg);
                 end;
         end;
         exit(rescode);
@@ -192,7 +197,6 @@ codeunit 50000 "Modern Channel Mgt"
         JToken: JsonToken;
         rescode: Text;
         sn: Text;
-        scrmsg: Text;
         amount: Text;
     begin
         requestURL := inquiryURL();
@@ -232,8 +236,10 @@ codeunit 50000 "Modern Channel Mgt"
                 end;
         end; */
         JObject.Get('resmessage', JToken);
+        JToken.WriteTo(resmsg);
+        JObject.Get('scrmessage', JToken);
         JToken.WriteTo(scrmsg);
-        Message(scrmsg);
+        Message(resmsg);
         exit(rescode);
     end;
 
@@ -247,10 +253,8 @@ codeunit 50000 "Modern Channel Mgt"
         struk: JsonObject;
         rescode: Text;
         sn: Text;
-        scrmsg: Text;
         amount: Decimal;
         operator: Text;
-        name: Text;
         harga: Text;
     begin
         requestURL := orderURL();
@@ -282,6 +286,8 @@ codeunit 50000 "Modern Channel Mgt"
                     struk.Get('name', JToken);
                     JToken.WriteTo(name);
                     POSTransLine.mc_name := name;
+                    JObject.Get('scrmessage', JToken);
+                    JToken.WriteTo(scrmsg);
 
                     Message('Total Tagihan sebesar %1, untuk nomor %2 atas nama %3', posTransLine.mc_amount, posTransLine.mc_hp, posTransLine.mc_name);
                 end;
@@ -305,14 +311,18 @@ codeunit 50000 "Modern Channel Mgt"
                     struk.Get('name', JToken);
                     JToken.WriteTo(name);
                     POSTransLine.mc_name := name;
+                    JObject.Get('scrmessage', JToken);
+                    JToken.WriteTo(scrmsg);
 
                     Message('Pesanan Dalam Proses. Silahkan lakukan Order ulang.');
                 end;
             else begin
                     JObject.Get('resmessage', JToken);
+                    JToken.WriteTo(resmsg);
+                    JObject.Get('scrmessage', JToken);
                     JToken.WriteTo(scrmsg);
                     POSTransLine.VoidLine();
-                    Message(scrmsg);
+                    Message(resmsg);
                 end;
         end;
     end;
@@ -346,8 +356,12 @@ codeunit 50000 "Modern Channel Mgt"
                     JObject.Get('sn', JToken);
                     JToken.WriteTo(sn);
                     POSTransLine.mc_sn := sn;
+                    JObject.Get('scrmessage', JToken);
+                    JToken.WriteTo(scrmsg);
                 end;
             else begin
+                    JObject.Get('scrmessage', JToken);
+                    JToken.WriteTo(scrmsg);
                     JObject.Get('scrmessage', JToken);
                     JToken.WriteTo(scrmsg);
                     Error(scrmsg);
@@ -397,6 +411,9 @@ codeunit 50000 "Modern Channel Mgt"
         mcLogEntry.Signature := signature;
         mcLogEntry.URL := CopyStr(requestURL, 1, 250);
         mcLogEntry."URL 2" := CopyStr(requestURL, 250);
+        mcLogEntry."Nama Pelanggan" := name;
+        mcLogEntry."Status Message" := scrmsg;
+        mcLogEntry.Handphone := handphone;
         mcLogEntry."Response Message".CreateOutStream(outStr);
         outStr.WriteText(responsMsg);
         mcLogEntry.Insert();
@@ -561,7 +578,7 @@ codeunit 50000 "Modern Channel Mgt"
 
     procedure initializeData(pPosID: Text; pCashierID: Text; pVtype: Text; pHandphone: Text; pPartnerTrxID: Text)
     begin
-        getSetup();
+        //getSetup();
         getStore(pPosID);
         /* channelID := LowerCase(modernChannelSetup."Channel ID");
         storeID := LowerCase(modernChannelSetup."Store ID");
@@ -599,4 +616,7 @@ codeunit 50000 "Modern Channel Mgt"
         PIN: Text;
         SKey: Text;
         URL: Text;
+        scrmsg: Text;
+        resmsg: Text;
+        name: Text;
 }

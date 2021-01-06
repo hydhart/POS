@@ -95,6 +95,18 @@ table 50001 "Modern Channel Log Entry"
             Caption = 'Response Message';
             DataClassification = ToBeClassified;
         }
+        field(19; Handphone; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(20; "Status Message"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(21; "Nama Pelanggan"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {

@@ -30,6 +30,14 @@ page 50001 "Modern Channel Log Entries"
                 {
                     ApplicationArea = All;
                 }
+                field(Handphone; Rec.Handphone)
+                {
+                    ApplicationArea = All;
+                }
+                field("Nama Pelanggan"; Rec."Nama Pelanggan")
+                {
+                    ApplicationArea = All;
+                }
                 field("Receipt No."; Rec."Receipt No.")
                 {
                     ApplicationArea = All;
