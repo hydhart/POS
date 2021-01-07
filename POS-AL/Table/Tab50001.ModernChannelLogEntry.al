@@ -114,6 +114,7 @@ table 50001 "Modern Channel Log Entry"
         {
             Clustered = true;
         }
+        Key(SK1; Handphone) { }
     }
 
 }
