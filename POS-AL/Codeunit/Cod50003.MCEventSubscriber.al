@@ -78,6 +78,10 @@ codeunit 50003 "MC Event Subscriber"
             RetailSetup.Get();
 
             if POSTransLine.mc_Itemtype = POSTransLine.mc_Itemtype::"Pulsa Prepaid" then begin
+                if POSTransLine."PPOB Status" = '4' then begin
+                    Message('Proses Pembelian pulsa telah sukses. Silahkan lanjutkan pembayaran.');
+                    exit;
+                end;
                 if InfoCode.Get(RetailSetup."PPOB Infocode") then begin
                     POSTransLine.mc_hp := getNomorHP(POSTransaction, InfoCode);
                     if POSTransLine.mc_hp = '' then
@@ -91,6 +95,10 @@ codeunit 50003 "MC Event Subscriber"
                     Proceed := false;
             end;
             if POSTransLine.mc_Itemtype = POSTransLine.mc_Itemtype::"Pulsa PostPaid" then begin
+                if POSTransLine."PPOB Status" = '4' then begin
+                    Message('Proses Pembelian pulsa telah sukses. Silahkan lanjutkan pembayaran.');
+                    exit;
+                end;
                 ModernChannelMgt.initializeData(POSTransaction."Store No.", POSTransaction."Staff ID",
                 POSTransLine.mc_vtype, POSTransLine.mc_hp, POSTransaction."Receipt No.");
                 ModernChannelMgt.RunConfirm(POSTransLine);
@@ -99,6 +107,10 @@ codeunit 50003 "MC Event Subscriber"
         end;
 
         if POSMenuLine.Command = 'VOID' then begin
+            if POSTransLine."PPOB Status" = '4' then begin
+                Message('Proses Pembelian pulsa telah sukses. Silahkan lanjutkan pembayaran.');
+                exit;
+            end;
             RetailSetup.Get();
             InfocodeEntry.Reset();
             InfocodeEntry.SetRange("Receipt No.", POSTransaction."Receipt No.");

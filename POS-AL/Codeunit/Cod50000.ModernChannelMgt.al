@@ -161,6 +161,7 @@ codeunit 50000 "Modern Channel Mgt"
                     POSTransLine.mc_amount := amount;
                     JObject.Get('scrmessage', JToken);
                     JToken.WriteTo(scrmsg);
+                    POSTransLine."PPOB Status" := rescode;
                     POSTransLine.Modify();
                     writeLog(response, requestURL);
                 end;
@@ -173,6 +174,7 @@ codeunit 50000 "Modern Channel Mgt"
                     POSTransLine.mc_amount := amount;
                     JObject.Get('scrmessage', JToken);
                     JToken.WriteTo(scrmsg);
+                    POSTransLine."PPOB Status" := rescode;
                     POSTransLine.Modify();
                     writeLog(response, requestURL);
                 end;
@@ -363,6 +365,7 @@ codeunit 50000 "Modern Channel Mgt"
                     JObject.Get('scrmessage', JToken);
                     JToken.WriteTo(scrmsg);
                     name := POSTransLine.mc_name;
+                    POSTransLine."PPOB Status" := rescode;
                     writeLog(response, requestURL);
                 end;
             else begin
@@ -371,6 +374,7 @@ codeunit 50000 "Modern Channel Mgt"
                     JObject.Get('scrmessage', JToken);
                     JToken.WriteTo(scrmsg);
                     name := POSTransLine.mc_name;
+                    POSTransLine."PPOB Status" := rescode;
                     writeLog(response, requestURL);
                     Error(scrmsg);
                 end;
