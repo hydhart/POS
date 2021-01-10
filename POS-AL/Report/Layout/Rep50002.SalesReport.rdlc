@@ -3071,7 +3071,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -7269,6 +7268,7 @@
                     <GroupExpressions>
                       <GroupExpression>=Fields!Store_No_.Value</GroupExpression>
                       <GroupExpression>=Fields!Receipt_No_.Value</GroupExpression>
+                      <GroupExpression>=Fields!Item_No_.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <TablixHeader>
@@ -7304,6 +7304,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                 </TablixMember>
