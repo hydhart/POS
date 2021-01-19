@@ -8,10 +8,14 @@ table 50006 "SPS Value Comission"
         field(1; "Inventory Posting Group"; Code[10])
         {
             DataClassification = ToBeClassified;
+            TableRelation = "Inventory Posting Group".Code;
+            ValidateTableRelation = true;
         }
         field(2; "Item Category Code"; Code[10])
         {
             DataClassification = ToBeClassified;
+            TableRelation = "Item Category".Code;
+            ValidateTableRelation = true;
         }
         field(3; "Min Val"; Decimal)
         {

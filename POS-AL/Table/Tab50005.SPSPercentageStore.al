@@ -8,10 +8,14 @@ table 50005 "SPS Percentage Store"
         field(1; "Inventory Posting Group"; Code[10])
         {
             DataClassification = ToBeClassified;
+            TableRelation = "Inventory Posting Group".Code;
+            ValidateTableRelation = true;
         }
         field(2; "Store Code"; Code[10])
         {
             DataClassification = ToBeClassified;
+            TableRelation = Store."No.";
+            ValidateTableRelation = true;
         }
         field(3; "Min Val"; Decimal)
         {
