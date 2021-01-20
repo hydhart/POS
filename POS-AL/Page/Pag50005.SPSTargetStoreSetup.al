@@ -11,6 +11,10 @@ page 50005 "Target Store Setup"
         {
             repeater(General)
             {
+                field("Start Date"; "Start Date")
+                {
+                    ApplicationArea = All;
+                }
                 field("Inventory Posting Group"; "Inventory Posting Group")
                 {
                     ApplicationArea = All;
@@ -19,7 +23,15 @@ page 50005 "Target Store Setup"
                 {
                     ApplicationArea = All;
                 }
-                field("Target Qty"; "Target Qty")
+                field("Item Family Code"; "Item Family Code")
+                {
+                    ApplicationArea = All;
+                }
+                field(Mode; Mode)
+                {
+                    ApplicationArea = All;
+                }
+                field(Target; Target)
                 {
                     ApplicationArea = All;
                 }

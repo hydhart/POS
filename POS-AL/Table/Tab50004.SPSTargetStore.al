@@ -5,19 +5,33 @@ table 50004 "SPS Target Store"
 
     fields
     {
-        field(1; "Inventory Posting Group"; Code[10])
+        field(1; "Start Date"; Date)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(2; "Inventory Posting Group"; Code[10])
         {
             DataClassification = ToBeClassified;
             TableRelation = "Inventory Posting Group".Code;
             ValidateTableRelation = true;
         }
-        field(2; "Store Code"; Code[10])
+        field(3; "Store Code"; Code[10])
         {
             DataClassification = ToBeClassified;
             TableRelation = Store;
             ValidateTableRelation = true;
         }
-        field(3; "Target Qty"; Integer)
+        field(4; "Item Family Code"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "Item Family";
+            ValidateTableRelation = true;
+        }
+        field(5; Mode; Integer)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(6; Target; Decimal)
         {
             DataClassification = ToBeClassified;
         }
@@ -25,7 +39,7 @@ table 50004 "SPS Target Store"
 
     keys
     {
-        key(PK; "Inventory Posting Group", "Store Code")
+        key(PK; "Start Date", "Inventory Posting Group", "Store Code", "Item Family Code")
         {
             Clustered = true;
         }

@@ -57,10 +57,6 @@ table 50007 "SPS History Sales"
         {
             DataClassification = ToBeClassified;
         }
-        field(14; "Qty Target Store"; Decimal)
-        {
-            DataClassification = ToBeClassified;
-        }
     }
 
     keys

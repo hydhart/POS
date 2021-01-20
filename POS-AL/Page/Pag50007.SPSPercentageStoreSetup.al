@@ -11,6 +11,10 @@ page 50007 "Percentage Store Setup"
         {
             repeater(General)
             {
+                field("Start Date"; "Start Date")
+                {
+                    ApplicationArea = All;
+                }
                 field("Inventory Posting Group"; "Inventory Posting Group")
                 {
                     ApplicationArea = All;

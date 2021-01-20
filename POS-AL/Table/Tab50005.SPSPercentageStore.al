@@ -5,27 +5,31 @@ table 50005 "SPS Percentage Store"
 
     fields
     {
-        field(1; "Inventory Posting Group"; Code[10])
+        field(1; "Start Date"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(2; "Inventory Posting Group"; Code[10])
         {
             DataClassification = ToBeClassified;
             TableRelation = "Inventory Posting Group".Code;
             ValidateTableRelation = true;
         }
-        field(2; "Store Code"; Code[10])
+        field(3; "Store Code"; Code[10])
         {
             DataClassification = ToBeClassified;
             TableRelation = Store."No.";
             ValidateTableRelation = true;
         }
-        field(3; "Min Val"; Decimal)
+        field(4; "Min Val"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(4; "Max Val"; Decimal)
+        field(5; "Max Val"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(5; Percentage; Decimal)
+        field(6; Percentage; Decimal)
         {
             DataClassification = ToBeClassified;
         }
@@ -33,7 +37,7 @@ table 50005 "SPS Percentage Store"
 
     keys
     {
-        key(PK; "Inventory Posting Group", "Store Code", "Min Val", "Max Val")
+        key(PK; "Start Date", "Inventory Posting Group", "Store Code", "Min Val", "Max Val")
         {
             Clustered = true;
         }
