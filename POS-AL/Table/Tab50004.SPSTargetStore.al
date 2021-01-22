@@ -18,7 +18,7 @@ table 50004 "SPS Target Store"
         field(3; "Store Code"; Code[10])
         {
             DataClassification = ToBeClassified;
-            TableRelation = Store;
+            TableRelation = Store."No.";
             ValidateTableRelation = true;
         }
         field(4; "Item Family Code"; Code[20])
@@ -27,7 +27,7 @@ table 50004 "SPS Target Store"
             TableRelation = "Item Family";
             ValidateTableRelation = true;
         }
-        field(5; Mode; Integer)
+        field(5; Mode; Enum "Target Mode")
         {
             DataClassification = ToBeClassified;
         }

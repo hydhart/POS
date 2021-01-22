@@ -5,7 +5,7 @@ table 50005 "SPS Percentage Store"
 
     fields
     {
-        field(1; "Start Date"; Decimal)
+        field(1; "Start Date"; Date)
         {
             DataClassification = ToBeClassified;
         }

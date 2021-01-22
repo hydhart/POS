@@ -5,7 +5,7 @@ table 50006 "SPS Value Comission"
 
     fields
     {
-        field(1; "Start Date"; Decimal)
+        field(1; "Start Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
@@ -27,15 +27,21 @@ table 50006 "SPS Value Comission"
             TableRelation = "Item Category".Code;
             ValidateTableRelation = true;
         }
-        field(5; "Min Val"; Decimal)
+        field(5; "Item No"; Code[10])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = Item."No.";
+            ValidateTableRelation = true;
+        }
+        field(6; "Min Val"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(6; "Max Val"; Decimal)
+        field(7; "Max Val"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(7; Comission; Decimal)
+        field(8; Comission; Decimal)
         {
             DataClassification = ToBeClassified;
         }
@@ -43,7 +49,7 @@ table 50006 "SPS Value Comission"
 
     keys
     {
-        key(PK; "Start Date", "Inventory Posting Group", "Item Family Code", "Item Category Code", "Min Val", "Max Val")
+        key(PK; "Start Date", "Inventory Posting Group", "Item Family Code", "Item Category Code", "Item No", "Min Val", "Max Val")
         {
             Clustered = true;
         }
