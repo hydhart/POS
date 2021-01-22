@@ -27,6 +27,10 @@ page 50008 "Value Comission Setup"
                 {
                     ApplicationArea = All;
                 }
+                field("Item No"; "Item No")
+                {
+                    ApplicationArea = All;
+                }
                 field("Min Val"; "Min Val")
                 {
                     ApplicationArea = All;
