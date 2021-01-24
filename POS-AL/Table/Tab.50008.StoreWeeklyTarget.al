@@ -8,6 +8,8 @@ table 50008 "Store Weekly Target"
         field(1; "Store No."; Code[10])
         {
             DataClassification = ToBeClassified;
+            TableRelation = Store."No.";
+            ValidateTableRelation = true;
         }
         field(2; "Year"; Integer)
         {
