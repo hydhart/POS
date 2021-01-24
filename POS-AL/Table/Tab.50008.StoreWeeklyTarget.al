@@ -22,10 +22,12 @@ table 50008 "Store Weekly Target"
         field(4; "Start Date"; Date)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(5; "End Date"; Date)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(6; "Target Sales"; Decimal)
         {
