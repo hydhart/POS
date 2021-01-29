@@ -48,11 +48,8 @@ page 50010 "Store Weekly Target"
                 ApplicationArea = All;
 
                 trigger OnAction()
-                var
-                    ImportWeeklyTarget: XmlPort "Store Weekly Target";
                 begin
-                    ImportWeeklyTarget.Run();
-                    //Message('Import');
+                    Xmlport.Run(50007, false, true);
                 end;
             }
         }

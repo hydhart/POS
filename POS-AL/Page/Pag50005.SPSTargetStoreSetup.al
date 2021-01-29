@@ -51,8 +51,8 @@ page 50005 "Target Store Setup"
                 var
                     ADO: Codeunit ADOFunction;
                 begin
+                    Xmlport.Run(50004, false, true);
                     //Message(ADO.RunSQLProcedure());
-                    Message('Import');
                 end;
             }
         }

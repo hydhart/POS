@@ -57,7 +57,7 @@ page 50008 "Value Comission Setup"
 
                 trigger OnAction()
                 begin
-                    Message('Import');
+                    Xmlport.Run(50006, false, true);
                 end;
             }
         }

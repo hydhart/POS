@@ -50,7 +50,7 @@ page 50007 "Percentage Store Setup"
 
                 trigger OnAction()
                 begin
-                    Message('Import');
+                    Xmlport.Run(50005, false, true);
                 end;
             }
         }

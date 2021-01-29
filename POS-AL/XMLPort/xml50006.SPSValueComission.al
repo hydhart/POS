@@ -20,9 +20,9 @@ xmlport 50006 "SPS Value Comission"
                 fieldelement(ItemFamilyCode; ValueComission."Item Family Code") { }
                 fieldelement(ItemCategoryCode; ValueComission."Item Category Code") { }
                 fieldelement(ItemNo; ValueComission."Item No") { }
-                fieldelement(Description; ValueComission."Min Val") { }
-                fieldelement(ClubCode; ValueComission."Max Val") { }
-                fieldelement(SchemeCode; ValueComission.Comission) { }
+                fieldelement(MinVal; ValueComission."Min Val") { }
+                fieldelement(MaxVal; ValueComission."Max Val") { }
+                fieldelement(Comission; ValueComission.Comission) { }
 
                 trigger OnBeforeInsertRecord()
                 begin
