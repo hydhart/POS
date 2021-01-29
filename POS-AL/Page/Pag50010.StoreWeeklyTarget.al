@@ -1,38 +1,37 @@
-page 50007 "Percentage Store Setup"
+page 50010 "Store Weekly Target"
 {
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
-    SourceTable = "SPS Percentage Store";
+    SourceTable = "Store Weekly Target";
 
     layout
     {
         area(Content)
         {
-            repeater(General)
+            repeater(WeeklyTarget)
             {
+                field("Store No."; "Store No.")
+                {
+                    ApplicationArea = All;
+                }
+                field(Year; Year)
+                {
+                    ApplicationArea = All;
+                }
+                field(Week; Week)
+                {
+                    ApplicationArea = All;
+                }
                 field("Start Date"; "Start Date")
                 {
                     ApplicationArea = All;
                 }
-                field("Inventory Posting Group"; "Inventory Posting Group")
+                field("End Date"; "End Date")
                 {
                     ApplicationArea = All;
                 }
-                field("Store Code"; "Store Code")
-                {
-                    ApplicationArea = All;
-                    ;
-                }
-                field("Min Val"; "Min Val")
-                {
-                    ApplicationArea = All;
-                }
-                field("Max Val"; "Max Val")
-                {
-                    ApplicationArea = All;
-                }
-                field(Percentage; Percentage)
+                field("Target Sales"; "Target Sales")
                 {
                     ApplicationArea = All;
                 }
@@ -49,10 +48,16 @@ page 50007 "Percentage Store Setup"
                 ApplicationArea = All;
 
                 trigger OnAction()
+                var
+                    ImportWeeklyTarget: XmlPort "Store Weekly Target";
                 begin
-                    Message('Import');
+                    ImportWeeklyTarget.Run();
+                    //Message('Import');
                 end;
             }
         }
     }
+
+    var
+        myInt: Integer;
 }

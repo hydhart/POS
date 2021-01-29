@@ -20,6 +20,11 @@ table 50008 "Store Weekly Target"
             DataClassification = ToBeClassified;
             MinValue = 1;
             MaxValue = 52;
+            trigger OnValidate()
+            begin
+                "Start Date" := DWY2DATE(1, Week, Year);
+                "End Date" := DWY2Date(7, Week, Year);
+            end;
         }
         field(4; "Start Date"; Date)
         {
