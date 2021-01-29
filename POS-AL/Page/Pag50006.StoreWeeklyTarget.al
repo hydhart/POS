@@ -40,5 +40,19 @@ page 50006 "Store Weekly Target"
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action(Import)
+            {
+                ApplicationArea = All;
 
+                trigger OnAction()
+                begin
+                    Xmlport.Run(50007, false, true);
+                end;
+            }
+        }
+    }
 }
