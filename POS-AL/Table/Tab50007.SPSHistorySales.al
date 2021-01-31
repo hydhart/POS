@@ -61,6 +61,10 @@ table 50007 "SPS History Sales"
         {
             DataClassification = ToBeClassified;
         }
+        field(15; "Serial No"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys
@@ -68,6 +72,10 @@ table 50007 "SPS History Sales"
         key(PK; "Order ID", "Line Nbr")
         {
             Clustered = true;
+        }
+        key(SecondKey; "Store Code", "SPG Code", "Order Date")
+        {
+            Unique = true;
         }
     }
 }

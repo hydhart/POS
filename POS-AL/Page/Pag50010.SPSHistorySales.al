@@ -80,6 +80,30 @@ page 50010 "History Sales"
                     */
                 end;
             }
+            action("Report History Sales")
+            {
+                ApplicationArea = All;
+
+                trigger OnAction()
+                begin
+                end;
+            }
+            action("Report Summary Sales")
+            {
+                ApplicationArea = All;
+
+                trigger OnAction()
+                begin
+                end;
+            }
+            action("Report Comission")
+            {
+                ApplicationArea = All;
+
+                trigger OnAction()
+                begin
+                end;
+            }
         }
     }
 }
