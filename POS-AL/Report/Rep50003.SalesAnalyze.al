@@ -101,9 +101,7 @@ report 50003 "Sales Analyze"
             StoreTarget.SetFilter("End Date", '>=%1', pDateFilter);
         end;
         if StoreTarget.FindSet() then
-            StoreTarget.CalcSums("Target Sales")
-        else
-            Error('Target Sales tidak ditemukan.');
+            StoreTarget.CalcSums("Target Sales");
 
         exit(StoreTarget."Target Sales");
     end;
