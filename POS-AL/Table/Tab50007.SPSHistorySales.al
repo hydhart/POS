@@ -16,10 +16,12 @@ table 50007 "SPS History Sales"
         field(3; "SPG Code"; Code[20])
         {
             DataClassification = ToBeClassified;
+            TableRelation = Staff.ID;
         }
         field(4; "Store Code"; Code[20])
         {
             DataClassification = ToBeClassified;
+            TableRelation = Store."No.";
         }
         field(5; "Customer Code"; Code[20])
         {
@@ -32,6 +34,7 @@ table 50007 "SPS History Sales"
         field(7; "Item No"; Code[20])
         {
             DataClassification = ToBeClassified;
+            TableRelation = Item."No.";
         }
         field(8; Qty; Decimal)
         {
@@ -52,10 +55,12 @@ table 50007 "SPS History Sales"
         field(12; "Inventory Posting Group"; Code[20])
         {
             DataClassification = ToBeClassified;
+            TableRelation = "Inventory Posting Group".Code;
         }
         field(13; "Item Category Code"; Code[20])
         {
             DataClassification = ToBeClassified;
+            TableRelation = "Item Category".Code;
         }
         field(14; "Qty Target Store"; Decimal)
         {

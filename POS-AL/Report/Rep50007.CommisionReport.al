@@ -1,9 +1,9 @@
-report 50005 "History Sales Report"
+report 50007 "Commision Report"
 {
     ApplicationArea = All;
     UsageCategory = ReportsAndAnalysis;
     DefaultLayout = RDLC;
-    RDLCLayout = './Report/Layout/Rep50005.HistorySales.rdlc';
+    RDLCLayout = './Report/Layout/Rep50007.CommisionReport.rdlc';
 
     dataset
     {
@@ -12,18 +12,14 @@ report 50005 "History Sales Report"
             DataItemTableView = sorting("Store Code", "SPG Code", "Order Date");
             RequestFilterFields = "SPG Code", "Store Code", "Order Date";
 
-            column(Order_Date; "Order Date") { }
-            column(SPG_Code; "SPG Code") { }
-            column(Store_Code; "Store Code") { }
             column(Store_Name; Store.Name) { }
-            column(Order_ID; "Order ID") { }
-            column(Item_No; "Item No") { }
-            column(Item_Desc; Item.Description) { }
+            column(SPG_Code; "SPG Code") { }
+            column(SPG_Name; Staff."First Name") { }
+            column(Inventory_Posting_Group; "Item Category Code") { }
             column(Item_ProdGroup; Item."Retail Product Code") { }
-            column(Serial_No; "Serial No") { }
             column(Qty; Qty) { }
             column(Amount; Amount) { }
-            column(Sub_Total; GrossAmt) { }
+            column(Target; "Qty Target Store") { }
             column(Comission; Comission) { }
 
             trigger OnAfterGetRecord()
@@ -31,7 +27,6 @@ report 50005 "History Sales Report"
                 if Item.Get("Item No") then;
                 if Store.Get("Store Code") then;
                 if Staff.Get("SPG Code") then;
-                GrossAmt := Qty * Amount;
             end;
         }
     }
@@ -39,5 +34,4 @@ report 50005 "History Sales Report"
         Item: Record Item;
         Store: Record Store;
         Staff: Record Staff;
-        GrossAmt: Decimal;
 }

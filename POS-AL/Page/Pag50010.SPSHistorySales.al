@@ -83,25 +83,34 @@ page 50010 "History Sales"
             action("Report History Sales")
             {
                 ApplicationArea = All;
+                Promoted = true;
+                PromotedCategory = Report;
 
                 trigger OnAction()
                 begin
+                    Report.RunModal(50005, true, false);
                 end;
             }
             action("Report Summary Sales")
             {
                 ApplicationArea = All;
+                Promoted = true;
+                PromotedCategory = Report;
 
                 trigger OnAction()
                 begin
+                    Report.RunModal(50006, true, false);
                 end;
             }
             action("Report Comission")
             {
                 ApplicationArea = All;
+                Promoted = true;
+                PromotedCategory = Report;
 
                 trigger OnAction()
                 begin
+                    Report.RunModal(50007, true, false);
                 end;
             }
         }
