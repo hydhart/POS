@@ -123,7 +123,7 @@ codeunit 50000 "Modern Channel Mgt"
         response := httpCall(requestURL);
         jObject.ReadFrom(response);
 
-        JObject.Get('status', JToken);
+        JObject.Get('scrmessage', JToken);
         JToken.WriteTo(status);
         scrmsg := status;
         writeLog(response, requestURL);
