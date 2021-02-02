@@ -94,19 +94,25 @@ codeunit 50002 "POS Command MC"
 
     procedure Inquiry()
     var
-        POSTrx: Codeunit "POS Transaction";
-        POSTransaction: Record "POS Transaction";
-        POSTransLine: Record "POS Trans. Line";
+        TransSalesEntry: Record "Trans. Sales Entry";
         PPOBMgt: Codeunit "Modern Channel Mgt";
+        eposCtrl: Codeunit "EPOS Control Interface";
+        recordID: RecordId;
+        ppobLog: Record "Modern Channel Log Entry";
     begin
-        POSTrx.GetPOSTransaction(POSTransaction);
-        posTransLine.Reset();
-        posTransLine.SetRange("Receipt No.", POSTransaction."Receipt No.");
-        posTransLine.SetRange("Entry Status", posTransLine."Entry Status"::" ");
-        if posTransLine.FindFirst() then begin
-            if POSTransLine.mc_Itemtype = POSTransLine.mc_Itemtype::"Pulsa PostPaid" then begin
-                PPOBMgt.initializeData(posTransLine."Store No.", POSTransaction."Staff ID", posTransLine.mc_vtype, posTransLine.mc_hp, POSTransaction."Receipt No.");
-                PPOBMgt.RunInquiry(posTransLine);
+        eposCtrl.GetActiveLookupRecordID(recordID);
+
+        ppobLog.Get(recordID);
+
+        TransSalesEntry.Reset();
+        TransSalesEntry.SetRange("Receipt No.", ppobLog."Receipt No.");
+        //posTransLine.SetRange("Entry Status", posTransLine."Entry Status"::" ");
+        if TransSalesEntry.FindFirst() then begin
+            if TransSalesEntry.mc_Itemtype <> TransSalesEntry.mc_Itemtype::" " then begin
+                PPOBMgt.initializeData(TransSalesEntry."Store No.", ppobLog."Cashier ID", ppobLog.VType,
+                ppobLog.Handphone, ppobLog."Receipt No.");
+
+                PPOBMgt.RunInquiry(ppobLog);
             end;
         end;
     end;

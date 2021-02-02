@@ -107,6 +107,10 @@ table 50001 "Modern Channel Log Entry"
         {
             DataClassification = ToBeClassified;
         }
+        field(22; "Server Trx ID"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {

@@ -95,7 +95,8 @@ codeunit 50000 "Modern Channel Mgt"
         httpResponse: HttpResponseMessage;
         JObject: JsonObject;
     begin
-        initializeData('pos01', 'csh01', 'HALO', '081312341234', 'p000001');
+        serverTrxID := '97721316';
+        initializeData('s0001', '10', 'PLGS5', '081234445555', '00000P0001000000073');
         getSetup();
         requestURL := inquiryURL();
         response := httpCall(requestURL);
@@ -148,6 +149,11 @@ codeunit 50000 "Modern Channel Mgt"
 
         JObject.Get('rescode', JToken);
         JToken.WriteTo(rescode);
+
+        JObject.Get('server_trxid', JToken);
+        JToken.WriteTo(serverTrxID);
+
+        serverTrxID := DelChr(serverTrxID, '=', '"');
         case rescode of
             '4':
                 begin
@@ -184,13 +190,13 @@ codeunit 50000 "Modern Channel Mgt"
                     JObject.Get('scrmessage', JToken);
                     JToken.WriteTo(scrmsg);
                     writeLog(response, requestURL);
-                    Error(resmsg);
+                    Error(scrmsg + '\' + resmsg);
                 end;
         end;
         exit(rescode);
     end;
 
-    procedure RunInquiry(var POSTransLine: Record "POS Trans. Line"): Text
+    procedure RunInquiry(var ppobLog: Record "Modern Channel Log Entry"): Text
     var
         requestURL: Text;
         response: Text;
@@ -201,6 +207,7 @@ codeunit 50000 "Modern Channel Mgt"
         sn: Text;
         amount: Text;
     begin
+        serverTrxID := DelChr(ppobLog."Server Trx ID", '=', '"');
         requestURL := inquiryURL();
         response := httpCall(requestURL);
 
@@ -208,34 +215,25 @@ codeunit 50000 "Modern Channel Mgt"
 
         JObject.Get('rescode', JToken);
         JToken.WriteTo(rescode);
-        /* case rescode of
+        case rescode of
             '4':
                 begin
-                    POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
-
                     JObject.Get('sn', JToken);
                     JToken.WriteTo(sn);
-                    POSTransLine.mc_sn := sn;
                     JObject.Get('harga', JToken);
                     JToken.WriteTo(amount);
-                    POSTransLine.mc_amount := amount;
-                    POSTransLine.Modify();
                 end;
             '0':
                 begin
-                    POSTransLine.mc_partner_trxid := POSTransLine."Receipt No.";
-
                     JObject.Get('harga', JToken);
                     JToken.WriteTo(amount);
-                    POSTransLine.mc_amount := amount;
-                    POSTransLine.Modify();
                 end;
             else begin
                     JObject.Get('resmessage', JToken);
                     JToken.WriteTo(scrmsg);
                     Error(scrmsg);
                 end;
-        end; */
+        end;
         JObject.Get('resmessage', JToken);
         JToken.WriteTo(resmsg);
         JObject.Get('scrmessage', JToken);
@@ -426,6 +424,7 @@ codeunit 50000 "Modern Channel Mgt"
         mcLogEntry."Nama Pelanggan" := name;
         mcLogEntry."Status Message" := scrmsg;
         mcLogEntry.Handphone := handphone;
+        mcLogEntry."Server Trx ID" := serverTrxID;
         mcLogEntry."Response Message".CreateOutStream(outStr);
         outStr.WriteText(responsMsg);
         mcLogEntry.Insert();
@@ -577,7 +576,8 @@ codeunit 50000 "Modern Channel Mgt"
     begin
         //GET REQUEST URL
         command := command::inquiry;
-        firstHash := PIN + SKey + serverTrxID + partnerTrxID;
+        firstHash := PIN + SKey + serverTrxID;
+        //firstHash := PIN + SKey + partnerTrxID;
         secondHash := channelID + storeID + posID + Format(CurrentDateTime, 0, formatDate);
         signature := getSignature(firstHash, secondHash);
 
