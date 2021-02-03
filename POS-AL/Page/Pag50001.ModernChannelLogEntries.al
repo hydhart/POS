@@ -78,6 +78,10 @@ page 50001 "Modern Channel Log Entries"
                 {
                     ApplicationArea = All;
                 }
+                field("Server Trx ID"; Rec."Server Trx ID")
+                {
+                    ApplicationArea = All;
+                }
                 field("Cashier ID"; Rec."Cashier ID")
                 {
                     ApplicationArea = All;

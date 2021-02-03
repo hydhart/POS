@@ -40,7 +40,6 @@ page 50006 "Store Weekly Target"
             }
         }
     }
-
     actions
     {
         area(Processing)
