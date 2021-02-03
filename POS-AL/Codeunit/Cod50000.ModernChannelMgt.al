@@ -214,26 +214,23 @@ codeunit 50000 "Modern Channel Mgt"
         jObject.ReadFrom(response);
 
         JObject.Get('rescode', JToken);
-        JToken.WriteTo(rescode);
+        JToken.WriteTo(rescode);/* 
         case rescode of
             '4':
                 begin
-                    JObject.Get('sn', JToken);
-                    JToken.WriteTo(sn);
-                    JObject.Get('harga', JToken);
-                    JToken.WriteTo(amount);
+                    JObject.Get('resmessage', JToken);
+                    JToken.WriteTo(scrmsg);
                 end;
             '0':
                 begin
-                    JObject.Get('harga', JToken);
-                    JToken.WriteTo(amount);
+                    JObject.Get('resmessage', JToken);
+                    JToken.WriteTo(scrmsg);
                 end;
             else begin
                     JObject.Get('resmessage', JToken);
                     JToken.WriteTo(scrmsg);
-                    Error(scrmsg);
                 end;
-        end;
+        end; */
         JObject.Get('resmessage', JToken);
         JToken.WriteTo(resmsg);
         JObject.Get('scrmessage', JToken);
