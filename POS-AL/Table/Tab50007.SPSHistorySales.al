@@ -70,6 +70,10 @@ table 50007 "SPS History Sales"
         {
             DataClassification = ToBeClassified;
         }
+        field(16; Mode; Enum "Target Mode")
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys
@@ -80,7 +84,6 @@ table 50007 "SPS History Sales"
         }
         key(SecondKey; "Store Code", "SPG Code", "Order Date")
         {
-            Unique = true;
         }
     }
 }
