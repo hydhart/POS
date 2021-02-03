@@ -8,10 +8,13 @@ codeunit 50006 ADOFunction
         SQLQuery: Text;
         SQLResultAsXML: Text;
 
-    procedure RunSQLProcedure(): Text
+    procedure RunSQLProcedure(StartDate: Date; EndDate: Date): Text
+    var
+        DateFormat: Text;
     begin
+        DateFormat := '<Year4>-<Month,2>-<Day,2>';
         ConnStr := 'Server=FTAN\SQL2017Dev;Database=w1-ls-central-release-17-0-0-0;User Id=sa;Password=P@ssw0rd;'; // change connection parameters
-        SQLQuery := '[dbo].[SPS_Calculate_Comission] ''2021-01-01'', ''2021-01-05'''; // change store procedure name
+        SQLQuery := StrSubstNo('[dbo].[SPS_Calculate_Comission] ''%1'', ''%2''', Format(StartDate, 0, DateFormat), Format(EndDate, 0, DateFormat)); // change store procedure name
 
         SQLConn := SQLConn.SqlConnection();
         SQLConn.ConnectionString := ConnStr;
@@ -19,6 +22,8 @@ codeunit 50006 ADOFunction
         SQLCmd.Connection.Open();
         SQLResultAsXML := FORMAT(SQLCmd.ExecuteNonQuery());
         SQLConn.Close();
+
+        Commit();
 
         exit(SQLResultAsXML);
     end;

@@ -9,31 +9,31 @@ page 50006 "Store Weekly Target"
 
     layout
     {
-        area(content)
+        area(Content)
         {
-            repeater(General)
+            repeater(WeeklyTarget)
             {
-                field("Store No."; Rec."Store No.")
+                field("Store No."; "Store No.")
                 {
                     ApplicationArea = All;
                 }
-                field(Year; Rec.Year)
+                field(Year; Year)
                 {
                     ApplicationArea = All;
                 }
-                field(Week; Rec.Week)
+                field(Week; Week)
                 {
                     ApplicationArea = All;
                 }
-                field("Start Date"; Rec."Start Date")
+                field("Start Date"; "Start Date")
                 {
                     ApplicationArea = All;
                 }
-                field("End Date"; Rec."End Date")
+                field("End Date"; "End Date")
                 {
                     ApplicationArea = All;
                 }
-                field("Target Sales"; Rec."Target Sales")
+                field("Target Sales"; "Target Sales")
                 {
                     ApplicationArea = All;
                 }
