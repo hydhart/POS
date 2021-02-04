@@ -70,6 +70,120 @@ End Function
         <Field Name="Name_Store">
           <DataField>Name_Store</DataField>
         </Field>
+        <Field Name="SalesWeekly">
+          <DataField>SalesWeekly</DataField>
+        </Field>
+        <Field Name="SalesWeeklyFormat">
+          <DataField>SalesWeeklyFormat</DataField>
+        </Field>
+        <Field Name="TargetWeekly">
+          <DataField>TargetWeekly</DataField>
+        </Field>
+        <Field Name="TargetWeeklyFormat">
+          <DataField>TargetWeeklyFormat</DataField>
+        </Field>
+        <Field Name="AchievementWeekly">
+          <DataField>AchievementWeekly</DataField>
+        </Field>
+        <Field Name="AchievementWeeklyFormat">
+          <DataField>AchievementWeeklyFormat</DataField>
+        </Field>
+        <Field Name="SalesLastWeek">
+          <DataField>SalesLastWeek</DataField>
+        </Field>
+        <Field Name="SalesLastWeekFormat">
+          <DataField>SalesLastWeekFormat</DataField>
+        </Field>
+        <Field Name="GrowthWeek">
+          <DataField>GrowthWeek</DataField>
+        </Field>
+        <Field Name="GrowthWeekFormat">
+          <DataField>GrowthWeekFormat</DataField>
+        </Field>
+        <Field Name="SalesMonth">
+          <DataField>SalesMonth</DataField>
+        </Field>
+        <Field Name="SalesMonthFormat">
+          <DataField>SalesMonthFormat</DataField>
+        </Field>
+        <Field Name="TargetMonth">
+          <DataField>TargetMonth</DataField>
+        </Field>
+        <Field Name="TargetMonthFormat">
+          <DataField>TargetMonthFormat</DataField>
+        </Field>
+        <Field Name="AchievementMonth">
+          <DataField>AchievementMonth</DataField>
+        </Field>
+        <Field Name="AchievementMonthFormat">
+          <DataField>AchievementMonthFormat</DataField>
+        </Field>
+        <Field Name="SalesLastYear">
+          <DataField>SalesLastYear</DataField>
+        </Field>
+        <Field Name="SalesLastYearFormat">
+          <DataField>SalesLastYearFormat</DataField>
+        </Field>
+        <Field Name="GrowthYear">
+          <DataField>GrowthYear</DataField>
+        </Field>
+        <Field Name="GrowthYearFormat">
+          <DataField>GrowthYearFormat</DataField>
+        </Field>
+        <Field Name="SalesLastMonth">
+          <DataField>SalesLastMonth</DataField>
+        </Field>
+        <Field Name="SalesLastMonthFormat">
+          <DataField>SalesLastMonthFormat</DataField>
+        </Field>
+        <Field Name="GrowthMonth">
+          <DataField>GrowthMonth</DataField>
+        </Field>
+        <Field Name="GrowthMonthFormat">
+          <DataField>GrowthMonthFormat</DataField>
+        </Field>
+        <Field Name="SalesYTD">
+          <DataField>SalesYTD</DataField>
+        </Field>
+        <Field Name="SalesYTDFormat">
+          <DataField>SalesYTDFormat</DataField>
+        </Field>
+        <Field Name="TargetYTD">
+          <DataField>TargetYTD</DataField>
+        </Field>
+        <Field Name="TargetYTDFormat">
+          <DataField>TargetYTDFormat</DataField>
+        </Field>
+        <Field Name="AchievementYTD">
+          <DataField>AchievementYTD</DataField>
+        </Field>
+        <Field Name="AchievementYTDFormat">
+          <DataField>AchievementYTDFormat</DataField>
+        </Field>
+        <Field Name="SalesYTDLastYear">
+          <DataField>SalesYTDLastYear</DataField>
+        </Field>
+        <Field Name="SalesYTDLastYearFormat">
+          <DataField>SalesYTDLastYearFormat</DataField>
+        </Field>
+        <Field Name="GrowthYTDLastYear">
+          <DataField>GrowthYTDLastYear</DataField>
+        </Field>
+        <Field Name="GrowthYTDLastYearFormat">
+          <DataField>GrowthYTDLastYearFormat</DataField>
+        </Field>
+        <Field Name="Caption1">
+          <DataField>Caption1</DataField>
+        </Field>
+        <Field Name="Caption2">
+          <DataField>Caption2</DataField>
+        </Field>
+        <Field Name="Caption3">
+          <DataField>Caption3</DataField>
+        </Field>
+        <Field Name="Caption4">
+          <DataField>Caption4</DataField>
+        </Field>
       </Fields>
       <Query>
         <DataSourceName>DataSource</DataSourceName>

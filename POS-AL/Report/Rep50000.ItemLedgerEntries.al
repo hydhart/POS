@@ -32,13 +32,14 @@ report 50000 "Item Ledger Entries"
             column(InvPostingGroup; InvPostingGroup) { }
             column(ItemDescription; ItemDescription) { }
             column(StoreNo; StoreNo) { }
+            column(ProductGroup; ProductGroup) { }
 
             trigger OnAfterGetRecord()
             begin
                 if Item.Get("Item No.") then begin
                     ItemDescription := Item.Description;
                     InvPostingGroup := Item."Inventory Posting Group";
-                    //ProductGroup := Item."Product Group Code";
+                    ProductGroup := Item."Retail Product Code";
                 end
                 else begin
                     Clear(ItemDescription);
