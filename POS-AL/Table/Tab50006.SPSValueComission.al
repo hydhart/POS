@@ -13,7 +13,6 @@ table 50006 "SPS Value Comission"
         {
             DataClassification = ToBeClassified;
             TableRelation = "Inventory Posting Group".Code;
-            ValidateTableRelation = true;
         }
         field(3; "Item Family Code"; Code[20])
         {

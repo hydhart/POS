@@ -55,7 +55,6 @@ table 50007 "SPS History Sales"
         field(12; "Inventory Posting Group"; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "Inventory Posting Group".Code;
         }
         field(13; "Item Category Code"; Code[20])
         {
