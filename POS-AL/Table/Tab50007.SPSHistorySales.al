@@ -52,7 +52,7 @@ table 50007 "SPS History Sales"
         {
             DataClassification = ToBeClassified;
         }
-        field(12; "Inventory Posting Group"; Code[20])
+        field(12; "Inventory Posting Group"; Code[50])
         {
             DataClassification = ToBeClassified;
         }

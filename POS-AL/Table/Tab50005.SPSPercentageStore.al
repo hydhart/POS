@@ -9,7 +9,7 @@ table 50005 "SPS Percentage Store"
         {
             DataClassification = ToBeClassified;
         }
-        field(2; "Inventory Posting Group"; Code[10])
+        field(2; "Inventory Posting Group"; Code[50])
         {
             DataClassification = ToBeClassified;
         }
