@@ -42,7 +42,7 @@ table 50004 "SPS Target Store"
 
     keys
     {
-        key(PK; "Start Date", "Inventory Posting Group", "Store Code", "Item Family Code")
+        key(PK; "Start Date", "Inventory Posting Group", "Store Code", "SPG Code", "Item Family Code")
         {
             Clustered = true;
         }
