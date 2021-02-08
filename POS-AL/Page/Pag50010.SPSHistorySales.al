@@ -4,9 +4,10 @@ page 50010 "History Sales"
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = "SPS History Sales";
-    //Editable = false;
+    Editable = false;
     InsertAllowed = false;
     ModifyAllowed = false;
+    DeleteAllowed = false;
 
     layout
     {
@@ -69,6 +70,7 @@ page 50010 "History Sales"
             action("Calculate Comission")
             {
                 ApplicationArea = All;
+                Visible = false;
 
                 trigger OnAction()
                 begin
