@@ -33,6 +33,11 @@ table 50004 "SPS Target Store"
         {
             DataClassification = ToBeClassified;
         }
+        field(7; "SPG Code"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = Staff.ID;
+        }
     }
 
     keys

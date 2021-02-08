@@ -27,6 +27,10 @@ page 50005 "Target Store Setup"
                 {
                     ApplicationArea = All;
                 }
+                field("SPG Code"; "SPG Code")
+                {
+                    ApplicationArea = All;
+                }
                 field(Mode; Mode)
                 {
                     ApplicationArea = All;
