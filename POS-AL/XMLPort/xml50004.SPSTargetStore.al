@@ -19,6 +19,7 @@ xmlport 50004 "SPS Target Store"
                 fieldelement(InventoryPostingGroup; TargetStore."Inventory Posting Group") { }
                 fieldelement(StoreCode; TargetStore."Store Code") { }
                 fieldelement(ItemFamilyCode; TargetStore."Item Family Code") { }
+                fieldelement(SPGCode; TargetStore."SPG Code") { }
                 fieldelement(Mode; TargetStore.Mode) { }
                 fieldelement(Target; TargetStore.Target) { }
 
@@ -30,6 +31,7 @@ xmlport 50004 "SPS Target Store"
                         DestTable."Inventory Posting Group" := TargetStore."Inventory Posting Group";
                         DestTable."Store Code" := TargetStore."Store Code";
                         DestTable."Item Family Code" := TargetStore."Item Family Code";
+                        DestTable."SPG Code" := TargetStore."SPG Code";
                         DestTable.Mode := TargetStore.Mode;
                         DestTable.Target := TargetStore.Target;
                         DestTable.Insert(true);
