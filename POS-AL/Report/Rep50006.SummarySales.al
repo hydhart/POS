@@ -21,7 +21,10 @@ report 50006 "Summary Sales Report"
                 if HistorySalesTemp.FindFirst() then begin
                     HistorySalesTemp.Qty += HistorySales.Qty;
                     HistorySalesTemp.Amount += HistorySales.Amount;
-                    HistorySalesTemp.Percentage := (HistorySalesTemp.Amount * 100) / HistorySalesTemp."Qty Target Store";
+                    if "Qty Target Store" <> 0 then
+                        HistorySalesTemp.Percentage := (HistorySalesTemp.Amount * 100) / HistorySalesTemp."Qty Target Store"
+                    else
+                        HistorySalesTemp.Percentage := 0;
                     HistorySalesTemp.Modify();
                 end else begin
                     LineNo += 1;
@@ -32,7 +35,10 @@ report 50006 "Summary Sales Report"
                     HistorySalesTemp.Qty := HistorySales.Qty;
                     HistorySalesTemp.Amount := HistorySales.Amount;
                     HistorySalesTemp."Qty Target Store" := HistorySales."Qty Target Store";
-                    HistorySalesTemp.Percentage := (HistorySalesTemp.Amount * 100) / HistorySalesTemp."Qty Target Store";
+                    if "Qty Target Store" <> 0 then
+                        HistorySalesTemp.Percentage := (HistorySalesTemp.Amount * 100) / HistorySalesTemp."Qty Target Store"
+                    else
+                        HistorySalesTemp.Percentage := 0;
                     HistorySalesTemp."Line Nbr" := LineNo;
                     HistorySalesTemp.Insert();
                 end;
