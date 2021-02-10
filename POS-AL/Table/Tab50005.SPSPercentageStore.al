@@ -35,7 +35,7 @@ table 50005 "SPS Percentage Store"
 
     keys
     {
-        key(PK; "Start Date", "Inventory Posting Group", "Store Code", "Min Val", "Max Val")
+        key(PK; "Inventory Posting Group", "Store Code", "Min Val", "Max Val", "Start Date")
         {
             Clustered = true;
         }

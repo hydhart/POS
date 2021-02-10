@@ -81,7 +81,7 @@ table 50007 "SPS History Sales"
         {
             Clustered = true;
         }
-        key(SecondKey; "Store Code", "SPG Code", "Order Date")
+        key(SecondKey; Mode, "Store Code", "SPG Code", "Order Date")
         {
         }
     }

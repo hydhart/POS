@@ -48,7 +48,7 @@ table 50006 "SPS Value Comission"
 
     keys
     {
-        key(PK; "Start Date", "Inventory Posting Group", "Item Family Code", "Item Category Code", "Item No", "Min Val", "Max Val")
+        key(PK; "Inventory Posting Group", "Item Family Code", "Item Category Code", "Item No", "Min Val", "Max Val", "Start Date")
         {
             Clustered = true;
         }
