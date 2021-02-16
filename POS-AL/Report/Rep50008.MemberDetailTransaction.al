@@ -29,6 +29,7 @@ report 50008 "Member Detail Transaction"
                 column(MemberName; MemberAccount.Description) { }
                 column(Status; MemberAccount.Status) { }
                 column(Email; MemberContact."E-Mail") { }
+                column(BirthDate; MemberContact."Date of Birth") { }
                 column(ItemNo; TransLine."Item No.") { }
                 column(ItemDesc; Item.Description) { }
                 column(InvPostGroup; Item."Inventory Posting Group") { }

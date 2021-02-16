@@ -45,7 +45,7 @@ tableextension 50003 "POS Trans Line Ext" extends "POS Trans. Line"
         {
             DataClassification = ToBeClassified;
         }
-        field(50009; "Card No"; Code[20])
+        field(50009; "Card No"; Code[100])
         {
             DataClassification = ToBeClassified;
         }
