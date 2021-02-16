@@ -51,4 +51,10 @@ tableextension 50001 "Trans Sales Entry Ext" extends "Trans. Sales Entry"
             DataClassification = ToBeClassified;
         }
     }
+    keys
+    {
+        key(MemberCard; "Card No.")
+        {
+        }
+    }
 }

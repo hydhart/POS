@@ -11,55 +11,6 @@
       <rd:DataSourceID>26bcefba-c3fe-4605-b6e1-265f842f6f48</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="Mode">
-          <DataField>Mode</DataField>
-        </Field>
-        <Field Name="No">
-          <DataField>No</DataField>
-        </Field>
-        <Field Name="SPGCode">
-          <DataField>SPGCode</DataField>
-        </Field>
-        <Field Name="StoreCode">
-          <DataField>StoreCode</DataField>
-        </Field>
-        <Field Name="InvPostingGroup">
-          <DataField>InvPostingGroup</DataField>
-        </Field>
-        <Field Name="TargetStore">
-          <DataField>TargetStore</DataField>
-        </Field>
-        <Field Name="TargetStoreFormat">
-          <DataField>TargetStoreFormat</DataField>
-        </Field>
-        <Field Name="Qty">
-          <DataField>Qty</DataField>
-        </Field>
-        <Field Name="QtyFormat">
-          <DataField>QtyFormat</DataField>
-        </Field>
-        <Field Name="Amount">
-          <DataField>Amount</DataField>
-        </Field>
-        <Field Name="AmountFormat">
-          <DataField>AmountFormat</DataField>
-        </Field>
-        <Field Name="PercentageSales">
-          <DataField>PercentageSales</DataField>
-        </Field>
-        <Field Name="PercentageSalesFormat">
-          <DataField>PercentageSalesFormat</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -1589,12 +1540,6 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -1634,4 +1579,53 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="Mode">
+          <DataField>Mode</DataField>
+        </Field>
+        <Field Name="No">
+          <DataField>No</DataField>
+        </Field>
+        <Field Name="SPGCode">
+          <DataField>SPGCode</DataField>
+        </Field>
+        <Field Name="StoreCode">
+          <DataField>StoreCode</DataField>
+        </Field>
+        <Field Name="InvPostingGroup">
+          <DataField>InvPostingGroup</DataField>
+        </Field>
+        <Field Name="TargetStore">
+          <DataField>TargetStore</DataField>
+        </Field>
+        <Field Name="TargetStoreFormat">
+          <DataField>TargetStoreFormat</DataField>
+        </Field>
+        <Field Name="Qty">
+          <DataField>Qty</DataField>
+        </Field>
+        <Field Name="QtyFormat">
+          <DataField>QtyFormat</DataField>
+        </Field>
+        <Field Name="Amount">
+          <DataField>Amount</DataField>
+        </Field>
+        <Field Name="AmountFormat">
+          <DataField>AmountFormat</DataField>
+        </Field>
+        <Field Name="PercentageSales">
+          <DataField>PercentageSales</DataField>
+        </Field>
+        <Field Name="PercentageSalesFormat">
+          <DataField>PercentageSalesFormat</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>
