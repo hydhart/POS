@@ -11,100 +11,6 @@
       <rd:DataSourceID>a17e101c-be12-401c-aded-cb7242cade77</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="TransDate">
-          <DataField>TransDate</DataField>
-        </Field>
-        <Field Name="DocNo">
-          <DataField>DocNo</DataField>
-        </Field>
-        <Field Name="AccountNo">
-          <DataField>AccountNo</DataField>
-        </Field>
-        <Field Name="ContactNo">
-          <DataField>ContactNo</DataField>
-        </Field>
-        <Field Name="CardNo">
-          <DataField>CardNo</DataField>
-        </Field>
-        <Field Name="ClubCode">
-          <DataField>ClubCode</DataField>
-        </Field>
-        <Field Name="SchemeCode">
-          <DataField>SchemeCode</DataField>
-        </Field>
-        <Field Name="MemberName">
-          <DataField>MemberName</DataField>
-        </Field>
-        <Field Name="Status">
-          <DataField>Status</DataField>
-        </Field>
-        <Field Name="Email">
-          <DataField>Email</DataField>
-        </Field>
-        <Field Name="BirthDate">
-          <DataField>BirthDate</DataField>
-        </Field>
-        <Field Name="ItemNo">
-          <DataField>ItemNo</DataField>
-        </Field>
-        <Field Name="ItemDesc">
-          <DataField>ItemDesc</DataField>
-        </Field>
-        <Field Name="InvPostGroup">
-          <DataField>InvPostGroup</DataField>
-        </Field>
-        <Field Name="ProductGroup">
-          <DataField>ProductGroup</DataField>
-        </Field>
-        <Field Name="Quantity">
-          <DataField>Quantity</DataField>
-        </Field>
-        <Field Name="QuantityFormat">
-          <DataField>QuantityFormat</DataField>
-        </Field>
-        <Field Name="NetAmount">
-          <DataField>NetAmount</DataField>
-        </Field>
-        <Field Name="NetAmountFormat">
-          <DataField>NetAmountFormat</DataField>
-        </Field>
-        <Field Name="GrossAmount">
-          <DataField>GrossAmount</DataField>
-        </Field>
-        <Field Name="GrossAmountFormat">
-          <DataField>GrossAmountFormat</DataField>
-        </Field>
-        <Field Name="DiscAmount">
-          <DataField>DiscAmount</DataField>
-        </Field>
-        <Field Name="DiscAmountFormat">
-          <DataField>DiscAmountFormat</DataField>
-        </Field>
-        <Field Name="CostAmount">
-          <DataField>CostAmount</DataField>
-        </Field>
-        <Field Name="CostAmountFormat">
-          <DataField>CostAmountFormat</DataField>
-        </Field>
-        <Field Name="PointType">
-          <DataField>PointType</DataField>
-        </Field>
-        <Field Name="Points">
-          <DataField>Points</DataField>
-        </Field>
-        <Field Name="PointsFormat">
-          <DataField>PointsFormat</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -5110,12 +5016,6 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -5155,4 +5055,98 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="TransDate">
+          <DataField>TransDate</DataField>
+        </Field>
+        <Field Name="DocNo">
+          <DataField>DocNo</DataField>
+        </Field>
+        <Field Name="AccountNo">
+          <DataField>AccountNo</DataField>
+        </Field>
+        <Field Name="ContactNo">
+          <DataField>ContactNo</DataField>
+        </Field>
+        <Field Name="CardNo">
+          <DataField>CardNo</DataField>
+        </Field>
+        <Field Name="ClubCode">
+          <DataField>ClubCode</DataField>
+        </Field>
+        <Field Name="SchemeCode">
+          <DataField>SchemeCode</DataField>
+        </Field>
+        <Field Name="MemberName">
+          <DataField>MemberName</DataField>
+        </Field>
+        <Field Name="Status">
+          <DataField>Status</DataField>
+        </Field>
+        <Field Name="Email">
+          <DataField>Email</DataField>
+        </Field>
+        <Field Name="BirthDate">
+          <DataField>BirthDate</DataField>
+        </Field>
+        <Field Name="ItemNo">
+          <DataField>ItemNo</DataField>
+        </Field>
+        <Field Name="ItemDesc">
+          <DataField>ItemDesc</DataField>
+        </Field>
+        <Field Name="InvPostGroup">
+          <DataField>InvPostGroup</DataField>
+        </Field>
+        <Field Name="ProductGroup">
+          <DataField>ProductGroup</DataField>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+        </Field>
+        <Field Name="QuantityFormat">
+          <DataField>QuantityFormat</DataField>
+        </Field>
+        <Field Name="NetAmount">
+          <DataField>NetAmount</DataField>
+        </Field>
+        <Field Name="NetAmountFormat">
+          <DataField>NetAmountFormat</DataField>
+        </Field>
+        <Field Name="GrossAmount">
+          <DataField>GrossAmount</DataField>
+        </Field>
+        <Field Name="GrossAmountFormat">
+          <DataField>GrossAmountFormat</DataField>
+        </Field>
+        <Field Name="DiscAmount">
+          <DataField>DiscAmount</DataField>
+        </Field>
+        <Field Name="DiscAmountFormat">
+          <DataField>DiscAmountFormat</DataField>
+        </Field>
+        <Field Name="CostAmount">
+          <DataField>CostAmount</DataField>
+        </Field>
+        <Field Name="CostAmountFormat">
+          <DataField>CostAmountFormat</DataField>
+        </Field>
+        <Field Name="PointType">
+          <DataField>PointType</DataField>
+        </Field>
+        <Field Name="Points">
+          <DataField>Points</DataField>
+        </Field>
+        <Field Name="PointsFormat">
+          <DataField>PointsFormat</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>

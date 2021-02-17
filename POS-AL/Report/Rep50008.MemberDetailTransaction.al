@@ -43,8 +43,6 @@ report 50008 "Member Detail Transaction"
                 column(Points; MemberEntry.Points) { }
 
                 trigger OnAfterGetRecord()
-                var
-                    myInt: Integer;
                 begin
                     MemberEntry.SetCurrentKey("Store No.", "POS Terminal No.", "Transaction No.");
                     MemberEntry.SetRange("Store No.", TransLine."Store No.");
@@ -52,6 +50,8 @@ report 50008 "Member Detail Transaction"
                     MemberEntry.SetRange("Transaction No.", TransLine."Transaction No.");
                     if not MemberEntry.FindFirst() then
                         MemberEntry.Init();
+                    if not Item.Get(TransLine."Item No.") then
+                        Item.Init();
                 end;
             }
             trigger OnAfterGetRecord()
