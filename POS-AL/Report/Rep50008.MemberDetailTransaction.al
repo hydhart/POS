@@ -24,8 +24,8 @@ report 50008 "Member Detail Transaction"
                 column(AccountNo; Member."Account No.") { }
                 column(ContactNo; Member."Contact No.") { }
                 column(CardNo; Member."Card No.") { }
-                column(ClubCode; Member."Club Code") { }
-                column(SchemeCode; Member."Scheme Code") { }
+                column(ClubCode; MemberAccount."Club Code") { }
+                column(SchemeCode; MemberAccount."Scheme Code") { }
                 column(MemberName; MemberAccount.Description) { }
                 column(Status; MemberAccount.Status) { }
                 column(Email; MemberContact."E-Mail") { }
