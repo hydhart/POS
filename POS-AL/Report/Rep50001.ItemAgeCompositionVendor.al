@@ -69,6 +69,7 @@ report 50001 "Item Age Composition - Vendor"
             {
                 DataItemLink = "Item No." = FIELD("No."), "Location Code" = FIELD("Location Filter"), "Variant Code" = FIELD("Variant Filter"), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter");
                 DataItemTableView = SORTING("Item No.", Open) WHERE(Open = CONST(true));
+                RequestFilterFields = "Source Type", "Source No.";
 
                 trigger OnAfterGetRecord()
                 begin
