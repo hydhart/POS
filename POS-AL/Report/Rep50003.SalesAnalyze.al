@@ -36,6 +36,7 @@ report 50003 "Sales Analyze"
             column(Caption2; Caption[2]) { }
             column(Caption3; Caption[3]) { }
             column(Caption4; Caption[4]) { }
+            column(Caption5; Caption[5]) { }
             //#endregion Caption
 
             trigger OnAfterGetRecord()
@@ -50,7 +51,7 @@ report 50003 "Sales Analyze"
 
                 Caption[3] := StrSubstNo('(%1 - %2)', Format(startYTD, 0, '<Month Text>'), Format(endYTD, 0, '<Month Text> <Year,4>'));
                 Caption[4] := StrSubstNo('(%1 - %2)', Format(startYTDLastYear, 0, '<Month Text>'), Format(endYTDLastYear, 0, '<Month Text> <Year,4>'));
-
+                Caption[5] := StrSubstNo('(%1)', Format(dateFilter, 0, '<Month Text>'));
                 CalculateValue();
             end;
         }
@@ -137,6 +138,8 @@ report 50003 "Sales Analyze"
 
         startYTD := DMY2Date(1, 1, Date2DMY(dateFilter, 3));
         endYTD := DMY2Date(Date2DMY(endLastMonth, 1), Date2DMY(endLastMonth, 2), Date2DMY(endLastMonth, 3));
+        if endYTD < startYTD then
+            endYTD := CalcDate('CM', endDate);
 
         startYTDLastYear := DMY2Date(Date2DMY(startYTD, 1), Date2DMY(startYTD, 2), Date2DMY(startYTD, 3) - 1);
 
@@ -163,27 +166,27 @@ report 50003 "Sales Analyze"
         SalesWeekly := TotalSales(dateFilter, endDate);
         TargetWeekly := TargetSales(dateFilter, false);
         if TargetWeekly > 0 then
-            AchievementWeekly := (SalesWeekly / TargetWeekly) * 100;
+            AchievementWeekly := Round((SalesWeekly / TargetWeekly) * 100, 0.01, '=');
         SalesLastWeek := TotalSales(startDateLastWeek, endDateLastWeek);
         if SalesWeekly > 0 then
-            GrowthWeek := ((SalesWeekly - SalesLastWeek) / SalesWeekly) * 100;
+            GrowthWeek := Round(((SalesWeekly - SalesLastWeek) / SalesWeekly) * 100, 0.01, '=');
         SalesMonth := TotalSales(startMonth, endMonth);
         TargetMonth := TargetSales(dateFilter, true);
         if TargetMonth > 0 then
-            AchievementMonth := (SalesMonth / TargetMonth) * 100;
+            AchievementMonth := Round((SalesMonth / TargetMonth) * 100, 0.01, '=');
         SalesLastYear := TotalSales(startLastYear, endLastYear);
         if SalesLastYear > 0 then
-            GrowthYear := ((SalesMonth - SalesLastYear) / SalesLastYear) * 100;
+            GrowthYear := Round(((SalesMonth - SalesLastYear) / SalesLastYear) * 100, 0.01, '=');
         SalesLastMonth := TotalSales(startLastMonth, endLastMonth);
         if SalesLastMonth > 0 then
-            GrowthMonth := ((SalesMonth - SalesLastMonth) / SalesLastMonth) * 100;
+            GrowthMonth := Round(((SalesMonth - SalesLastMonth) / SalesLastMonth) * 100, 0.01, '=');
         SalesYTD := TotalSales(startYTD, endYTD);
         TargetYTD := TargetSalesYTD(Date2DMY(dateFilter, 3));
         if TargetYTD > 0 then
-            AchievementYTD := (SalesYTD / TargetYTD) * 100;
+            AchievementYTD := Round((SalesYTD / TargetYTD) * 100, 0.01, '=');
         SalesYTDLastYear := TotalSales(startYTDLastYear, endYTDLastYear);
         if SalesYTDLastYear > 0 then
-            GrowthYTDLastYear := ((SalesYTD - SalesYTDLastYear) / SalesYTDLastYear) * 100;
+            GrowthYTDLastYear := Round(((SalesYTD - SalesYTDLastYear) / SalesYTDLastYear) * 100, 0.01, '=');
     end;
 
     var
