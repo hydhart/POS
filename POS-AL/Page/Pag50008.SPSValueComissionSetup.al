@@ -18,6 +18,7 @@ page 50008 "Value Comission Setup"
                 field("Inventory Posting Group"; "Inventory Posting Group")
                 {
                     ApplicationArea = All;
+                    Caption = 'Group Comission Code';
                 }
                 field("Item Family Code"; "Item Family Code")
                 {

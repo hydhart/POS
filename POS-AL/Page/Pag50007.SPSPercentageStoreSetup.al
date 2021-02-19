@@ -18,6 +18,7 @@ page 50007 "Percentage Store Setup"
                 field("Inventory Posting Group"; "Inventory Posting Group")
                 {
                     ApplicationArea = All;
+                    Caption = 'Group Comission Code';
                 }
                 field("Store Code"; "Store Code")
                 {

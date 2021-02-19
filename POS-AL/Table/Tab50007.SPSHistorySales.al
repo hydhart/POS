@@ -59,7 +59,7 @@ table 50007 "SPS History Sales"
         field(13; "Item Category Code"; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "Item Category".Code;
+            Caption = 'Group Comission Code';
         }
         field(14; "Qty Target Store"; Decimal)
         {
