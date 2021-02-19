@@ -1,9 +1,9 @@
-report 50007 "Commision Report"
+report 50007 "Comission Report"
 {
     ApplicationArea = All;
     UsageCategory = ReportsAndAnalysis;
     DefaultLayout = RDLC;
-    RDLCLayout = './Report/Layout/Rep50007.CommisionReport.rdlc';
+    RDLCLayout = './Report/Layout/Rep50007.ComissionReport.rdlc';
 
     dataset
     {
