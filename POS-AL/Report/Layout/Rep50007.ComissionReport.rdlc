@@ -11,58 +11,6 @@
       <rd:DataSourceID>26bcefba-c3fe-4605-b6e1-265f842f6f48</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="Store_Name">
-          <DataField>Store_Name</DataField>
-        </Field>
-        <Field Name="SPG_Code">
-          <DataField>SPG_Code</DataField>
-        </Field>
-        <Field Name="SPG_Name">
-          <DataField>SPG_Name</DataField>
-        </Field>
-        <Field Name="Inventory_Posting_Group">
-          <DataField>Inventory_Posting_Group</DataField>
-        </Field>
-        <Field Name="Item_ProdGroup">
-          <DataField>Item_ProdGroup</DataField>
-        </Field>
-        <Field Name="Qty">
-          <DataField>Qty</DataField>
-        </Field>
-        <Field Name="QtyFormat">
-          <DataField>QtyFormat</DataField>
-        </Field>
-        <Field Name="Amount">
-          <DataField>Amount</DataField>
-        </Field>
-        <Field Name="AmountFormat">
-          <DataField>AmountFormat</DataField>
-        </Field>
-        <Field Name="Target">
-          <DataField>Target</DataField>
-        </Field>
-        <Field Name="TargetFormat">
-          <DataField>TargetFormat</DataField>
-        </Field>
-        <Field Name="Mode">
-          <DataField>Mode</DataField>
-        </Field>
-        <Field Name="Comission">
-          <DataField>Comission</DataField>
-        </Field>
-        <Field Name="ComissionFormat">
-          <DataField>ComissionFormat</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -2029,12 +1977,6 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -2074,4 +2016,56 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="Store_Name">
+          <DataField>Store_Name</DataField>
+        </Field>
+        <Field Name="SPG_Code">
+          <DataField>SPG_Code</DataField>
+        </Field>
+        <Field Name="SPG_Name">
+          <DataField>SPG_Name</DataField>
+        </Field>
+        <Field Name="Inventory_Posting_Group">
+          <DataField>Inventory_Posting_Group</DataField>
+        </Field>
+        <Field Name="Item_ProdGroup">
+          <DataField>Item_ProdGroup</DataField>
+        </Field>
+        <Field Name="Qty">
+          <DataField>Qty</DataField>
+        </Field>
+        <Field Name="QtyFormat">
+          <DataField>QtyFormat</DataField>
+        </Field>
+        <Field Name="Amount">
+          <DataField>Amount</DataField>
+        </Field>
+        <Field Name="AmountFormat">
+          <DataField>AmountFormat</DataField>
+        </Field>
+        <Field Name="Target">
+          <DataField>Target</DataField>
+        </Field>
+        <Field Name="TargetFormat">
+          <DataField>TargetFormat</DataField>
+        </Field>
+        <Field Name="Mode">
+          <DataField>Mode</DataField>
+        </Field>
+        <Field Name="Comission">
+          <DataField>Comission</DataField>
+        </Field>
+        <Field Name="ComissionFormat">
+          <DataField>ComissionFormat</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>

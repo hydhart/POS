@@ -256,7 +256,7 @@ report 50001 "Item Age Composition - Vendor"
         PrintLine: Boolean;
         AverageCost: array[5] of Decimal;
         AverageCostACY: array[5] of Decimal;
-        ItemAgeCompositionValueCaptionLbl: Label 'Item Age Composition - Value';
+        ItemAgeCompositionValueCaptionLbl: Label 'Item Age Composition - Vendor';
         CurrReportPageNoCaptionLbl: Label 'Page';
         AfterCaptionLbl: Label 'After...';
         BeforeCaptionLbl: Label '...Before';
