@@ -49,8 +49,8 @@ report 50003 "Sales Analyze"
                 else
                     Caption[2] := StrSubstNo('(%1 %2 - %3)', Date2DMY(startDateLastWeek, 1), Format(startDateLastWeek, 0, '<Month Text>'), format(endDateLastWeek, 0, formatDate));
 
-                Caption[3] := StrSubstNo('(%1 - %2)', Format(startYTD, 0, '<Month Text>'), Format(endYTD, 0, '<Month Text> <Year,4>'));
-                Caption[4] := StrSubstNo('(%1 - %2)', Format(startYTDLastYear, 0, '<Month Text>'), Format(endYTDLastYear, 0, '<Month Text> <Year,4>'));
+                Caption[3] := StrSubstNo('(%1 - %2)', Format(startYTD, 0, '<Month Text>'), Format(endYTD, 0, '<Month Text> <Year4>'));
+                Caption[4] := StrSubstNo('(%1 - %2)', Format(startYTDLastYear, 0, '<Month Text>'), Format(endYTDLastYear, 0, '<Month Text> <Year4>'));
                 Caption[5] := StrSubstNo('(%1)', Format(dateFilter, 0, '<Month Text>'));
                 CalculateValue();
             end;
