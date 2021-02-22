@@ -10,91 +10,6 @@
       <rd:DataSourceID>e7f9531d-ed6b-4c36-a600-94e245585aca</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="Entry_No_">
-          <DataField>Entry_No_</DataField>
-        </Field>
-        <Field Name="PostingDate">
-          <DataField>PostingDate</DataField>
-        </Field>
-        <Field Name="EntryType">
-          <DataField>EntryType</DataField>
-        </Field>
-        <Field Name="DocumentNo">
-          <DataField>DocumentNo</DataField>
-        </Field>
-        <Field Name="DocumentType">
-          <DataField>DocumentType</DataField>
-        </Field>
-        <Field Name="ItemNo">
-          <DataField>ItemNo</DataField>
-        </Field>
-        <Field Name="SerialNo">
-          <DataField>SerialNo</DataField>
-        </Field>
-        <Field Name="InvoicedQuantity">
-          <DataField>InvoicedQuantity</DataField>
-        </Field>
-        <Field Name="InvoicedQuantityFormat">
-          <DataField>InvoicedQuantityFormat</DataField>
-        </Field>
-        <Field Name="Quantity">
-          <DataField>Quantity</DataField>
-        </Field>
-        <Field Name="QuantityFormat">
-          <DataField>QuantityFormat</DataField>
-        </Field>
-        <Field Name="RemainingQuantity">
-          <DataField>RemainingQuantity</DataField>
-        </Field>
-        <Field Name="RemainingQuantityFormat">
-          <DataField>RemainingQuantityFormat</DataField>
-        </Field>
-        <Field Name="SalesAmountActual">
-          <DataField>SalesAmountActual</DataField>
-        </Field>
-        <Field Name="SalesAmountActualFormat">
-          <DataField>SalesAmountActualFormat</DataField>
-        </Field>
-        <Field Name="CostAmountActual">
-          <DataField>CostAmountActual</DataField>
-        </Field>
-        <Field Name="CostAmountActualFormat">
-          <DataField>CostAmountActualFormat</DataField>
-        </Field>
-        <Field Name="LocationCode">
-          <DataField>LocationCode</DataField>
-        </Field>
-        <Field Name="EntryNo">
-          <DataField>EntryNo</DataField>
-        </Field>
-        <Field Name="VendorNo">
-          <DataField>VendorNo</DataField>
-        </Field>
-        <Field Name="VendorName">
-          <DataField>VendorName</DataField>
-        </Field>
-        <Field Name="InvPostingGroup">
-          <DataField>InvPostingGroup</DataField>
-        </Field>
-        <Field Name="ItemDescription">
-          <DataField>ItemDescription</DataField>
-        </Field>
-        <Field Name="StoreNo">
-          <DataField>StoreNo</DataField>
-        </Field>
-        <Field Name="ProductGroup">
-          <DataField>ProductGroup</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -1451,12 +1366,6 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -1496,4 +1405,89 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="Entry_No_">
+          <DataField>Entry_No_</DataField>
+        </Field>
+        <Field Name="PostingDate">
+          <DataField>PostingDate</DataField>
+        </Field>
+        <Field Name="EntryType">
+          <DataField>EntryType</DataField>
+        </Field>
+        <Field Name="DocumentNo">
+          <DataField>DocumentNo</DataField>
+        </Field>
+        <Field Name="DocumentType">
+          <DataField>DocumentType</DataField>
+        </Field>
+        <Field Name="ItemNo">
+          <DataField>ItemNo</DataField>
+        </Field>
+        <Field Name="SerialNo">
+          <DataField>SerialNo</DataField>
+        </Field>
+        <Field Name="InvoicedQuantity">
+          <DataField>InvoicedQuantity</DataField>
+        </Field>
+        <Field Name="InvoicedQuantityFormat">
+          <DataField>InvoicedQuantityFormat</DataField>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+        </Field>
+        <Field Name="QuantityFormat">
+          <DataField>QuantityFormat</DataField>
+        </Field>
+        <Field Name="RemainingQuantity">
+          <DataField>RemainingQuantity</DataField>
+        </Field>
+        <Field Name="RemainingQuantityFormat">
+          <DataField>RemainingQuantityFormat</DataField>
+        </Field>
+        <Field Name="SalesAmountActual">
+          <DataField>SalesAmountActual</DataField>
+        </Field>
+        <Field Name="SalesAmountActualFormat">
+          <DataField>SalesAmountActualFormat</DataField>
+        </Field>
+        <Field Name="CostAmountActual">
+          <DataField>CostAmountActual</DataField>
+        </Field>
+        <Field Name="CostAmountActualFormat">
+          <DataField>CostAmountActualFormat</DataField>
+        </Field>
+        <Field Name="LocationCode">
+          <DataField>LocationCode</DataField>
+        </Field>
+        <Field Name="EntryNo">
+          <DataField>EntryNo</DataField>
+        </Field>
+        <Field Name="VendorNo">
+          <DataField>VendorNo</DataField>
+        </Field>
+        <Field Name="VendorName">
+          <DataField>VendorName</DataField>
+        </Field>
+        <Field Name="InvPostingGroup">
+          <DataField>InvPostingGroup</DataField>
+        </Field>
+        <Field Name="ItemDescription">
+          <DataField>ItemDescription</DataField>
+        </Field>
+        <Field Name="StoreNo">
+          <DataField>StoreNo</DataField>
+        </Field>
+        <Field Name="ProductGroup">
+          <DataField>ProductGroup</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>
