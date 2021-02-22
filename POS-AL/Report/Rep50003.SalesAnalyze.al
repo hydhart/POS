@@ -76,14 +76,26 @@ report 50003 "Sales Analyze"
     local procedure TotalSales(pStartDate: Date; pEndDate: Date): Decimal;
     var
         TransSalesEntry: Record "Trans. Sales Entry";
+        VE: Record "Value Entry";
     begin
+        /*
         TransSalesEntry.Reset();
         TransSalesEntry.SetRange("Store No.", Store."No.");
         TransSalesEntry.SetRange(Date, pStartDate, pEndDate);
         if TransSalesEntry.FindSet() then
             TransSalesEntry.CalcSums("Net Amount");
+        */
 
-        exit(Abs(TransSalesEntry."Net Amount"));
+        VE.Reset();
+        VE.SetCurrentKey("Item Ledger Entry Type", "Salespers./Purch. Code", "Location Code", "Posting Date");
+        VE.SetRange("Item Ledger Entry Type", VE."Item Ledger Entry Type"::Sale);
+        VE.SetRange("Location Code", Store."Location Code");
+        VE.SetRange("Posting Date", pStartDate, pEndDate);
+        if VE.FindSet() then
+            VE.CalcSums("Sales Amount (Actual)");
+
+        //exit(Abs(TransSalesEntry."Net Amount"));
+        exit(Abs(VE."Sales Amount (Actual)"));
     end;
 
     local procedure TargetSales(pDateFilter: Date; Month: Boolean): Decimal;
