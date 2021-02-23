@@ -89,7 +89,8 @@ report 50003 "Sales Analyze"
         VE.Reset();
         VE.SetCurrentKey("Item Ledger Entry Type", "Salespers./Purch. Code", "Location Code", "Posting Date");
         VE.SetRange("Item Ledger Entry Type", VE."Item Ledger Entry Type"::Sale);
-        VE.SetRange("Location Code", Store."Location Code");
+        //VE.SetRange("Location Code", Store."Location Code");
+        VE.SetRange("Global Dimension 1 Code", Store."Global Dimension 1 Code");
         VE.SetRange("Posting Date", pStartDate, pEndDate);
         if VE.FindSet() then
             VE.CalcSums("Sales Amount (Actual)");
