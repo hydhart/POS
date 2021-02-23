@@ -5,7 +5,7 @@ report 50001 "Item Age Composition - Vendor"
     ApplicationArea = Basic, Suite;
     Caption = 'Item Age Composition - Vendor';
     UsageCategory = ReportsAndAnalysis;
-    DataAccessIntent = ReadOnly;
+    //DataAccessIntent = ReadOnly;
 
     dataset
     {
