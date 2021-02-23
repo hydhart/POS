@@ -6,12 +6,12 @@ report 50003 "Sales Analyze"
     RDLCLayout = './Report/Layout/Rep50003.SalesAnalyze.rdlc';
     dataset
     {
-        dataitem(Store; Store)
+        dataitem(Store; "Dimension Value")
         {
-            DataItemTableView = sorting("No.");
-            RequestFilterFields = "No.";
+            DataItemTableView = sorting(Code) where("Dimension Code" = filter('STORE'));
+            RequestFilterFields = Code;
 
-            column(No_Store; Store."No.") { }
+            column(No_Store; Store.Code) { }
             column(Name_Store; Store.Name) { }
             column(SalesWeekly; SalesWeekly) { }
             column(TargetWeekly; TargetWeekly) { }
@@ -89,8 +89,7 @@ report 50003 "Sales Analyze"
         VE.Reset();
         VE.SetCurrentKey("Item Ledger Entry Type", "Salespers./Purch. Code", "Location Code", "Posting Date");
         VE.SetRange("Item Ledger Entry Type", VE."Item Ledger Entry Type"::Sale);
-        //VE.SetRange("Location Code", Store."Location Code");
-        VE.SetRange("Global Dimension 1 Code", Store."Global Dimension 1 Code");
+        VE.SetRange("Global Dimension 1 Code", Store.Code);
         VE.SetRange("Posting Date", pStartDate, pEndDate);
         if VE.FindSet() then
             VE.CalcSums("Sales Amount (Actual)");
@@ -104,7 +103,7 @@ report 50003 "Sales Analyze"
         StoreTarget: Record "Store Weekly Target";
     begin
         StoreTarget.Reset();
-        StoreTarget.SetRange("Store No.", Store."No.");
+        StoreTarget.SetRange("Store No.", Store.Code);
         StoreTarget.SetRange(Year, Date2DMY(pDateFilter, 3));
         if Month then begin
             StoreTarget.SetFilter("Start Date", '>=%1', pDateFilter);
@@ -125,7 +124,7 @@ report 50003 "Sales Analyze"
         StoreTarget: Record "Store Weekly Target";
     begin
         StoreTarget.Reset();
-        StoreTarget.SetRange("Store No.", Store."No.");
+        StoreTarget.SetRange("Store No.", Store.Code);
         StoreTarget.SetRange(Year, Year);
         if StoreTarget.FindSet() then
             StoreTarget.CalcSums("Target Sales");
@@ -164,14 +163,14 @@ report 50003 "Sales Analyze"
         StoreTarget: Record "Store Weekly Target";
     begin
         StoreTarget.Reset();
-        StoreTarget.SetRange("Store No.", Store."No.");
+        StoreTarget.SetRange("Store No.", Store.Code);
         StoreTarget.SetRange(Year, Date2DMY(dateFilter, 3));
         StoreTarget.SetFilter("Start Date", '<=%1', DateFilter);
         StoreTarget.SetFilter("End Date", '>=%1', DateFilter);
         if StoreTarget.FindFirst() then
             endDate := StoreTarget."End Date"
         else
-            Error('Target Sales tidak ditemukan pada Store %1', Store."No.");
+            Error('Target Sales tidak ditemukan pada Store %1', Store.Code);
     end;
 
     local procedure CalculateValue()
