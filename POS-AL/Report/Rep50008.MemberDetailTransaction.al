@@ -59,7 +59,7 @@ report 50008 "Member Detail Transaction"
             begin
                 if not MemberAccount.Get(Member."Account No.") then
                     MemberAccount.Init();
-                if not MemberContact.Get(Member."Contact No.") then
+                if not MemberContact.Get(Member."Account No.", Member."Contact No.") then
                     MemberContact.Init();
             end;
         }
