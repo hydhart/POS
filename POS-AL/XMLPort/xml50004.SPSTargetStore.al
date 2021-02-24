@@ -25,7 +25,7 @@ xmlport 50004 "SPS Target Store"
 
                 trigger OnBeforeInsertRecord()
                 begin
-                    if not DestTable.Get(TargetStore."Start Date", TargetStore."Inventory Posting Group", TargetStore."Store Code", TargetStore."Item Family Code") then begin
+                    if not DestTable.Get(TargetStore."Inventory Posting Group", TargetStore."Store Code", TargetStore."SPG Code", TargetStore."Item Family Code", TargetStore."Start Date") then begin
                         DestTable.Init();
                         DestTable."Start Date" := TargetStore."Start Date";
                         DestTable."Inventory Posting Group" := TargetStore."Inventory Posting Group";

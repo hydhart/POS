@@ -55,11 +55,11 @@ table 50007 "SPS History Sales"
         field(12; "Inventory Posting Group"; Code[50])
         {
             DataClassification = ToBeClassified;
+            Caption = 'Group Comission Code';
         }
         field(13; "Item Category Code"; Code[20])
         {
             DataClassification = ToBeClassified;
-            Caption = 'Group Comission Code';
         }
         field(14; "Qty Target Store"; Decimal)
         {

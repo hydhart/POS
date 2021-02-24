@@ -24,7 +24,7 @@ xmlport 50005 "SPS Percentage Store"
 
                 trigger OnBeforeInsertRecord()
                 begin
-                    if not DestTable.Get(PercentageStore."Start Date", PercentageStore."Inventory Posting Group", PercentageStore."Store Code", PercentageStore."Min Val", PercentageStore."Max Val") then begin
+                    if not DestTable.Get(PercentageStore."Inventory Posting Group", PercentageStore."Store Code", PercentageStore."Min Val", PercentageStore."Max Val", PercentageStore."Start Date") then begin
                         DestTable.Init();
                         DestTable."Start Date" := PercentageStore."Start Date";
                         DestTable."Inventory Posting Group" := PercentageStore."Inventory Posting Group";

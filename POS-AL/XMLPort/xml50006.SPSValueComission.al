@@ -26,7 +26,7 @@ xmlport 50006 "SPS Value Comission"
 
                 trigger OnBeforeInsertRecord()
                 begin
-                    if not DestTable.Get(ValueComission."Start Date", ValueComission."Inventory Posting Group", ValueComission."Item Family Code", ValueComission."Item Category Code", ValueComission."Item No", ValueComission."Min Val", ValueComission."Max Val") then begin
+                    if not DestTable.Get(ValueComission."Inventory Posting Group", ValueComission."Item Family Code", ValueComission."Item Category Code", ValueComission."Item No", ValueComission."Min Val", ValueComission."Max Val", ValueComission."Start Date") then begin
                         DestTable.Init();
                         DestTable."Start Date" := ValueComission."Start Date";
                         DestTable."Inventory Posting Group" := ValueComission."Inventory Posting Group";
