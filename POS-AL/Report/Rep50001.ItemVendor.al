@@ -1,9 +1,9 @@
-report 50010 "Item-Vendor"
+report 50001 "Item-Vendor"
 {
     ApplicationArea = All;
     UsageCategory = ReportsAndAnalysis;
     DefaultLayout = RDLC;
-    RDLCLayout = './Report/Layout/Rep50010.Item-Vendor.rdlc';
+    RDLCLayout = './Report/Layout/Rep50001.Item-Vendor.rdlc';
 
     dataset
     {
