@@ -1,69 +1,36 @@
-report 50009 "Item Age Composition - NEW"
+report 50009 "Item Age Composition Vendor 2"
 {
-    DefaultLayout = RDLC;
-    RDLCLayout = 'Report/Layout/ItemAgeCompositionValue2.rdlc';
-    ApplicationArea = Basic, Suite;
-    Caption = 'Item Age Composition - NEW';
+    ApplicationArea = All;
     UsageCategory = ReportsAndAnalysis;
-    DataAccessIntent = ReadOnly;
+    DefaultLayout = RDLC;
+    RDLCLayout = './Report/Layout/Rep50009.ItemAgeCompVendor.rdlc';
 
     dataset
     {
         dataitem(Item; Item)
         {
             DataItemTableView = SORTING("No.") WHERE(Type = CONST(Inventory));
-            RequestFilterFields = "No.", "Inventory Posting Group", "Statistics Group", "Location Filter";
-            column(TodayFormatted; Format(Today, 0, 4))
-            {
-            }
-            column(CompanyName; COMPANYPROPERTY.DisplayName)
-            {
-            }
-            column(ItemTableCaptItemFilter; TableCaption + ': ' + ItemFilter)
-            {
-            }
-            column(ItemFilter; ItemFilter)
-            {
-            }
-            column(PeriodStartDate21; Format(PeriodStartDate[2] + 1))
-            {
-            }
-            column(PeriodStartDate3; Format(PeriodStartDate[3]))
-            {
-            }
-            column(PeriodStartDate31; Format(PeriodStartDate[3] + 1))
-            {
-            }
-            column(PeriodStartDate4; Format(PeriodStartDate[4]))
-            {
-            }
-            column(PeriodStartDate41; Format(PeriodStartDate[4] + 1))
-            {
-            }
-            column(PeriodStartDate5; Format(PeriodStartDate[5]))
-            {
-            }
-            column(PrintLine; PrintLine)
-            {
-            }
-            column(InvtValueRTC1; InvtValueRTC[1])
-            {
-            }
-            column(InvtValueRTC2; InvtValueRTC[2])
-            {
-            }
-            column(InvtValueRTC5; InvtValueRTC[5])
-            {
-            }
-            column(InvtValueRTC4; InvtValueRTC[4])
-            {
-            }
-            column(InvtValueRTC3; InvtValueRTC[3])
-            {
-            }
-            column(TotalInvtValueRTC; TotalInvtValueRTC)
-            {
-            }
+            //RequestFilterFields = "No.", "Inventory Posting Group", "Statistics Group", "Location Filter";
+            CalcFields = Inventory;
+
+            column(Inventory; Inventory) { }
+            column(TodayFormatted; Format(Today, 0, 4)) { }
+            column(CompanyName; COMPANYPROPERTY.DisplayName) { }
+            column(ItemTableCaptItemFilter; TableCaption + ': ' + ItemFilter) { }
+            column(ItemFilter; ItemFilter) { }
+            column(PeriodStartDate21; Format(PeriodStartDate[2] + 1)) { }
+            column(PeriodStartDate3; Format(PeriodStartDate[3])) { }
+            column(PeriodStartDate31; Format(PeriodStartDate[3] + 1)) { }
+            column(PeriodStartDate4; Format(PeriodStartDate[4])) { }
+            column(PeriodStartDate41; Format(PeriodStartDate[4] + 1)) { }
+            column(PeriodStartDate5; Format(PeriodStartDate[5])) { }
+            column(PrintLine; PrintLine) { }
+            column(InvtValueRTC1; InvtValueRTC[1]) { }
+            column(InvtValueRTC2; InvtValueRTC[2]) { }
+            column(InvtValueRTC5; InvtValueRTC[5]) { }
+            column(InvtValueRTC4; InvtValueRTC[4]) { }
+            column(InvtValueRTC3; InvtValueRTC[3]) { }
+            column(TotalInvtValueRTC; TotalInvtValueRTC) { }
             column(InvtValue1_Item; InvtValue[1])
             {
                 AutoFormatType = 1;
@@ -88,34 +55,19 @@ report 50009 "Item Age Composition - NEW"
             {
                 AutoFormatType = 1;
             }
-            column(ItemAgeCompositionValueCaption; ItemAgeCompositionValueCaptionLbl)
-            {
-            }
-            column(CurrReportPageNoCaption; CurrReportPageNoCaptionLbl)
-            {
-            }
-            column(AfterCaption; AfterCaptionLbl)
-            {
-            }
-            column(BeforeCaption; BeforeCaptionLbl)
-            {
-            }
-            column(InventoryValueCaption; InventoryValueCaptionLbl)
-            {
-            }
-            column(ItemDescriptionCaption; ItemDescriptionCaptionLbl)
-            {
-            }
-            column(ItemNoCaption; ItemNoCaptionLbl)
-            {
-            }
-            column(TotalCaption; TotalCaptionLbl)
-            {
-            }
+            column(ItemAgeCompositionValueCaption; ItemAgeCompositionValueCaptionLbl) { }
+            column(CurrReportPageNoCaption; CurrReportPageNoCaptionLbl) { }
+            column(AfterCaption; AfterCaptionLbl) { }
+            column(BeforeCaption; BeforeCaptionLbl) { }
+            column(InventoryValueCaption; InventoryValueCaptionLbl) { }
+            column(ItemDescriptionCaption; ItemDescriptionCaptionLbl) { }
+            column(ItemNoCaption; ItemNoCaptionLbl) { }
+            column(TotalCaption; TotalCaptionLbl) { }
             dataitem("Item Ledger Entry"; "Item Ledger Entry")
             {
                 DataItemLink = "Item No." = FIELD("No."), "Location Code" = FIELD("Location Filter"), "Variant Code" = FIELD("Variant Filter"), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter");
                 DataItemTableView = SORTING("Item No.", Open) WHERE(Open = CONST(true));
+                RequestFilterFields = "Source Type", "Source No.", "Inventory Posting Group";
 
                 trigger OnAfterGetRecord()
                 begin
@@ -302,7 +254,7 @@ report 50009 "Item Age Composition - NEW"
         PrintLine: Boolean;
         AverageCost: array[5] of Decimal;
         AverageCostACY: array[5] of Decimal;
-        ItemAgeCompositionValueCaptionLbl: Label 'Item Age Composition - Value';
+        ItemAgeCompositionValueCaptionLbl: Label 'Item Age Composition - Vendor';
         CurrReportPageNoCaptionLbl: Label 'Page';
         AfterCaptionLbl: Label 'After...';
         BeforeCaptionLbl: Label '...Before';
@@ -359,4 +311,3 @@ report 50009 "Item Age Composition - NEW"
         PeriodLength := NewPeriodLength;
     end;
 }
-
