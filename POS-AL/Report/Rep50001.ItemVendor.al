@@ -50,8 +50,8 @@ report 50001 "Item-Vendor"
                         ItemTemp."COGS (LCY)" := InvtValue[4];
                         ItemTemp."Gross Weight" := InvtValue[5];
                         ItemTemp."Indirect Cost %" := InvtValue[6];
-                        if (InvtValue[1] <> 0) and (InvtValue[2] <> 0) and (InvtValue[3] <> 0)
-                        and (InvtValue[4] <> 0) and (InvtValue[5] <> 0) and (InvtValue[6] <> 0) then
+                        if (InvtValue[1] <> 0) or (InvtValue[2] <> 0) or (InvtValue[3] <> 0)
+                        or (InvtValue[4] <> 0) or (InvtValue[6] <> 0) then
                             ItemTemp.Insert();
                     until Item.Next() = 0;
                 end;
