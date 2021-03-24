@@ -7,9 +7,110 @@
         <DataProvider>SQL</DataProvider>
         <ConnectString />
       </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>bb73ffea-50cb-4c35-8746-906f3a2b12a4</rd:DataSourceID>
     </DataSource>
   </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="No">
+          <DataField>No</DataField>
+        </Field>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+        </Field>
+        <Field Name="Inventory_Posting_Group">
+          <DataField>Inventory_Posting_Group</DataField>
+        </Field>
+        <Field Name="Inventory">
+          <DataField>Inventory</DataField>
+        </Field>
+        <Field Name="InventoryFormat">
+          <DataField>InventoryFormat</DataField>
+        </Field>
+        <Field Name="BeforeCaptionLbl">
+          <DataField>BeforeCaptionLbl</DataField>
+        </Field>
+        <Field Name="InvtValue1">
+          <DataField>InvtValue1</DataField>
+        </Field>
+        <Field Name="InvtValue1Format">
+          <DataField>InvtValue1Format</DataField>
+        </Field>
+        <Field Name="InvtValue2">
+          <DataField>InvtValue2</DataField>
+        </Field>
+        <Field Name="InvtValue2Format">
+          <DataField>InvtValue2Format</DataField>
+        </Field>
+        <Field Name="InvtValue3">
+          <DataField>InvtValue3</DataField>
+        </Field>
+        <Field Name="InvtValue3Format">
+          <DataField>InvtValue3Format</DataField>
+        </Field>
+        <Field Name="InvtValue4">
+          <DataField>InvtValue4</DataField>
+        </Field>
+        <Field Name="InvtValue4Format">
+          <DataField>InvtValue4Format</DataField>
+        </Field>
+        <Field Name="InvtValue5">
+          <DataField>InvtValue5</DataField>
+        </Field>
+        <Field Name="InvtValue5Format">
+          <DataField>InvtValue5Format</DataField>
+        </Field>
+        <Field Name="InvtValue6">
+          <DataField>InvtValue6</DataField>
+        </Field>
+        <Field Name="InvtValue6Format">
+          <DataField>InvtValue6Format</DataField>
+        </Field>
+        <Field Name="PeriodStartDate1">
+          <DataField>PeriodStartDate1</DataField>
+        </Field>
+        <Field Name="PeriodStartDate2">
+          <DataField>PeriodStartDate2</DataField>
+        </Field>
+        <Field Name="PeriodStartDate6">
+          <DataField>PeriodStartDate6</DataField>
+        </Field>
+        <Field Name="PeriodStartDate21">
+          <DataField>PeriodStartDate21</DataField>
+        </Field>
+        <Field Name="PeriodStartDate3">
+          <DataField>PeriodStartDate3</DataField>
+        </Field>
+        <Field Name="PeriodStartDate31">
+          <DataField>PeriodStartDate31</DataField>
+        </Field>
+        <Field Name="PeriodStartDate4">
+          <DataField>PeriodStartDate4</DataField>
+        </Field>
+        <Field Name="PeriodStartDate41">
+          <DataField>PeriodStartDate41</DataField>
+        </Field>
+        <Field Name="PeriodStartDate5">
+          <DataField>PeriodStartDate5</DataField>
+        </Field>
+        <Field Name="ItemFilter">
+          <DataField>ItemFilter</DataField>
+        </Field>
+        <Field Name="CompanyName">
+          <DataField>CompanyName</DataField>
+        </Field>
+        <Field Name="TodayFormatted">
+          <DataField>TodayFormatted</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -21,25 +122,25 @@
                   <Width>3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.5cm</Width>
+                  <Width>6.51083cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2cm</Width>
+                  <Width>3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2cm</Width>
+                  <Width>3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2cm</Width>
+                  <Width>3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2cm</Width>
+                  <Width>3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2cm</Width>
+                  <Width>3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>3cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -1204,7 +1305,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1462,7 +1562,7 @@
             <Top>0cm</Top>
             <Left>0cm</Left>
             <Height>2.2cm</Height>
-            <Width>20cm</Width>
+            <Width>27.51083cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1473,7 +1573,7 @@
         <Height>2.23542cm</Height>
         <Style />
       </Body>
-      <Width>20cm</Width>
+      <Width>27.51083cm</Width>
       <Page>
         <PageHeader>
           <Height>2.40771cm</Height>
@@ -1599,7 +1699,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.2cm</Top>
-              <Left>13cm</Left>
+              <Left>20.39775cm</Left>
               <Height>0.5cm</Height>
               <Width>7cm</Width>
               <ZIndex>3</ZIndex>
@@ -1634,7 +1734,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.7cm</Top>
-              <Left>13cm</Left>
+              <Left>20.39775cm</Left>
               <Height>0.5cm</Height>
               <Width>7cm</Width>
               <ZIndex>4</ZIndex>
@@ -1669,7 +1769,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>1.2cm</Top>
-              <Left>13cm</Left>
+              <Left>20.39775cm</Left>
               <Height>0.5cm</Height>
               <Width>7cm</Width>
               <ZIndex>5</ZIndex>
@@ -1690,8 +1790,8 @@
             </Border>
           </Style>
         </PageHeader>
-        <PageHeight>29.7cm</PageHeight>
-        <PageWidth>21cm</PageWidth>
+        <PageHeight>21cm</PageHeight>
+        <PageWidth>29.7cm</PageWidth>
         <LeftMargin>0.5cm</LeftMargin>
         <RightMargin>0.5cm</RightMargin>
         <TopMargin>0.5cm</TopMargin>
@@ -1701,6 +1801,12 @@
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -1740,104 +1846,4 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Fields>
-        <Field Name="No">
-          <DataField>No</DataField>
-        </Field>
-        <Field Name="Description">
-          <DataField>Description</DataField>
-        </Field>
-        <Field Name="Inventory_Posting_Group">
-          <DataField>Inventory_Posting_Group</DataField>
-        </Field>
-        <Field Name="Inventory">
-          <DataField>Inventory</DataField>
-        </Field>
-        <Field Name="InventoryFormat">
-          <DataField>InventoryFormat</DataField>
-        </Field>
-        <Field Name="BeforeCaptionLbl">
-          <DataField>BeforeCaptionLbl</DataField>
-        </Field>
-        <Field Name="InvtValue1">
-          <DataField>InvtValue1</DataField>
-        </Field>
-        <Field Name="InvtValue1Format">
-          <DataField>InvtValue1Format</DataField>
-        </Field>
-        <Field Name="InvtValue2">
-          <DataField>InvtValue2</DataField>
-        </Field>
-        <Field Name="InvtValue2Format">
-          <DataField>InvtValue2Format</DataField>
-        </Field>
-        <Field Name="InvtValue3">
-          <DataField>InvtValue3</DataField>
-        </Field>
-        <Field Name="InvtValue3Format">
-          <DataField>InvtValue3Format</DataField>
-        </Field>
-        <Field Name="InvtValue4">
-          <DataField>InvtValue4</DataField>
-        </Field>
-        <Field Name="InvtValue4Format">
-          <DataField>InvtValue4Format</DataField>
-        </Field>
-        <Field Name="InvtValue5">
-          <DataField>InvtValue5</DataField>
-        </Field>
-        <Field Name="InvtValue5Format">
-          <DataField>InvtValue5Format</DataField>
-        </Field>
-        <Field Name="InvtValue6">
-          <DataField>InvtValue6</DataField>
-        </Field>
-        <Field Name="InvtValue6Format">
-          <DataField>InvtValue6Format</DataField>
-        </Field>
-        <Field Name="PeriodStartDate1">
-          <DataField>PeriodStartDate1</DataField>
-        </Field>
-        <Field Name="PeriodStartDate2">
-          <DataField>PeriodStartDate2</DataField>
-        </Field>
-        <Field Name="PeriodStartDate6">
-          <DataField>PeriodStartDate6</DataField>
-        </Field>
-        <Field Name="PeriodStartDate21">
-          <DataField>PeriodStartDate21</DataField>
-        </Field>
-        <Field Name="PeriodStartDate3">
-          <DataField>PeriodStartDate3</DataField>
-        </Field>
-        <Field Name="PeriodStartDate31">
-          <DataField>PeriodStartDate31</DataField>
-        </Field>
-        <Field Name="PeriodStartDate4">
-          <DataField>PeriodStartDate4</DataField>
-        </Field>
-        <Field Name="PeriodStartDate41">
-          <DataField>PeriodStartDate41</DataField>
-        </Field>
-        <Field Name="PeriodStartDate5">
-          <DataField>PeriodStartDate5</DataField>
-        </Field>
-        <Field Name="ItemFilter">
-          <DataField>ItemFilter</DataField>
-        </Field>
-        <Field Name="CompanyName">
-          <DataField>CompanyName</DataField>
-        </Field>
-        <Field Name="TodayFormatted">
-          <DataField>TodayFormatted</DataField>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-    </DataSet>
-  </DataSets>
 </Report>

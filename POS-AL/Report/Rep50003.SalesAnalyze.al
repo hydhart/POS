@@ -119,6 +119,21 @@ report 50003 "Sales Analyze"
         exit(StoreTarget."Target Sales");
     end;
 
+    local procedure TargetSalesMonth(pStart: Date; pEnd: Date): Decimal;
+    var
+        StoreTarget: Record "Store Weekly Target";
+    begin
+        StoreTarget.Reset();
+        StoreTarget.SetRange("Store No.", Store.Code);
+        StoreTarget.SetRange(Year, Date2DMY(pStart, 3));
+        StoreTarget.SetFilter("Start Date", '>=%1', pStart);
+        StoreTarget.SetFilter("End Date", '<=%1', pEnd);
+        if StoreTarget.FindSet() then
+            StoreTarget.CalcSums("Target Sales");
+
+        exit(StoreTarget."Target Sales");
+    end;
+
     local procedure TargetSalesYTD(Year: Integer): Decimal;
     var
         StoreTarget: Record "Store Weekly Target";
@@ -167,8 +182,10 @@ report 50003 "Sales Analyze"
         StoreTarget.SetRange(Year, Date2DMY(dateFilter, 3));
         StoreTarget.SetFilter("Start Date", '<=%1', DateFilter);
         StoreTarget.SetFilter("End Date", '>=%1', DateFilter);
-        if StoreTarget.FindFirst() then
-            endDate := StoreTarget."End Date"
+        if StoreTarget.FindFirst() then begin
+            endDate := StoreTarget."End Date";
+            dateFilter := StoreTarget."Start Date";
+        end
         else
             Error('Target Sales tidak ditemukan pada Store %1', Store.Code);
     end;
@@ -183,7 +200,7 @@ report 50003 "Sales Analyze"
         if SalesWeekly > 0 then
             GrowthWeek := Round(((SalesWeekly - SalesLastWeek) / SalesWeekly), 0.01, '=');
         SalesMonth := TotalSales(startMonth, endMonth);
-        TargetMonth := TargetSales(dateFilter, true);
+        TargetMonth := TargetSalesMonth(dateFilter, endMonth);//TargetSales(dateFilter, true);
         if TargetMonth > 0 then
             AchievementMonth := Round((SalesMonth / TargetMonth), 0.01, '=');
         SalesLastYear := TotalSales(startLastYear, endLastYear);
