@@ -1543,9 +1543,12 @@
               <TablixMembers>
                 <TablixMember>
                   <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
+                  <KeepTogether>true</KeepTogether>
                 </TablixMember>
                 <TablixMember>
                   <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
                 </TablixMember>
                 <TablixMember>
                   <Group Name="Details" />
@@ -1559,8 +1562,6 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>0cm</Top>
-            <Left>0cm</Left>
             <Height>2.2cm</Height>
             <Width>27.51083cm</Width>
             <Style>
@@ -1599,7 +1600,6 @@
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.7cm</Top>
-              <Left>0cm</Left>
               <Height>0.5cm</Height>
               <Width>7cm</Width>
               <Style>
@@ -1631,7 +1631,6 @@
               </Paragraphs>
               <rd:DefaultName>Textbox18</rd:DefaultName>
               <Top>1.58167cm</Top>
-              <Left>0cm</Left>
               <Height>0.6cm</Height>
               <Width>7cm</Width>
               <ZIndex>1</ZIndex>
@@ -1662,8 +1661,6 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0cm</Top>
-              <Left>0cm</Left>
               <Height>0.7cm</Height>
               <Width>7cm</Width>
               <ZIndex>2</ZIndex>
