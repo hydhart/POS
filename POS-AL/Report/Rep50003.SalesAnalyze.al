@@ -183,8 +183,8 @@ report 50003 "Sales Analyze"
         StoreTarget.SetFilter("Start Date", '<=%1', DateFilter);
         StoreTarget.SetFilter("End Date", '>=%1', DateFilter);
         if StoreTarget.FindFirst() then begin
-            dateFilter := StoreTarget."Start Date";
             endDate := StoreTarget."End Date";
+            dateFilter := StoreTarget."Start Date";
         end
         else
             Error('Target Sales tidak ditemukan pada Store %1', Store.Code);

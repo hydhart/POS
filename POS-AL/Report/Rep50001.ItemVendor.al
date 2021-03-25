@@ -35,24 +35,39 @@ report 50001 "Item-Vendor"
             column(TodayFormatted; Format(Today, 0, 4)) { }
 
             trigger OnPreDataItem()
+            var
+                VE: Record "Value Entry";
+                Skip: Boolean;
             begin
                 Item.Reset();
                 Item.SetFilter("No.", ItemFilter);
                 Item.SetFilter("Inventory Posting Group", InvPostGrp);
                 if Item.FindSet() then begin
                     repeat
-                        ItemTemp.Init();
-                        ItemTemp.TransferFields(Item);
-                        getInventoryValue();
-                        ItemTemp."Budget Profit" := InvtValue[1];
-                        ItemTemp."Budget Quantity" := InvtValue[2];
-                        ItemTemp."Budgeted Amount" := InvtValue[3];
-                        ItemTemp."COGS (LCY)" := InvtValue[4];
-                        ItemTemp."Gross Weight" := InvtValue[5];
-                        ItemTemp."Indirect Cost %" := InvtValue[6];
-                        if (InvtValue[1] <> 0) or (InvtValue[2] <> 0) or (InvtValue[3] <> 0)
-                        or (InvtValue[4] <> 0) or (InvtValue[6] <> 0) then
-                            ItemTemp.Insert();
+                        Skip := false;
+                        if vendorNo <> '' then begin
+                            VE.SetCurrentKey("Item No.", "Source Type", "Source No.");
+                            VE.SetFilter("Item No.", Item."No.");
+                            VE.SetRange("Source Type", VE."Source Type"::Vendor);
+                            VE.SetRange("Source No.", vendorNo);
+                            if not VE.FindFirst() then
+                                Skip := true;
+                        end;
+
+                        if not Skip then begin
+                            ItemTemp.Init();
+                            ItemTemp.TransferFields(Item);
+                            getInventoryValue();
+                            ItemTemp."Budget Profit" := InvtValue[1];
+                            ItemTemp."Budget Quantity" := InvtValue[2];
+                            ItemTemp."Budgeted Amount" := InvtValue[3];
+                            ItemTemp."COGS (LCY)" := InvtValue[4];
+                            ItemTemp."Gross Weight" := InvtValue[5];
+                            ItemTemp."Indirect Cost %" := InvtValue[6];
+                            if (InvtValue[1] <> 0) or (InvtValue[2] <> 0) or (InvtValue[3] <> 0)
+                            or (InvtValue[4] <> 0) or (InvtValue[6] <> 0) then
+                                ItemTemp.Insert();
+                        end;
                     until Item.Next() = 0;
                 end;
 
@@ -156,10 +171,10 @@ report 50001 "Item-Vendor"
                         valueEntry.SetCurrentKey("Item No.", "Posting Date", "Item Ledger Entry Type", "Entry Type", "Variance Type", "Item Charge No.", "Location Code", "Variant Code");
                         valueEntry.SetRange("Item No.", Item."No.");
                         valueEntry.SetFilter("Posting Date", '..%1', PeriodStartDate[2]);
-                        if vendorNo <> '' then begin
-                            valueEntry.SetRange("Source Type", valueEntry."Source Type"::Vendor);
-                            valueEntry.SetFilter("Source No.", vendorNo);
-                        end;
+                        //if vendorNo <> '' then begin
+                        //    valueEntry.SetRange("Source Type", valueEntry."Source Type"::Vendor);
+                        //    valueEntry.SetFilter("Source No.", vendorNo);
+                        //end;
                         if valueEntry.FindSet() then begin
                             valueEntry.CalcSums("Cost Amount (Actual)");
                             InvtValue[i] := valueEntry."Cost Amount (Actual)";
@@ -171,10 +186,10 @@ report 50001 "Item-Vendor"
                         valueEntry.SetCurrentKey("Item No.", "Posting Date", "Item Ledger Entry Type", "Entry Type", "Variance Type", "Item Charge No.", "Location Code", "Variant Code");
                         valueEntry.SetRange("Item No.", Item."No.");
                         valueEntry.SetFilter("Posting Date", '%1..%2', PeriodStartDate[2] + 1, PeriodStartDate[3]);
-                        if vendorNo <> '' then begin
-                            valueEntry.SetRange("Source Type", valueEntry."Source Type"::Vendor);
-                            valueEntry.SetFilter("Source No.", vendorNo);
-                        end;
+                        //if vendorNo <> '' then begin
+                        //    valueEntry.SetRange("Source Type", valueEntry."Source Type"::Vendor);
+                        //    valueEntry.SetFilter("Source No.", vendorNo);
+                        //end;
                         if valueEntry.FindSet() then begin
                             valueEntry.CalcSums("Cost Amount (Actual)");
                             InvtValue[i] := valueEntry."Cost Amount (Actual)";
@@ -187,10 +202,10 @@ report 50001 "Item-Vendor"
                         valueEntry.SetCurrentKey("Item No.", "Posting Date", "Item Ledger Entry Type", "Entry Type", "Variance Type", "Item Charge No.", "Location Code", "Variant Code");
                         valueEntry.SetRange("Item No.", Item."No.");
                         valueEntry.SetFilter("Posting Date", '%1..%2', PeriodStartDate[3] + 1, PeriodStartDate[4]);
-                        if vendorNo <> '' then begin
-                            valueEntry.SetRange("Source Type", valueEntry."Source Type"::Vendor);
-                            valueEntry.SetFilter("Source No.", vendorNo);
-                        end;
+                        //if vendorNo <> '' then begin
+                        //    valueEntry.SetRange("Source Type", valueEntry."Source Type"::Vendor);
+                        //    valueEntry.SetFilter("Source No.", vendorNo);
+                        //end;
                         if valueEntry.FindSet() then begin
                             valueEntry.CalcSums("Cost Amount (Actual)");
                             InvtValue[i] := valueEntry."Cost Amount (Actual)";
@@ -203,10 +218,10 @@ report 50001 "Item-Vendor"
                         valueEntry.SetCurrentKey("Item No.", "Posting Date", "Item Ledger Entry Type", "Entry Type", "Variance Type", "Item Charge No.", "Location Code", "Variant Code");
                         valueEntry.SetRange("Item No.", Item."No.");
                         valueEntry.SetFilter("Posting Date", '%1..%2', PeriodStartDate[4] + 1, PeriodStartDate[5]);
-                        if vendorNo <> '' then begin
-                            valueEntry.SetRange("Source Type", valueEntry."Source Type"::Vendor);
-                            valueEntry.SetFilter("Source No.", vendorNo);
-                        end;
+                        //if vendorNo <> '' then begin
+                        //    valueEntry.SetRange("Source Type", valueEntry."Source Type"::Vendor);
+                        //    valueEntry.SetFilter("Source No.", vendorNo);
+                        //end;
                         if valueEntry.FindSet() then begin
                             valueEntry.CalcSums("Cost Amount (Actual)");
                             InvtValue[i] := valueEntry."Cost Amount (Actual)";
@@ -218,10 +233,10 @@ report 50001 "Item-Vendor"
                         valueEntry.SetCurrentKey("Item No.", "Posting Date", "Item Ledger Entry Type", "Entry Type", "Variance Type", "Item Charge No.", "Location Code", "Variant Code");
                         valueEntry.SetRange("Item No.", Item."No.");
                         valueEntry.SetFilter("Posting Date", '..%1', PeriodStartDate[5]);
-                        if vendorNo <> '' then begin
-                            valueEntry.SetRange("Source Type", valueEntry."Source Type"::Vendor);
-                            valueEntry.SetFilter("Source No.", vendorNo);
-                        end;
+                        //if vendorNo <> '' then begin
+                        //    valueEntry.SetRange("Source Type", valueEntry."Source Type"::Vendor);
+                        //    valueEntry.SetFilter("Source No.", vendorNo);
+                        //end;
                         if valueEntry.FindSet() then begin
                             valueEntry.CalcSums("Cost Amount (Actual)");
                             InvtValue[i] := valueEntry."Cost Amount (Actual)";

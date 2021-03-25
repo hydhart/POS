@@ -7,6 +7,7 @@
         <DataProvider>SQL</DataProvider>
         <ConnectString />
       </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>bb73ffea-50cb-4c35-8746-906f3a2b12a4</rd:DataSourceID>
     </DataSource>
   </DataSources>
@@ -21,25 +22,25 @@
                   <Width>3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.5cm</Width>
+                  <Width>6.51083cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2cm</Width>
+                  <Width>3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2cm</Width>
+                  <Width>3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2cm</Width>
+                  <Width>3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2cm</Width>
+                  <Width>3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2cm</Width>
+                  <Width>3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>3cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -1462,7 +1463,7 @@
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Height>2.2cm</Height>
-            <Width>20cm</Width>
+            <Width>27.51083cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1473,7 +1474,7 @@
         <Height>2.23542cm</Height>
         <Style />
       </Body>
-      <Width>20cm</Width>
+      <Width>27.51083cm</Width>
       <Page>
         <PageHeader>
           <Height>2.40771cm</Height>
@@ -1595,7 +1596,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.2cm</Top>
-              <Left>13cm</Left>
+              <Left>20.39775cm</Left>
               <Height>0.5cm</Height>
               <Width>7cm</Width>
               <ZIndex>3</ZIndex>
@@ -1630,7 +1631,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.7cm</Top>
-              <Left>13cm</Left>
+              <Left>20.39775cm</Left>
               <Height>0.5cm</Height>
               <Width>7cm</Width>
               <ZIndex>4</ZIndex>
@@ -1665,7 +1666,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>1.2cm</Top>
-              <Left>13cm</Left>
+              <Left>20.39775cm</Left>
               <Height>0.5cm</Height>
               <Width>7cm</Width>
               <ZIndex>5</ZIndex>
@@ -1686,8 +1687,8 @@
             </Border>
           </Style>
         </PageHeader>
-        <PageHeight>29.7cm</PageHeight>
-        <PageWidth>21cm</PageWidth>
+        <PageHeight>21cm</PageHeight>
+        <PageWidth>29.7cm</PageWidth>
         <LeftMargin>0.5cm</LeftMargin>
         <RightMargin>0.5cm</RightMargin>
         <TopMargin>0.5cm</TopMargin>
