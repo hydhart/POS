@@ -11,118 +11,6 @@
       <rd:DataSourceID>b8013b2f-5d94-4a16-98d0-279bd8780b45</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="Store_No_">
-          <DataField>Store_No_</DataField>
-        </Field>
-        <Field Name="Receipt_No_">
-          <DataField>Receipt_No_</DataField>
-        </Field>
-        <Field Name="Date">
-          <DataField>Date</DataField>
-        </Field>
-        <Field Name="Item_No_">
-          <DataField>Item_No_</DataField>
-        </Field>
-        <Field Name="Item_Category_Code">
-          <DataField>Item_Category_Code</DataField>
-        </Field>
-        <Field Name="Serial_No_">
-          <DataField>Serial_No_</DataField>
-        </Field>
-        <Field Name="Quantity">
-          <DataField>Quantity</DataField>
-        </Field>
-        <Field Name="QuantityFormat">
-          <DataField>QuantityFormat</DataField>
-        </Field>
-        <Field Name="Unit_of_Measure">
-          <DataField>Unit_of_Measure</DataField>
-        </Field>
-        <Field Name="Price">
-          <DataField>Price</DataField>
-        </Field>
-        <Field Name="PriceFormat">
-          <DataField>PriceFormat</DataField>
-        </Field>
-        <Field Name="Discount_Amount">
-          <DataField>Discount_Amount</DataField>
-        </Field>
-        <Field Name="Discount_AmountFormat">
-          <DataField>Discount_AmountFormat</DataField>
-        </Field>
-        <Field Name="Net_Amount">
-          <DataField>Net_Amount</DataField>
-        </Field>
-        <Field Name="Net_AmountFormat">
-          <DataField>Net_AmountFormat</DataField>
-        </Field>
-        <Field Name="VAT_Amount">
-          <DataField>VAT_Amount</DataField>
-        </Field>
-        <Field Name="VAT_AmountFormat">
-          <DataField>VAT_AmountFormat</DataField>
-        </Field>
-        <Field Name="Cost_Amount">
-          <DataField>Cost_Amount</DataField>
-        </Field>
-        <Field Name="Cost_AmountFormat">
-          <DataField>Cost_AmountFormat</DataField>
-        </Field>
-        <Field Name="Staff_ID">
-          <DataField>Staff_ID</DataField>
-        </Field>
-        <Field Name="Time">
-          <DataField>Time</DataField>
-        </Field>
-        <Field Name="Periodic_Discount">
-          <DataField>Periodic_Discount</DataField>
-        </Field>
-        <Field Name="Periodic_DiscountFormat">
-          <DataField>Periodic_DiscountFormat</DataField>
-        </Field>
-        <Field Name="Sales_Staff">
-          <DataField>Sales_Staff</DataField>
-        </Field>
-        <Field Name="Item_InvPosGroup">
-          <DataField>Item_InvPosGroup</DataField>
-        </Field>
-        <Field Name="Item_Desc">
-          <DataField>Item_Desc</DataField>
-        </Field>
-        <Field Name="GrossAmt">
-          <DataField>GrossAmt</DataField>
-        </Field>
-        <Field Name="GrossAmtFormat">
-          <DataField>GrossAmtFormat</DataField>
-        </Field>
-        <Field Name="Store_Name">
-          <DataField>Store_Name</DataField>
-        </Field>
-        <Field Name="Staff">
-          <DataField>Staff</DataField>
-        </Field>
-        <Field Name="Tender_Type">
-          <DataField>Tender_Type</DataField>
-        </Field>
-        <Field Name="TenderCaption">
-          <DataField>TenderCaption</DataField>
-        </Field>
-        <Field Name="Amount_Tendered">
-          <DataField>Amount_Tendered</DataField>
-        </Field>
-        <Field Name="Amount_TenderedFormat">
-          <DataField>Amount_TenderedFormat</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -7751,12 +7639,6 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -7796,4 +7678,116 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="Store_No_">
+          <DataField>Store_No_</DataField>
+        </Field>
+        <Field Name="Receipt_No_">
+          <DataField>Receipt_No_</DataField>
+        </Field>
+        <Field Name="Date">
+          <DataField>Date</DataField>
+        </Field>
+        <Field Name="Item_No_">
+          <DataField>Item_No_</DataField>
+        </Field>
+        <Field Name="Item_Category_Code">
+          <DataField>Item_Category_Code</DataField>
+        </Field>
+        <Field Name="Serial_No_">
+          <DataField>Serial_No_</DataField>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+        </Field>
+        <Field Name="QuantityFormat">
+          <DataField>QuantityFormat</DataField>
+        </Field>
+        <Field Name="Unit_of_Measure">
+          <DataField>Unit_of_Measure</DataField>
+        </Field>
+        <Field Name="Price">
+          <DataField>Price</DataField>
+        </Field>
+        <Field Name="PriceFormat">
+          <DataField>PriceFormat</DataField>
+        </Field>
+        <Field Name="Discount_Amount">
+          <DataField>Discount_Amount</DataField>
+        </Field>
+        <Field Name="Discount_AmountFormat">
+          <DataField>Discount_AmountFormat</DataField>
+        </Field>
+        <Field Name="Net_Amount">
+          <DataField>Net_Amount</DataField>
+        </Field>
+        <Field Name="Net_AmountFormat">
+          <DataField>Net_AmountFormat</DataField>
+        </Field>
+        <Field Name="VAT_Amount">
+          <DataField>VAT_Amount</DataField>
+        </Field>
+        <Field Name="VAT_AmountFormat">
+          <DataField>VAT_AmountFormat</DataField>
+        </Field>
+        <Field Name="Cost_Amount">
+          <DataField>Cost_Amount</DataField>
+        </Field>
+        <Field Name="Cost_AmountFormat">
+          <DataField>Cost_AmountFormat</DataField>
+        </Field>
+        <Field Name="Staff_ID">
+          <DataField>Staff_ID</DataField>
+        </Field>
+        <Field Name="Time">
+          <DataField>Time</DataField>
+        </Field>
+        <Field Name="Periodic_Discount">
+          <DataField>Periodic_Discount</DataField>
+        </Field>
+        <Field Name="Periodic_DiscountFormat">
+          <DataField>Periodic_DiscountFormat</DataField>
+        </Field>
+        <Field Name="Sales_Staff">
+          <DataField>Sales_Staff</DataField>
+        </Field>
+        <Field Name="Item_InvPosGroup">
+          <DataField>Item_InvPosGroup</DataField>
+        </Field>
+        <Field Name="Item_Desc">
+          <DataField>Item_Desc</DataField>
+        </Field>
+        <Field Name="GrossAmt">
+          <DataField>GrossAmt</DataField>
+        </Field>
+        <Field Name="GrossAmtFormat">
+          <DataField>GrossAmtFormat</DataField>
+        </Field>
+        <Field Name="Store_Name">
+          <DataField>Store_Name</DataField>
+        </Field>
+        <Field Name="Staff">
+          <DataField>Staff</DataField>
+        </Field>
+        <Field Name="Tender_Type">
+          <DataField>Tender_Type</DataField>
+        </Field>
+        <Field Name="TenderCaption">
+          <DataField>TenderCaption</DataField>
+        </Field>
+        <Field Name="Amount_Tendered">
+          <DataField>Amount_Tendered</DataField>
+        </Field>
+        <Field Name="Amount_TenderedFormat">
+          <DataField>Amount_TenderedFormat</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>
