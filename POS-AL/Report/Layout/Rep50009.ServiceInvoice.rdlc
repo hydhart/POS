@@ -19,16 +19,16 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.88542in</Width>
+                  <Width>2.8125in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.61458in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>0.65625in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.66667in</Width>
+                  <Width>1.625in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -41,10 +41,10 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>5.66667in</Width>
+                                <Width>5.43751in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.5in</Width>
+                                <Width>2.27083in</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
@@ -57,10 +57,10 @@
                                         <TablixBody>
                                           <TablixColumns>
                                             <TablixColumn>
-                                              <Width>2.82292in</Width>
+                                              <Width>2.60156in</Width>
                                             </TablixColumn>
                                             <TablixColumn>
-                                              <Width>2.84375in</Width>
+                                              <Width>2.83594in</Width>
                                             </TablixColumn>
                                           </TablixColumns>
                                           <TablixRows>
@@ -559,13 +559,13 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>2.72222in</Width>
+                                <Width>2.56944in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.72222in</Width>
+                                <Width>2.56944in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.72222in</Width>
+                                <Width>2.56944in</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
@@ -868,28 +868,28 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>0.16146in</Width>
+                                <Width>0.31945in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.67188in</Width>
+                                <Width>0.69096in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.13021in</Width>
+                                <Width>0.24478in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>3.11979in</Width>
+                                <Width>2.48441in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.18229in</Width>
+                                <Width>0.34028in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.96007in</Width>
+                                <Width>1.02519in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.09896in</Width>
+                                <Width>0.25043in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.84201in</Width>
+                                <Width>2.35287in</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
@@ -1912,10 +1912,14 @@
                                             <TextRuns>
                                               <TextRun>
                                                 <Value>=Fields!ServiceItem_Warranty.Value</Value>
-                                                <Style />
+                                                <Style>
+                                                  <Format>M/d/yyyy</Format>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
-                                            <Style />
+                                            <Style>
+                                              <TextAlign>Left</TextAlign>
+                                            </Style>
                                           </Paragraph>
                                         </Paragraphs>
                                         <rd:DefaultName>ServiceItem_Warranty</rd:DefaultName>
@@ -1935,6 +1939,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                 </TablixCells>
@@ -2843,7 +2848,6 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox303">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -3016,21 +3020,20 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SericeLine_Fault_Code">
-                          <CanGrow>true</CanGrow>
+                        <Textbox Name="ServiceLine_Fault_Code">
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SericeLine_Fault_Code.Value</Value>
+                                  <Value>=Fields!ServiceLine_Fault_Code.Value + " " + Fields!ServiceLineFault_Description.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SericeLine_Fault_Code</rd:DefaultName>
+                          <rd:DefaultName>ServiceLine_Fault_Code</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -3050,21 +3053,21 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SericeLineDescription">
+                        <Textbox Name="ServiceLineDescription">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SericeLineDescription.Value</Value>
+                                  <Value>=Fields!ServiceLineDescription.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SericeLineDescription</rd:DefaultName>
+                          <rd:DefaultName>ServiceLineDescription</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -3084,21 +3087,23 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SericeLineQuantity">
+                        <Textbox Name="ServiceLineQuantity">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SericeLineQuantity.Value</Value>
+                                  <Value>=IIF(Fields!ServiceLineQuantity.Value=0,"",Fields!ServiceLineQuantity.Value)</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SericeLineQuantity</rd:DefaultName>
+                          <rd:DefaultName>ServiceLineQuantity</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -3118,21 +3123,21 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SericeLinePriceIncVAT">
+                        <Textbox Name="ServiceLinePriceIncVAT">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SericeLinePriceIncVAT.Value</Value>
+                                  <Value>=IIF(Fields!ServiceLinePriceIncVAT.Value=0,"",Fields!ServiceLinePriceIncVAT.Value)</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SericeLinePriceIncVAT</rd:DefaultName>
+                          <rd:DefaultName>ServiceLinePriceIncVAT</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -3163,7 +3168,6 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox307">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -3332,19 +3336,19 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.63333in</Width>
+                                <Width>1.82291in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.46667in</Width>
+                                <Width>1.81147in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.05105in</Width>
+                                <Width>0.06458in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.35104in</Width>
+                                <Width>2.38438in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.66458in</Width>
+                                <Width>1.625in</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
@@ -3481,21 +3485,21 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="SericeLinePriceIncVAT1">
+                                      <Textbox Name="TotalPart">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Sum(Fields!SericeLinePriceIncVAT.Value)</Value>
+                                                <Value>=Fields!TotalPart.Value</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
                                             <Style />
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>SericeLinePriceIncVAT1</rd:DefaultName>
+                                        <rd:DefaultName>TotalPart</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>None</Style>
@@ -3607,9 +3611,6 @@
                                           <Border>
                                             <Style>None</Style>
                                           </Border>
-                                          <LeftBorder>
-                                            <Style>Solid</Style>
-                                          </LeftBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -3654,7 +3655,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox353">
+                                      <Textbox Name="Textbox2">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -3668,7 +3669,7 @@
                                             <Style />
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox353</rd:DefaultName>
+                                        <rd:DefaultName>Textbox2</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>None</Style>
@@ -3844,21 +3845,21 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox341">
+                                      <Textbox Name="TotalService">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value />
+                                                <Value>=Fields!TotalService.Value</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
                                             <Style />
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox341</rd:DefaultName>
+                                        <rd:DefaultName>TotalService</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>None</Style>
@@ -3901,7 +3902,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>-------------------------------------------------------------------------------------------</Value>
+                                                <Value>---------------------------------------------------------------------</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -4006,21 +4007,21 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox349">
+                                      <Textbox Name="TotalTransport">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value />
+                                                <Value>=Fields!TotalTransport.Value</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
                                             <Style />
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox349</rd:DefaultName>
+                                        <rd:DefaultName>TotalTransport</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>None</Style>
@@ -4192,7 +4193,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox345">
+                                      <Textbox Name="Textbox1">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -4206,7 +4207,7 @@
                                             <Style />
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox345</rd:DefaultName>
+                                        <rd:DefaultName>Textbox1</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>None</Style>
@@ -4378,21 +4379,21 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox337">
+                                      <Textbox Name="TotalPart1">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value />
+                                                <Value>=Fields!TotalPart.Value + Fields!TotalService.Value + Fields!TotalTransport.Value</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
                                             <Style />
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox337</rd:DefaultName>
+                                        <rd:DefaultName>TotalPart1</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>None</Style>
@@ -5206,6 +5207,20 @@
                     </TablixMember>
                     <TablixMember>
                       <Group Name="Details" />
+                      <SortExpressions>
+                        <SortExpression>
+                          <Value>=Fields!CompInfo_Name.Value</Value>
+                        </SortExpression>
+                        <SortExpression>
+                          <Value>=Fields!ServiceHeader_No.Value</Value>
+                        </SortExpression>
+                        <SortExpression>
+                          <Value>=Fields!ServiceLine_LineNo.Value</Value>
+                        </SortExpression>
+                      </SortExpressions>
+                      <Visibility>
+                        <Hidden>=(Fields!ServiceLine_LineNo.Value=0)</Hidden>
+                      </Visibility>
                     </TablixMember>
                     <TablixMember>
                       <KeepWithGroup>Before</KeepWithGroup>
@@ -5223,7 +5238,7 @@
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.00568in</Top>
             <Height>6.53125in</Height>
-            <Width>8.16667in</Width>
+            <Width>7.70833in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -5234,12 +5249,12 @@
         <Height>6.53693in</Height>
         <Style />
       </Body>
-      <Width>8.17708in</Width>
+      <Width>7.70833in</Width>
       <Page>
-        <LeftMargin>2cm</LeftMargin>
-        <RightMargin>2cm</RightMargin>
-        <TopMargin>2cm</TopMargin>
-        <BottomMargin>2cm</BottomMargin>
+        <LeftMargin>1cm</LeftMargin>
+        <RightMargin>1cm</RightMargin>
+        <TopMargin>1cm</TopMargin>
+        <BottomMargin>1cm</BottomMargin>
         <Style />
       </Page>
     </ReportSection>
@@ -5340,29 +5355,50 @@ End Function
         <Field Name="ServiceItem_Status">
           <DataField>ServiceItem_Status</DataField>
         </Field>
-        <Field Name="SericeLine_No_">
-          <DataField>SericeLine_No_</DataField>
+        <Field Name="ServiceLine_LineNo">
+          <DataField>ServiceLine_LineNo</DataField>
         </Field>
-        <Field Name="SericeLine_Fault_Code">
-          <DataField>SericeLine_Fault_Code</DataField>
+        <Field Name="ServiceLine_No_">
+          <DataField>ServiceLine_No_</DataField>
         </Field>
-        <Field Name="SericeLineFault_Description">
-          <DataField>SericeLineFault_Description</DataField>
+        <Field Name="ServiceLine_Fault_Code">
+          <DataField>ServiceLine_Fault_Code</DataField>
         </Field>
-        <Field Name="SericeLineDescription">
-          <DataField>SericeLineDescription</DataField>
+        <Field Name="ServiceLineFault_Description">
+          <DataField>ServiceLineFault_Description</DataField>
         </Field>
-        <Field Name="SericeLineQuantity">
-          <DataField>SericeLineQuantity</DataField>
+        <Field Name="ServiceLineDescription">
+          <DataField>ServiceLineDescription</DataField>
         </Field>
-        <Field Name="SericeLineQuantityFormat">
-          <DataField>SericeLineQuantityFormat</DataField>
+        <Field Name="ServiceLineQuantity">
+          <DataField>ServiceLineQuantity</DataField>
         </Field>
-        <Field Name="SericeLinePriceIncVAT">
-          <DataField>SericeLinePriceIncVAT</DataField>
+        <Field Name="ServiceLineQuantityFormat">
+          <DataField>ServiceLineQuantityFormat</DataField>
         </Field>
-        <Field Name="SericeLinePriceIncVATFormat">
-          <DataField>SericeLinePriceIncVATFormat</DataField>
+        <Field Name="ServiceLinePriceIncVAT">
+          <DataField>ServiceLinePriceIncVAT</DataField>
+        </Field>
+        <Field Name="ServiceLinePriceIncVATFormat">
+          <DataField>ServiceLinePriceIncVATFormat</DataField>
+        </Field>
+        <Field Name="TotalPart">
+          <DataField>TotalPart</DataField>
+        </Field>
+        <Field Name="TotalPartFormat">
+          <DataField>TotalPartFormat</DataField>
+        </Field>
+        <Field Name="TotalService">
+          <DataField>TotalService</DataField>
+        </Field>
+        <Field Name="TotalServiceFormat">
+          <DataField>TotalServiceFormat</DataField>
+        </Field>
+        <Field Name="TotalTransport">
+          <DataField>TotalTransport</DataField>
+        </Field>
+        <Field Name="TotalTransportFormat">
+          <DataField>TotalTransportFormat</DataField>
         </Field>
       </Fields>
       <Query>

@@ -1,9 +1,9 @@
-report 50009 "Service Invoice"
+report 50010 "Service Receipt"
 {
     ApplicationArea = All;
     UsageCategory = Documents;
     DefaultLayout = RDLC;
-    RDLCLayout = './Report/Layout/Rep50009.ServiceInvoice.rdlc';
+    RDLCLayout = './Report/Layout/Rep50010.ServiceReceipt.rdlc';
 
     dataset
     {
@@ -77,6 +77,7 @@ report 50009 "Service Invoice"
             dataitem(LineData; Integer)
             {
                 column(ServiceLine_LineNo; ServiceInvLineTemp."Line No.") { }
+                column(ServiceLine_LocationCode; ServiceInvLineTemp."Location Code") { }
                 column(ServiceLine_No_; ServiceInvLineTemp."No.") { }
                 column(ServiceLine_Fault_Code; ServiceInvLineTemp."Fault Code") { }
                 column(ServiceLineFault_Description; Fault.Description) { }
