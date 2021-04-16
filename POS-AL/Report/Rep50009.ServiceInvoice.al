@@ -13,7 +13,6 @@ report 50009 "Service Invoice"
             column(CompInfo_Address; CompInfo.Address) { }
             column(CompInfo_Address2; CompInfo."Address 2") { }
             column(CompInfo_City; CompInfo.City) { }
-            column(CompInfo_Pic; CompInfo.Picture) { }
             column(ServiceHeader_No; "No.") { }
             column(ServiceHeader_Posting_Date; "Posting Date") { }
             column(CompInfo_NPWP; CompInfo."VAT Registration No.") { }
@@ -31,6 +30,8 @@ report 50009 "Service Invoice"
             dataitem(InvLine; "Service Invoice Line")
             {
                 DataItemTableView = sorting("Document No.", "Line No.");
+                DataItemLinkReference = InvHeader;
+                DataItemLink = "Document No." = field("No.");
 
                 trigger OnPreDataItem()
                 begin
@@ -126,7 +127,6 @@ report 50009 "Service Invoice"
     trigger OnPreReport()
     begin
         CompInfo.Get();
-        CompInfo.CalcFields(Picture);
         MaxLine := 15;
         Clear(LineCount);
         Clear(TotalPart);

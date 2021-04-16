@@ -11,118 +11,6 @@
       <rd:DataSourceID>b8013b2f-5d94-4a16-98d0-279bd8780b45</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="Store_No_">
-          <DataField>Store_No_</DataField>
-        </Field>
-        <Field Name="Receipt_No_">
-          <DataField>Receipt_No_</DataField>
-        </Field>
-        <Field Name="Date">
-          <DataField>Date</DataField>
-        </Field>
-        <Field Name="Item_No_">
-          <DataField>Item_No_</DataField>
-        </Field>
-        <Field Name="Item_Category_Code">
-          <DataField>Item_Category_Code</DataField>
-        </Field>
-        <Field Name="Serial_No_">
-          <DataField>Serial_No_</DataField>
-        </Field>
-        <Field Name="Quantity">
-          <DataField>Quantity</DataField>
-        </Field>
-        <Field Name="QuantityFormat">
-          <DataField>QuantityFormat</DataField>
-        </Field>
-        <Field Name="Unit_of_Measure">
-          <DataField>Unit_of_Measure</DataField>
-        </Field>
-        <Field Name="Price">
-          <DataField>Price</DataField>
-        </Field>
-        <Field Name="PriceFormat">
-          <DataField>PriceFormat</DataField>
-        </Field>
-        <Field Name="Discount_Amount">
-          <DataField>Discount_Amount</DataField>
-        </Field>
-        <Field Name="Discount_AmountFormat">
-          <DataField>Discount_AmountFormat</DataField>
-        </Field>
-        <Field Name="Net_Amount">
-          <DataField>Net_Amount</DataField>
-        </Field>
-        <Field Name="Net_AmountFormat">
-          <DataField>Net_AmountFormat</DataField>
-        </Field>
-        <Field Name="VAT_Amount">
-          <DataField>VAT_Amount</DataField>
-        </Field>
-        <Field Name="VAT_AmountFormat">
-          <DataField>VAT_AmountFormat</DataField>
-        </Field>
-        <Field Name="Cost_Amount">
-          <DataField>Cost_Amount</DataField>
-        </Field>
-        <Field Name="Cost_AmountFormat">
-          <DataField>Cost_AmountFormat</DataField>
-        </Field>
-        <Field Name="Staff_ID">
-          <DataField>Staff_ID</DataField>
-        </Field>
-        <Field Name="Time">
-          <DataField>Time</DataField>
-        </Field>
-        <Field Name="Periodic_Discount">
-          <DataField>Periodic_Discount</DataField>
-        </Field>
-        <Field Name="Periodic_DiscountFormat">
-          <DataField>Periodic_DiscountFormat</DataField>
-        </Field>
-        <Field Name="Sales_Staff">
-          <DataField>Sales_Staff</DataField>
-        </Field>
-        <Field Name="Item_InvPosGroup">
-          <DataField>Item_InvPosGroup</DataField>
-        </Field>
-        <Field Name="Item_Desc">
-          <DataField>Item_Desc</DataField>
-        </Field>
-        <Field Name="GrossAmt">
-          <DataField>GrossAmt</DataField>
-        </Field>
-        <Field Name="GrossAmtFormat">
-          <DataField>GrossAmtFormat</DataField>
-        </Field>
-        <Field Name="Store_Name">
-          <DataField>Store_Name</DataField>
-        </Field>
-        <Field Name="Staff">
-          <DataField>Staff</DataField>
-        </Field>
-        <Field Name="Tender_Type">
-          <DataField>Tender_Type</DataField>
-        </Field>
-        <Field Name="TenderCaption">
-          <DataField>TenderCaption</DataField>
-        </Field>
-        <Field Name="Amount_Tendered">
-          <DataField>Amount_Tendered</DataField>
-        </Field>
-        <Field Name="Amount_TenderedFormat">
-          <DataField>Amount_TenderedFormat</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -412,7 +300,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Avg(Fields!Quantity.Value)</Value>
+                                  <Value>=Sum(Fields!Quantity.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -513,7 +401,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Avg(Fields!Discount_Amount.Value)</Value>
+                                  <Value>=Sum(Fields!Discount_Amount.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -547,10 +435,11 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Avg(Fields!GrossAmt.Value)</Value>
+                                  <Value>=Sum(Fields!GrossAmt.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
+                                    <Format>#,0.00</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -580,7 +469,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Avg(Fields!Net_Amount.Value)</Value>
+                                  <Value>=Sum(Fields!Net_Amount.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -614,7 +503,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Avg(Fields!VAT_Amount.Value)</Value>
+                                  <Value>=Sum(Fields!VAT_Amount.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -648,7 +537,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Avg(Fields!Cost_Amount.Value)</Value>
+                                  <Value>=Sum(Fields!Cost_Amount.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -848,10 +737,11 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Avg(Fields!Periodic_Discount.Value)</Value>
+                                  <Value>=Sum(Fields!Periodic_Discount.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
+                                    <Format>#,0.00</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -918,6 +808,7 @@
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>7pt</FontSize>
+                                    <Format>#,0.00</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1110,14 +1001,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Quantity">
+                        <Textbox Name="TotalQty">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Quantity.Value)</Value>
+                                  <Value>=Last(Fields!TotalQty.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -1129,7 +1020,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Quantity</rd:DefaultName>
+                          <rd:DefaultName>TotalQty</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1215,14 +1106,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Discount_Amount">
+                        <Textbox Name="TotalDiscAmt">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Discount_Amount.Value)</Value>
+                                  <Value>=Last(Fields!TotalDiscAmt.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -1234,7 +1125,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Discount_Amount</rd:DefaultName>
+                          <rd:DefaultName>TotalDiscAmt</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1250,14 +1141,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="GrossAmt">
+                        <Textbox Name="TotalGrossAmt">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!GrossAmt.Value)</Value>
+                                  <Value>=Last(Fields!TotalGrossAmt.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -1269,7 +1160,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>GrossAmt</rd:DefaultName>
+                          <rd:DefaultName>TotalGrossAmt</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1285,14 +1176,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Net_Amount">
+                        <Textbox Name="TotalNettAmt">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Net_Amount.Value)</Value>
+                                  <Value>=Last(Fields!TotalNettAmt.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -1304,7 +1195,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Net_Amount</rd:DefaultName>
+                          <rd:DefaultName>TotalNettAmt</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1320,14 +1211,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="VAT_Amount">
+                        <Textbox Name="TotalVATAmt">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!VAT_Amount.Value)</Value>
+                                  <Value>=Last(Fields!TotalVATAmt.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -1339,7 +1230,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>VAT_Amount</rd:DefaultName>
+                          <rd:DefaultName>TotalVATAmt</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1362,7 +1253,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Cost_Amount.Value)</Value>
+                                  <Value>=Last(Fields!TotalCostAmt.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -1572,7 +1463,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Periodic_Discount.Value)</Value>
+                                  <Value>=Last(Fields!TotalPeriodDiscAmt.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -3120,14 +3011,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Quantity3">
+                        <Textbox Name="TotalQty2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Quantity.Value)</Value>
+                                  <Value>=Last(Fields!TotalQty.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -3139,7 +3030,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Quantity</rd:DefaultName>
+                          <rd:DefaultName>TotalQty</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -3821,14 +3712,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Discount_Amount3">
+                        <Textbox Name="TotalDiscAmt2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Discount_Amount.Value)</Value>
+                                  <Value>=Last(Fields!TotalDiscAmt.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -3840,7 +3731,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Discount_Amount</rd:DefaultName>
+                          <rd:DefaultName>TotalDiscAmt</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -3852,6 +3743,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -4522,14 +4414,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox163">
+                        <Textbox Name="Textbox156">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Periodic_Discount.Value)</Value>
+                                  <Value>=Last(Fields!TotalPeriodDiscAmt.Value)</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -5224,7 +5116,7 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox165">
+                        <Textbox Name="Textbox157">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -7381,7 +7273,7 @@
                     <GroupExpressions>
                       <GroupExpression>=Fields!Store_No_.Value</GroupExpression>
                       <GroupExpression>=Fields!Receipt_No_.Value</GroupExpression>
-                      <GroupExpression>=Fields!Item_No_.Value</GroupExpression>
+                      <GroupExpression>=Fields!Line_No_.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
@@ -7392,7 +7284,7 @@
                       <Value>=Fields!Receipt_No_.Value</Value>
                     </SortExpression>
                     <SortExpression>
-                      <Value>=Fields!Item_No_.Value</Value>
+                      <Value>=Fields!Line_No_.Value</Value>
                     </SortExpression>
                   </SortExpressions>
                   <TablixMembers>
@@ -7751,12 +7643,6 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -7796,4 +7682,161 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="Store_No_">
+          <DataField>Store_No_</DataField>
+        </Field>
+        <Field Name="Receipt_No_">
+          <DataField>Receipt_No_</DataField>
+        </Field>
+        <Field Name="Line_No_">
+          <DataField>Line_No_</DataField>
+        </Field>
+        <Field Name="Date">
+          <DataField>Date</DataField>
+        </Field>
+        <Field Name="Item_No_">
+          <DataField>Item_No_</DataField>
+        </Field>
+        <Field Name="Item_Category_Code">
+          <DataField>Item_Category_Code</DataField>
+        </Field>
+        <Field Name="Serial_No_">
+          <DataField>Serial_No_</DataField>
+        </Field>
+        <Field Name="Unit_of_Measure">
+          <DataField>Unit_of_Measure</DataField>
+        </Field>
+        <Field Name="Staff_ID">
+          <DataField>Staff_ID</DataField>
+        </Field>
+        <Field Name="Time">
+          <DataField>Time</DataField>
+        </Field>
+        <Field Name="Sales_Staff">
+          <DataField>Sales_Staff</DataField>
+        </Field>
+        <Field Name="Item_InvPosGroup">
+          <DataField>Item_InvPosGroup</DataField>
+        </Field>
+        <Field Name="Item_Desc">
+          <DataField>Item_Desc</DataField>
+        </Field>
+        <Field Name="Store_Name">
+          <DataField>Store_Name</DataField>
+        </Field>
+        <Field Name="Staff">
+          <DataField>Staff</DataField>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+        </Field>
+        <Field Name="QuantityFormat">
+          <DataField>QuantityFormat</DataField>
+        </Field>
+        <Field Name="Price">
+          <DataField>Price</DataField>
+        </Field>
+        <Field Name="PriceFormat">
+          <DataField>PriceFormat</DataField>
+        </Field>
+        <Field Name="Discount_Amount">
+          <DataField>Discount_Amount</DataField>
+        </Field>
+        <Field Name="Discount_AmountFormat">
+          <DataField>Discount_AmountFormat</DataField>
+        </Field>
+        <Field Name="Net_Amount">
+          <DataField>Net_Amount</DataField>
+        </Field>
+        <Field Name="Net_AmountFormat">
+          <DataField>Net_AmountFormat</DataField>
+        </Field>
+        <Field Name="VAT_Amount">
+          <DataField>VAT_Amount</DataField>
+        </Field>
+        <Field Name="VAT_AmountFormat">
+          <DataField>VAT_AmountFormat</DataField>
+        </Field>
+        <Field Name="Cost_Amount">
+          <DataField>Cost_Amount</DataField>
+        </Field>
+        <Field Name="Cost_AmountFormat">
+          <DataField>Cost_AmountFormat</DataField>
+        </Field>
+        <Field Name="Periodic_Discount">
+          <DataField>Periodic_Discount</DataField>
+        </Field>
+        <Field Name="Periodic_DiscountFormat">
+          <DataField>Periodic_DiscountFormat</DataField>
+        </Field>
+        <Field Name="GrossAmt">
+          <DataField>GrossAmt</DataField>
+        </Field>
+        <Field Name="GrossAmtFormat">
+          <DataField>GrossAmtFormat</DataField>
+        </Field>
+        <Field Name="Tender_Type">
+          <DataField>Tender_Type</DataField>
+        </Field>
+        <Field Name="TenderCaption">
+          <DataField>TenderCaption</DataField>
+        </Field>
+        <Field Name="Amount_Tendered">
+          <DataField>Amount_Tendered</DataField>
+        </Field>
+        <Field Name="Amount_TenderedFormat">
+          <DataField>Amount_TenderedFormat</DataField>
+        </Field>
+        <Field Name="TotalQty">
+          <DataField>TotalQty</DataField>
+        </Field>
+        <Field Name="TotalQtyFormat">
+          <DataField>TotalQtyFormat</DataField>
+        </Field>
+        <Field Name="TotalGrossAmt">
+          <DataField>TotalGrossAmt</DataField>
+        </Field>
+        <Field Name="TotalGrossAmtFormat">
+          <DataField>TotalGrossAmtFormat</DataField>
+        </Field>
+        <Field Name="TotalNettAmt">
+          <DataField>TotalNettAmt</DataField>
+        </Field>
+        <Field Name="TotalNettAmtFormat">
+          <DataField>TotalNettAmtFormat</DataField>
+        </Field>
+        <Field Name="TotalDiscAmt">
+          <DataField>TotalDiscAmt</DataField>
+        </Field>
+        <Field Name="TotalDiscAmtFormat">
+          <DataField>TotalDiscAmtFormat</DataField>
+        </Field>
+        <Field Name="TotalPeriodDiscAmt">
+          <DataField>TotalPeriodDiscAmt</DataField>
+        </Field>
+        <Field Name="TotalPeriodDiscAmtFormat">
+          <DataField>TotalPeriodDiscAmtFormat</DataField>
+        </Field>
+        <Field Name="TotalVATAmt">
+          <DataField>TotalVATAmt</DataField>
+        </Field>
+        <Field Name="TotalVATAmtFormat">
+          <DataField>TotalVATAmtFormat</DataField>
+        </Field>
+        <Field Name="TotalCostAmt">
+          <DataField>TotalCostAmt</DataField>
+        </Field>
+        <Field Name="TotalCostAmtFormat">
+          <DataField>TotalCostAmtFormat</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>

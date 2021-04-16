@@ -13,7 +13,6 @@ report 50010 "Service Receipt"
             column(CompInfo_Address; CompInfo.Address) { }
             column(CompInfo_Address2; CompInfo."Address 2") { }
             column(CompInfo_City; CompInfo.City) { }
-            column(CompInfo_Pic; CompInfo.Picture) { }
             column(ServiceHeader_No; "No.") { }
             column(ServiceHeader_Posting_Date; "Posting Date") { }
             column(CompInfo_NPWP; CompInfo."VAT Registration No.") { }
@@ -27,10 +26,13 @@ report 50010 "Service Receipt"
             column(ServiceItem_SerialNo; ServiceItem."Serial No.") { }
             column(ServiceItem_Warranty; ServiceItem."Warranty Starting Date (Parts)") { }
             column(ServiceItem_Status; ServiceItem."Customer No.") { }
+            column(IProTechValue; IProTechValue) { }
 
             dataitem(InvLine; "Service Invoice Line")
             {
                 DataItemTableView = sorting("Document No.", "Line No.");
+                DataItemLinkReference = InvHeader;
+                DataItemLink = "Document No." = field("No.");
 
                 trigger OnPreDataItem()
                 begin
@@ -120,6 +122,9 @@ report 50010 "Service Receipt"
                         ServiceItem.Init();
                 end else
                     ServiceItem.Init();
+                Clear(IProTechValue);
+                if IProtech then
+                    IProTechValue := 'V';
             end;
         }
     }
@@ -127,8 +132,7 @@ report 50010 "Service Receipt"
     trigger OnPreReport()
     begin
         CompInfo.Get();
-        CompInfo.CalcFields(Picture);
-        MaxLine := 15;
+        MaxLine := 5;
         Clear(LineCount);
         Clear(TotalPart);
         Clear(TotalService);
@@ -145,6 +149,7 @@ report 50010 "Service Receipt"
         ServiceInvLineTemp: Record "Service Invoice Line" temporary;
         Fault: Record "Fault Code";
         LastDocNo: Code[20];
+        IProTechValue: Text;
         PriceIncVAT: Decimal;
         TotalPart: Decimal;
         TotalService: Decimal;
