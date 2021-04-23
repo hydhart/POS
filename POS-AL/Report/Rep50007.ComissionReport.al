@@ -15,8 +15,8 @@ report 50007 "Comission Report"
             column(Store_Name; Store.Name) { }
             column(SPG_Code; "SPG Code") { }
             column(SPG_Name; Staff."First Name") { }
-            column(Inventory_Posting_Group; "Item Category Code") { }
-            column(Item_ProdGroup; Item."Retail Product Code") { }
+            column(Inventory_Posting_Group; "Inventory Posting Group") { }
+            column(Item_ProdGroup; "Item Category Code") { }
             column(Qty; Qty) { }
             column(Amount; Amount) { }
             column(Target; TargetStore.Target) { }
